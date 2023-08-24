@@ -33,12 +33,12 @@ export function Navbar() {
 
             </div>
 
-            <div className="border-t border-gray-100 flex-1 flex justify-center">
+            <nav className="border-t border-gray-100 flex-1 flex justify-center">
                 <div className="px-2 h-full">
                     <ul className="space-y-1 border-t border-gray-100 pt-4 h-2/3 flex flex-col items-center justify-evenly">
                         <li>
-                            <a
-                                href=""
+                            <Link
+                                to="/clients"
                                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                             >
                                 <MathOperations weight="fill" size={28} className="opacity-75" />
@@ -47,12 +47,12 @@ export function Navbar() {
                                 >
                                     Orçamento
                                 </span>
-                            </a>
+                            </Link>
                         </li>
 
                         <li>
-                            <a
-                                href=""
+                            <Link
+                                to="/"
                                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                             >
                                 <Calendar size={28} className="opacity-75" />
@@ -62,12 +62,12 @@ export function Navbar() {
                                 >
                                     Agendamentos
                                 </span>
-                            </a>
+                            </Link>
                         </li>
 
                         <li>
-                            <a
-                                href=""
+                            <Link
+                                to="/"
                                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                             >
                                 <Users size={28} className="opacity-75" />
@@ -76,12 +76,12 @@ export function Navbar() {
                                 >
                                     Clientes
                                 </span>
-                            </a>
+                            </Link>
                         </li>
 
                         <li>
-                            <a
-                                href=""
+                            <Link
+                                to="/"
                                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                             >
                                 <NewspaperClipping size={28} className="opacity-75" />
@@ -90,16 +90,16 @@ export function Navbar() {
                                 >
                                     Relatórios
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
-            </div>
+            </nav>
 
             <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
                 <div className="py-4">
-                    <a
-                        href=""
+                    <Link
+                        to="/"
                         className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-blue-700"
                     >
                         <GearSix size={28} className="opacity-75" />
@@ -110,7 +110,7 @@ export function Navbar() {
                         >
                             Configurações
                         </span>
-                    </a>
+                    </Link>
                 </div>
                 <button
                     type="button"

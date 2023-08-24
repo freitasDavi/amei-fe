@@ -32,7 +32,7 @@ export function Client() {
 
 
     return (
-        <main className="flex flex-col w-[60%] bg-slate-800 h-screen text-white mx-auto p-20 gap-10">
+        <main className="flex flex-col w-[90%] h-screen text-white mx-auto p-20 gap-10">
             <h1 className="text-3xl font-black leading-tight text-indig-500">Clientes</h1>
             {data && (
                 <section>
