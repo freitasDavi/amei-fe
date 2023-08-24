@@ -8,12 +8,13 @@ export function DefaultLayout() {
     const token = useAuthStore((state) => state.token);
     const location = useLocation();
 
+    console.log(token)
     // if (token && token.trim().length === 0) {
     //     return <Navigate to="/login" replace />
     // }
 
     return (
-        token && token.trim().length === 0
+        token.trim().length === 0
             ? (
                 <Navigate to="/login" state={{ from: location }} replace />
             ) : (
