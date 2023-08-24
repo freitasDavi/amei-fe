@@ -12,7 +12,7 @@ export const columns: ColumnDef<Clients>[] = [
         id: "select",
         header: ({ table }) => (
             <Checkbox
-                className="border-white"
+                className="border-slate-400"
                 checked={table.getIsAllPageRowsSelected()}
                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 aria-label="Select all"
