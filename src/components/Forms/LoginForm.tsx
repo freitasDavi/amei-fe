@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { baseApi } from "@/lib/api";
 
 import useAuthStore from "@/store/AuthStore";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "../ui/use-toast";
 
 const loginSchema = z.object({
@@ -74,15 +74,15 @@ export function LoginForm() {
     return (
         <section>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-8">
                     <FormField
                         control={form.control}
                         name="username"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor="username">Username</FormLabel>
+                                <FormLabel htmlFor="username">Usuário</FormLabel>
                                 <FormControl>
-                                    <Input id="username" placeholder="davi@gmail.com" {...field} />
+                                    <Input id="username" placeholder="usuario@email.com" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -94,7 +94,7 @@ export function LoginForm() {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor="password">Password</FormLabel>
+                                <FormLabel htmlFor="password">Senha</FormLabel>
                                 <FormControl>
                                     <Input id="password" type="password" placeholder="●●●●●●●●" {...field} />
                                 </FormControl>
@@ -102,7 +102,15 @@ export function LoginForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">Login</Button>
+                    <div className="flex flex-row-reverse justify-between items-baseline">
+                        <Button className="bg-primary-logo hover:bg-primary-logo-dark" type="submit">Entrar</Button>
+
+
+                        <p className="mt-4 text-sm text-gray-500 sm:mt-0">
+                            Não tem uma conta?
+                            <Link to="/register" className="ml-2 text-primary-logo-dark hover:underline">Cadastre-se</Link>.
+                        </p>
+                    </div>
                 </form>
             </Form>
         </section>

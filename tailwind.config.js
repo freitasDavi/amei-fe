@@ -17,6 +17,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        'primary-logo': '#1C9AEA',
+        'primary-logo-dark': '#1772C1',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -74,6 +76,10 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      fontFamily: {
+        'sans':  ['Open Sans', 'sans-serif'],
+        'logo': ['Manjari', 'sans-serif']
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
