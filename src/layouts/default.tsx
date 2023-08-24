@@ -17,13 +17,13 @@ export function DefaultLayout() {
             ? (
                 <Navigate to="/login" state={{ from: location }} replace />
             ) : (
-                <div className="flex flex-col">
+                <div className="flex">
                     <Navbar />
-                    <main className="w-full min-h-[75vh] mt-16">
+                    <main className="w-full bg-slate-600">
                         <Outlet />
                         <Toaster />
                     </main>
-                    <Footer />
+                    {/* <Footer /> */}
                 </div>
 
             )
