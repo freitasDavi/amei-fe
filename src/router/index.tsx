@@ -28,12 +28,14 @@ export const router = createBrowserRouter([
 export const router2 = createBrowserRouter(
     createRoutesFromElements(
         <Route>
-            <Route path="/" element={<DefaultLayout />}>
-                <Route index element={<Home />} />
+            <Route element={<DefaultLayout />}>
+                <Route path="/home" element={<Home />} />
                 <Route path="/clients" element={<Client />} />
                 <Route path="/protected" element={<Protected />} />
             </Route>
+            <Route path="/" element={<div>Home page</div>} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<div>Register page</div>} />
         </Route>
     )
 );

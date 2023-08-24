@@ -15,11 +15,10 @@ export function UnAuthNavbar() {
     }
 
     return (
-        <nav className="bg-rose-900 fixed w-full z-20 top-0 left-0 border-b border-gray-600">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="https://flowbite.com/" className="flex items-center">
-                    <img src={logo} className="h-16 mr-3" alt="Flowbite Logo" />
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">TKN Base Layout</span>
+        <nav className="bg-primary-logo fixed w-full z-20 top-0 left-0 border-b border-slate-100">
+            <div className="max-w-screen-xl flex flex-wrap items-baseline justify-between mx-auto p-4">
+                <a href="https://flowbite.com/" className="text-white font-logo text-5xl font-semibold ">
+                    a-mei
                 </a>
                 <div className="flex md:order-2">
                     {/* TODO: Aqui que vai o Avatar */}
