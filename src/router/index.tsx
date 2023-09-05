@@ -4,6 +4,7 @@ import { Client } from "@/pages/Clients/Client";
 import Home from "@/pages/Home";
 import { Login } from "@/pages/Login";
 import { Protected } from "@/pages/Protected";
+import { Checkout } from "@/pages/Checkout";
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -32,6 +33,7 @@ export const router2 = createBrowserRouter(
                 <Route path="/home" element={<Home />} />
                 <Route path="/clients" element={<Client />} />
                 <Route path="/protected" element={<Protected />} />
+                <Route path="/checkout" element={<Checkout />} />
             </Route>
             <Route path="/" element={<div>Home page</div>} />
             <Route path="/login" element={<Login />} />

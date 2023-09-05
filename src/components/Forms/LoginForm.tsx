@@ -54,7 +54,7 @@ export function LoginForm() {
                     })
 
                     setTimeout(() => {
-                        navigate(from, { replace: true });
+                        navigate('/home', { replace: true });
                     }, 1000);
 
                     return;

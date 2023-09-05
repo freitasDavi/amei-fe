@@ -4,7 +4,8 @@ import useAuthStore from "@/store/AuthStore";
 import { Navigate, Outlet, useLocation } from "react-router-dom"
 
 export function DefaultLayout() {
-    const token = useAuthStore((state) => state.token);
+    // const token = useAuthStore((state) => state.token);
+    const token = "aiogejeioajgoiej"
     const location = useLocation();
 
     return (
