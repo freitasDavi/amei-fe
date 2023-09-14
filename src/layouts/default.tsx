@@ -12,9 +12,9 @@ export function DefaultLayout() {
             ? (
                 <Navigate to="/login" state={{ from: location }} replace />
             ) : (
-                <div className="flex">
+                <div className="flex ">
                     <Navbar />
-                    <main className="w-full bg-slate-600">
+                    <main className="w-full bg-[#E9E9FA]">
                         <Outlet />
                         <Toaster />
                     </main>
