@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { baseApi } from "@/lib/api";
 import { customization, initialization } from "@/lib/payment";
 import { Payment } from "@mercadopago/sdk-react";
 import { useState } from "react";
@@ -21,23 +22,17 @@ export function Checkout() {
     const onSubmitPayment = async ({
         selectedPaymentMethod, formData
     }) => {
-        return new Promise((resolve, reject) => {
-            fetch("http://localhost:8080/api/pagamentos/process_payment", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            })
-                .then((response) => response.json())
-                .then((response) => {
-                    // receber o resultado do pagamento
-                    resolve();
-                })
-                .catch((error) => {
-                    // lidar com a resposta de erro ao tentar criar o pagamento
-                    reject();
-                });
+        return new Promise(async (resolve, reject) => {
+
+            try {
+                const response = await baseApi.post("/pagamentos/process_payment", formData);
+
+                console.log(response.data)
+
+                resolve(response.data);
+            } catch (err) {
+                reject(err);
+            }
         });
     }
 
