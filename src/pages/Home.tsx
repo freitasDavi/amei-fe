@@ -1,8 +1,24 @@
 import { Link } from "react-router-dom";
 import { Star } from "@phosphor-icons/react"
+import { useEffect } from "react";
+import { baseApi } from "@/lib/api";
+import { PaymentIntentResponse } from "@/lib/responses/PaymentIntentResponse";
+import { usePaymentStore } from "@/store/PaymentStore";
 
 
 export default function Home() {
+    const setClientSecret = usePaymentStore(state => state.setClientSecret);
+
+
+    useEffect(() => {
+        const getClientSecret = async () => {
+            const response = await baseApi.get<PaymentIntentResponse>("/pagamentos/getPaymentIntent");
+
+            setClientSecret(response.data.client_secret);
+        }
+
+        getClientSecret();
+    }, []);
 
     return (
         <div className="flex flex-row">
