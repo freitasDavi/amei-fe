@@ -8,7 +8,7 @@ import { baseApi } from "@/lib/api";
 
 import useAuthStore from "@/store/AuthStore";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "../../ui/use-toast";
 
 const loginSchema = z.object({
     username: z.string(),
@@ -82,7 +82,7 @@ export function LoginForm() {
                             <FormItem>
                                 <FormLabel htmlFor="username">Usuário</FormLabel>
                                 <FormControl>
-                                    <Input id="username" placeholder="usuario@email.com" {...field} />
+                                    <Input id="username" placeholder="usuario" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
