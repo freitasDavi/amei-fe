@@ -30,7 +30,7 @@ baseApi.interceptors.response.use((response) => {
         const originalRequest = error.config as InternalAxiosRequestConfigWithRetry;
 
         if (error.response?.status === 401) {
-            if (error.response?.data?.error.includes("User Not Found")) {
+            if (error.response.data && error.response?.data?.error.includes("User Not Found")) {
                 return Promise.reject(error);
             }
 

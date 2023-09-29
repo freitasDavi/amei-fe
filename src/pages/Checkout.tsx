@@ -1,62 +1,29 @@
-import { Button } from "@/components/ui/button";
-import { baseApi } from "@/lib/api";
-import { customization, initialization } from "@/lib/payment";
-import { Payment } from "@mercadopago/sdk-react";
-import { useState } from "react";
+import { stripePromise } from "@/App";
+import { CheckoutForm } from "@/components/Payment/CheckoutForm";
+import { usePaymentStore } from "@/store/PaymentStore"
+import { Elements } from "@stripe/react-stripe-js";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 export function Checkout() {
-    const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
+    const clientSecret = usePaymentStore(state => state.clientSecret);
 
-    const onReadyBricks = async () => {
-        setIsLoading(false);
-    }
-
-    const onError = async (error) => {
-        // callback chamado para todos os casos de erro do Brick
-        console.log(error);
-        console.warn("Erro ao carregar gerenciador de pagamento...");
-        console.warn("Atualize a página")
-    };
-
-    const onSubmitPayment = async ({
-        selectedPaymentMethod, formData
-    }) => {
-        return new Promise((resolve, reject) => {
-            baseApi.post("http://localhost:8080/api/pagamentos/process_payment", formData)
-                .then((response) => response.json())
-                .then((response) => {
-                    // receber o resultado do pagamento
-                    resolve();
-                })
-                .catch((error) => {
-                    // lidar com a resposta de erro ao tentar criar o pagamento
-                    reject();
-                });
-        });
-    }
+    useEffect(() => {
+        if (!clientSecret) {
+            navigate("/home");
+        }
+    }, []);
 
     return (
         <div>
             <h1>Checkout page!</h1>
-
-            {isLoading && <p>Carregando...</p>}
-
-            <Payment
-                locale="pt-BR"
-                initialization={initialization}
-                customization={{
-                    paymentMethods: {
-                        creditCard: "all",
-                        debitCard: "all",
-                        ticket: "all",
-                    }
-                }}
-                onSubmit={onSubmitPayment}
-                onError={onError}
-                onReady={onReadyBricks}
-            />
-            {/* <Button onClick={test}>Teste</Button> */}
+            <Elements stripe={stripePromise} options={{
+                clientSecret: clientSecret
+            }} >
+                <CheckoutForm />
+            </Elements>
         </div>
     )
 }

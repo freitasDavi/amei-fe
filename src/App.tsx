@@ -1,17 +1,11 @@
 import { RouterProvider } from "react-router-dom"
 import { AuthContextProvider } from "./contexts/AuthContext"
 import { router2 } from "./router"
-import { initMercadoPago } from "@mercadopago/sdk-react";
+import { loadStripe } from "@stripe/stripe-js"
+
+export const stripePromise = loadStripe('pk_test_51Nq3F7Ez6oa2bkpU2cKNj50NS4r0yd0BvXDUrZStk2kYesiwdbqp8Uc4iCDPjdeHP3NAQlEwPLDaZrFgqXNlrgGP009ak11IZe');
 
 function App() {
-  const mercadoPagoPK = import.meta.env.VITE_PAY_BROKER_PUBLIC_KEY;
-
-  console.log(mercadoPagoPK);
-
-  if (mercadoPagoPK) {
-    initMercadoPago(mercadoPagoPK);
-  }
-
 
   return (
     <AuthContextProvider>
