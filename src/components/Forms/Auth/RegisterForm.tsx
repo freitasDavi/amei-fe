@@ -3,6 +3,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { RegisterMEIForm } from "./RegisterMEIForm";
 import { Button } from "@/components/ui/button";
+import { RegisterEnderecoForm } from "./RegisterEnderecoForm";
+import { RegisterLoginForm } from "./RegisterLoginForm";
 
 const registerSchema = z.object({
     username: z.string().max(20, "Seu usuário pode conter no máximo 20 caracteres"),
@@ -24,9 +26,10 @@ export type registerSc = z.infer<typeof registerSchema>;
 
 type RegisterFormProps = {
     changeStep: (newStep: number) => void;
+    currentStep: number;
 }
 
-export function RegisterForm({ changeStep }: RegisterFormProps) {
+export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
     const form = useForm<registerSc>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -54,14 +57,11 @@ export function RegisterForm({ changeStep }: RegisterFormProps) {
         <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(handleSubmitRegisterForm, () => console.log("Faltam campos"))}>
                 {/* Infos CNPJ */}
-                <RegisterMEIForm changeStep={changeStep} />
+                {currentStep == 1 && <RegisterMEIForm changeStep={changeStep} />}
                 {/* Infos Endereco */}
-                {/* <RegisterEnderecoForm /> */}
+                {currentStep == 2 && <RegisterEnderecoForm changeStep={changeStep} />}
                 {/* Infos Login */}
-                {/* <RegisterLoginForm /> */}
-
-
-                <input type="submit" value="Submit" />
+                {currentStep == 3 && <RegisterLoginForm changeStep={changeStep} />}
             </form>
         </FormProvider>
     )

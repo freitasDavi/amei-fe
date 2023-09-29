@@ -15,8 +15,8 @@ export function Register() {
             <section className="py-10 w-2/5 mt-10 flex items-center">
                 <Stepper currentStep={currentStep} />
             </section>
-            <section className="w-2/5 my-10">
-                <RegisterForm changeStep={changeCurrentStep} />
+            <section className="w-2/5 my-4">
+                <RegisterForm changeStep={changeCurrentStep} currentStep={currentStep} />
             </section>
         </main>
     )

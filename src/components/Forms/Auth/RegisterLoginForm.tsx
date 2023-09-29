@@ -1,20 +1,18 @@
 import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { useFormContext } from "react-hook-form"
-import { registerSc } from "./RegisterForm";
 import { Input } from "@/components/ui/input";
+import { registerSc } from "./RegisterForm";
+import { useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-
 
 type Props = {
     changeStep: (newStep: number) => void;
 }
 
-export function RegisterMEIForm({ changeStep }: Props) {
+export function RegisterLoginForm({ changeStep }: Props) {
     const { control } = useFormContext<registerSc>();
 
-    const onClickAdvance = () => {
-        console.log("avançando...");
-        changeStep(2);
+    const onClickHandleStep = (passo: number) => {
+        changeStep(passo);
     }
 
     return (
@@ -22,24 +20,24 @@ export function RegisterMEIForm({ changeStep }: Props) {
             <div className="w-full flex gap-6">
                 <FormField
                     control={control}
-                    name="razaoSocialUsuario"
+                    name="username"
                     render={({ field }) => (
                         <FormItem className="flex-1">
-                            <FormLabel htmlFor="razaoSocialUsuario">Razão social</FormLabel>
+                            <FormLabel htmlFor="username">Nome de usuário</FormLabel>
                             <FormControl>
-                                <Input id="razaoSocialUsuario" placeholder="Empresa ltda." {...field} />
+                                <Input id="username" placeholder="Joao123" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={control}
-                    name="telefoneUsuario"
+                    name="email"
                     render={({ field }) => (
                         <FormItem className="flex-1">
-                            <FormLabel htmlFor="telefoneUsuario">Telefone</FormLabel>
+                            <FormLabel htmlFor="email">Email</FormLabel>
                             <FormControl>
-                                <Input id="telefoneUsuario" placeholder="048 99999-9999" {...field} />
+                                <Input id="email" placeholder="email@mail.com" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
@@ -49,35 +47,34 @@ export function RegisterMEIForm({ changeStep }: Props) {
             <div className="w-full flex gap-6">
                 <FormField
                     control={control}
-                    name="cnpjUsuario"
+                    name="password"
                     render={({ field }) => (
                         <FormItem className="flex-1">
-                            <FormLabel htmlFor="cnpjUsuario">CNPJ</FormLabel>
+                            <FormLabel htmlFor="password">Senha</FormLabel>
                             <FormControl>
-                                <Input id="cnpjUsuario" placeholder="000.000.000-00" {...field} />
+                                <Input id="password" placeholder="•••••••••" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
 
-                <FormField
+                {/* <FormField
                     control={control}
-                    name="inscricaoMunicipalUsuario"
+                    name="usuarioBairro"
                     render={({ field }) => (
                         <FormItem className="flex-1">
-                            <FormLabel htmlFor="inscricaoMunicipalUsuario">Inscrição municipal</FormLabel>
+                            <FormLabel htmlFor="usuarioBairro">Confirme sua senha</FormLabel>
                             <FormControl>
-                                <Input id="inscricaoMunicipalUsuario" placeholder="000000.000.00" {...field} />
+                                <Input id="usuarioBairro" placeholder="••••••••" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
-                />
-
+                /> */}
             </div>
 
-
-            <span className="w-full flex justify-end mt-6">
-                <Button type="button" onClick={onClickAdvance}>Próxima etapa</Button>
+            <span className="w-full flex justify-between mt-6">
+                <Button type="button" onClick={() => onClickHandleStep(2)}>Etapa anterior</Button>
+                <Button type="submit">Salvar</Button>
             </span>
         </div>
     )
