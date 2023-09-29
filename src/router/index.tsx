@@ -6,6 +6,7 @@ import { Login } from "@/pages/Login";
 import { Protected } from "@/pages/Protected";
 import { Checkout } from "@/pages/Checkout";
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
+import { Index } from "@/pages/Index";
 
 export const router = createBrowserRouter([
     {
@@ -35,7 +36,7 @@ export const router2 = createBrowserRouter(
                 <Route path="/protected" element={<Protected />} />
                 <Route path="/checkout" element={<Checkout />} />
             </Route>
-            <Route path="/" element={<div>Home page</div>} />
+            <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<div>Register page</div>} />
         </Route>

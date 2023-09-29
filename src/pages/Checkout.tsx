@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { baseApi } from "@/lib/api";
 import { customization, initialization } from "@/lib/payment";
 import { Payment } from "@mercadopago/sdk-react";
 import { useState } from "react";
@@ -22,13 +23,7 @@ export function Checkout() {
         selectedPaymentMethod, formData
     }) => {
         return new Promise((resolve, reject) => {
-            fetch("http://localhost:8080/api/pagamentos/process_payment", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            })
+            baseApi.post("http://localhost:8080/api/pagamentos/process_payment", formData)
                 .then((response) => response.json())
                 .then((response) => {
                     // receber o resultado do pagamento
