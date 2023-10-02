@@ -20,7 +20,7 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
             <div className="w-full flex gap-6">
                 <FormField
                     control={control}
-                    name="cepUsuario"
+                    name="cep"
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="cepUsuario">CEP</FormLabel>
@@ -28,7 +28,7 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                                 <Input id="cepUsuario" placeholder="00000-000   " {...field} />
                             </FormControl>
                             <FormMessage>
-                                {formState.errors.cepUsuario && formState.errors.cepUsuario.message}
+                                {formState.errors.cep && formState.errors.cep.message}
                             </FormMessage>
                         </FormItem>
                     )}

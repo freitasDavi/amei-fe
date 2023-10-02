@@ -67,18 +67,18 @@ export function RegisterLoginForm({ changeStep }: Props) {
                     )}
                 />
 
-                {/* <FormField
+                <FormField
                     control={control}
-                    name="usuarioBairro"
+                    name="passwordConfirmation"
                     render={({ field }) => (
                         <FormItem className="flex-1">
-                            <FormLabel htmlFor="usuarioBairro">Confirme sua senha</FormLabel>
+                            <FormLabel htmlFor="passwordConfirmation">Confirme sua senha</FormLabel>
                             <FormControl>
-                                <Input id="usuarioBairro" placeholder="••••••••" {...field} />
+                                <Input id="passwordConfirmation" placeholder="••••••••" {...field} />
                             </FormControl>
                         </FormItem>
                     )}
-                /> */}
+                />
             </div>
 
             <span className="w-full flex justify-between mt-6">

@@ -22,7 +22,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
             <div className="w-full flex gap-6">
                 <FormField
                     control={control}
-                    name="razaoSocialUsuario"
+                    name="razaoSocial"
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="razaoSocialUsuario">Razão social</FormLabel>
@@ -30,14 +30,14 @@ export function RegisterMEIForm({ changeStep }: Props) {
                                 <Input id="razaoSocialUsuario" placeholder="Empresa ltda." {...field} />
                             </FormControl>
                             <FormMessage>
-                                {formState.errors.razaoSocialUsuario && formState.errors.razaoSocialUsuario.message}
+                                {formState.errors.razaoSocial && formState.errors.razaoSocial.message}
                             </FormMessage>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={control}
-                    name="telefoneUsuario"
+                    name="telefone"
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="telefoneUsuario">Telefone</FormLabel>
@@ -45,7 +45,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                                 <Input id="telefoneUsuario" placeholder="048 99999-9999" {...field} />
                             </FormControl>
                             <FormMessage>
-                                {formState.errors.telefoneUsuario && formState.errors.telefoneUsuario.message}
+                                {formState.errors.telefone && formState.errors.telefone.message}
                             </FormMessage>
                         </FormItem>
                     )}
@@ -55,7 +55,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
             <div className="w-full flex gap-6">
                 <FormField
                     control={control}
-                    name="cnpjUsuario"
+                    name="cnpj"
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="cnpjUsuario">CNPJ</FormLabel>
@@ -63,7 +63,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                                 <Input id="cnpjUsuario" placeholder="000.000.000-00" {...field} />
                             </FormControl>
                             <FormMessage>
-                                {formState.errors.cnpjUsuario && formState.errors.cnpjUsuario.message}
+                                {formState.errors.cnpj && formState.errors.cnpj.message}
                             </FormMessage>
                         </FormItem>
                     )}
@@ -71,7 +71,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
 
                 <FormField
                     control={control}
-                    name="inscricaoMunicipalUsuario"
+                    name="inscricaoMunicipal"
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="inscricaoMunicipalUsuario">Inscrição municipal</FormLabel>
@@ -79,7 +79,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                                 <Input id="inscricaoMunicipalUsuario" placeholder="000000.000.00" {...field} />
                             </FormControl>
                             <FormMessage>
-                                {formState.errors.inscricaoMunicipalUsuario && formState.errors.inscricaoMunicipalUsuario.message}
+                                {formState.errors.inscricaoMunicipal && formState.errors.inscricaoMunicipal.message}
                             </FormMessage>
                         </FormItem>
                     )}
