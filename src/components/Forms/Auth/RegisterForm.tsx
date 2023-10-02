@@ -10,6 +10,7 @@ const registerSchema = z.object({
     username: z.string().max(20, "Seu usuário pode conter no máximo 20 caracteres"),
     email: z.string().email("Seu email deve conter um formato válido"),
     password: z.string().min(5, "Sua senha deve ter no mínimo 5 caracteres"),
+    passwordConfirmation: z.string().min(5, "Sua senha deve ter no mínimo 5 caracteres"),
     razaoSocialUsuario: z.string(),
     cnpjUsuario: z.string(),
     inscricaoMunicipalUsuario: z.string().optional(),
@@ -18,8 +19,11 @@ const registerSchema = z.object({
     enderecoUsuario: z.string(),
     numeroUsuario: z.string(),
     complementoUsuario: z.string(),
-    usuarioCidade: z.number(),
-    usuarioBairro: z.number()
+    usuarioCidade: z.string(),
+    usuarioBairro: z.string()
+}).refine((data) => data.password === data.passwordConfirmation, {
+    path: ["passwordConfirmation"],
+    message: "A senhas devem ser iguais"
 });
 
 export type registerSc = z.infer<typeof registerSchema>;
@@ -44,8 +48,8 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
             enderecoUsuario: "",
             numeroUsuario: "",
             complementoUsuario: "",
-            usuarioBairro: 0,
-            usuarioCidade: 0,
+            usuarioBairro: "",
+            usuarioCidade: "",
         }
     })
 

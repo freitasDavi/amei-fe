@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { registerSc } from "./RegisterForm";
-import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -9,7 +9,7 @@ type Props = {
 }
 
 export function RegisterEnderecoForm({ changeStep }: Props) {
-    const { control } = useFormContext<registerSc>();
+    const { control, formState } = useFormContext<registerSc>();
 
     const onClickHandleStep = (passo: number) => {
         changeStep(passo);
@@ -27,6 +27,9 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                             <FormControl>
                                 <Input id="cepUsuario" placeholder="00000-000   " {...field} />
                             </FormControl>
+                            <FormMessage>
+                                {formState.errors.cepUsuario && formState.errors.cepUsuario.message}
+                            </FormMessage>
                         </FormItem>
                     )}
                 />
@@ -39,6 +42,9 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                             <FormControl>
                                 <Input id="usuarioCidade" placeholder="Içara" type="number" {...field} />
                             </FormControl>
+                            <FormMessage>
+                                {formState.errors.usuarioCidade && formState.errors.usuarioCidade.message}
+                            </FormMessage>
                         </FormItem>
                     )}
                 />
@@ -54,6 +60,9 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                             <FormControl>
                                 <Input id="enderecoUsuario" placeholder="Rua Brasil" {...field} />
                             </FormControl>
+                            <FormMessage>
+                                {formState.errors.enderecoUsuario && formState.errors.enderecoUsuario.message}
+                            </FormMessage>
                         </FormItem>
                     )}
                 />
@@ -67,6 +76,9 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                             <FormControl>
                                 <Input id="usuarioBairro" placeholder="Centro" type="number" {...field} />
                             </FormControl>
+                            <FormMessage>
+                                {formState.errors.usuarioBairro && formState.errors.usuarioBairro.message}
+                            </FormMessage>
                         </FormItem>
                     )}
                 />
@@ -82,6 +94,9 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                             <FormControl>
                                 <Input id="numeroUsuario" placeholder="123" {...field} />
                             </FormControl>
+                            <FormMessage>
+                                {formState.errors.numeroUsuario && formState.errors.numeroUsuario.message}
+                            </FormMessage>
                         </FormItem>
                     )}
                 />
@@ -95,6 +110,9 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                             <FormControl>
                                 <Input id="complementoUsuario" placeholder="Próximo a..." {...field} />
                             </FormControl>
+                            <FormMessage>
+                                {formState.errors.complementoUsuario && formState.errors.complementoUsuario.message}
+                            </FormMessage>
                         </FormItem>
                     )}
                 />

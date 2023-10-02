@@ -1,4 +1,4 @@
-import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { registerSc } from "./RegisterForm";
 import { useFormContext } from "react-hook-form";
@@ -9,7 +9,7 @@ type Props = {
 }
 
 export function RegisterLoginForm({ changeStep }: Props) {
-    const { control } = useFormContext<registerSc>();
+    const { control, formState } = useFormContext<registerSc>();
 
     const onClickHandleStep = (passo: number) => {
         changeStep(passo);
@@ -27,6 +27,9 @@ export function RegisterLoginForm({ changeStep }: Props) {
                             <FormControl>
                                 <Input id="username" placeholder="Joao123" {...field} />
                             </FormControl>
+                            <FormMessage>
+                                {formState.errors.username && formState.errors.username.message}
+                            </FormMessage>
                         </FormItem>
                     )}
                 />
@@ -39,6 +42,9 @@ export function RegisterLoginForm({ changeStep }: Props) {
                             <FormControl>
                                 <Input id="email" placeholder="email@mail.com" {...field} />
                             </FormControl>
+                            <FormMessage>
+                                {formState.errors.email && formState.errors.email.message}
+                            </FormMessage>
                         </FormItem>
                     )}
                 />
@@ -54,6 +60,9 @@ export function RegisterLoginForm({ changeStep }: Props) {
                             <FormControl>
                                 <Input id="password" placeholder="•••••••••" {...field} />
                             </FormControl>
+                            <FormMessage>
+                                {formState.errors.password && formState.errors.password.message}
+                            </FormMessage>
                         </FormItem>
                     )}
                 />
