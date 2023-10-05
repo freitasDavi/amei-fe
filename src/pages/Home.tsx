@@ -16,27 +16,27 @@ export default function Home() {
             <section id="cards" className="w-full flex gap-8">
                 <CardSlider
                     icon="Money"
-                    path="orcamento"
+                    path="/orcamento"
                     title="Orçamento"
                 />
                 <CardSlider
                     icon="Package"
-                    path="ordens"
+                    path="/ordens"
                     title="Ordem de Serviço"
                 />
                 <CardSlider
                     icon="Calendar"
-                    path="agendamento"
+                    path="/agendamento"
                     title="Agendamento"
                 />
                 <CardSlider
                     icon="Users"
-                    path="clientes"
+                    path="/clientes"
                     title="Clientes"
                 />
                 <CardSlider
                     icon="FlagBanner"
-                    path="servicos"
+                    path="/servicos"
                     title="Serviços"
                 />
             </section>

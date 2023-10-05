@@ -40,7 +40,7 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
     const { toast } = useToast();
     const navigate = useNavigate();
     const { signIn } = useAuthStore((state) => ({
-        signIn: state.setToken
+        signIn: state.setLoginInfo
     }));
     const form = useForm<registerSc>({
         resolver: zodResolver(registerSchema),
@@ -78,7 +78,11 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
                     description: "Cadastro efetuado com sucesso"
                 })
 
-                signIn(response.data.accessToken, response.data.refreshToken);
+                signIn(response.data.accessToken, response.data.refreshToken, {
+                    email: response.data.email,
+                    id: response.data.id,
+                    username: response.data.username
+                });
 
                 setTimeout(() => {
                     navigate("/home");

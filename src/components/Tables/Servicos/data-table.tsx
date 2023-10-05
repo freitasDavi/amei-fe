@@ -1,29 +1,11 @@
-import {
-    ColumnDef,
-    SortingState,
-    flexRender,
-    getCoreRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from "@tanstack/react-table"
-
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { DataTableProps } from "../Clients/data-table";
+import { SortingState, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 
 
-export interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
-    data: TData[];
-}
+
 
 export function DataTable<TData, TValue>({
     columns, data
@@ -94,10 +76,10 @@ export function DataTable<TData, TValue>({
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
                 <Button variant="outline" size="sm" className="text-slate-800" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-                    Previous
+                    Página anterior
                 </Button>
                 <Button variant="outline" size="sm" className="text-slate-800" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-                    Next
+                    Próxima página
                 </Button>
             </div>
         </div>

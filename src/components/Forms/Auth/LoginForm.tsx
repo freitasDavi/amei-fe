@@ -24,8 +24,7 @@ export function LoginForm() {
     const from = location.state?.from?.pathname || "/";
     const { toast } = useToast();
     const { signIn } = useAuthStore((state) => ({
-        signIn: state.setToken,
-        isLogged: state.isLogged
+        signIn: state.setLoginInfo
     }));
     const form = useForm<loginSc>({
         resolver: zodResolver(loginSchema),
@@ -45,7 +44,12 @@ export function LoginForm() {
 
             if (res.status === 200) {
                 if (res.data.accessToken && typeof res.data.accessToken == "string") {
-                    signIn(res.data.accessToken, res.data.refreshToken);
+
+                    signIn(res.data.accessToken, res.data.refreshToken, {
+                        email: res.data.email,
+                        id: res.data.id,
+                        username: res.data.username
+                    });
 
                     toast({
                         variant: "success",
