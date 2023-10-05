@@ -37,7 +37,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                 />
                 <FormField
                     control={control}
-                    name="telefone"
+                    name="telefoneUsuario"
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="telefoneUsuario">Telefone</FormLabel>
@@ -45,7 +45,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                                 <Input id="telefoneUsuario" placeholder="048 99999-9999" {...field} />
                             </FormControl>
                             <FormMessage>
-                                {formState.errors.telefone && formState.errors.telefone.message}
+                                {formState.errors.telefoneUsuario && formState.errors.telefoneUsuario.message}
                             </FormMessage>
                         </FormItem>
                     )}

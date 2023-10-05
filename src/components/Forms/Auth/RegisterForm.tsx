@@ -6,6 +6,8 @@ import { RegisterEnderecoForm } from "./RegisterEnderecoForm";
 import { RegisterLoginForm } from "./RegisterLoginForm";
 import { baseApi } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
+import useAuthStore from "@/store/AuthStore";
+import { useNavigate } from "react-router-dom";
 
 const registerSchema = z.object({
     username: z.string().max(20, "Seu usuário pode conter no máximo 20 caracteres"),
@@ -15,9 +17,9 @@ const registerSchema = z.object({
     razaoSocial: z.string(),
     cnpj: z.string(),
     inscricaoMunicipal: z.string().optional(),
-    telefone: z.string(),
-    cep: z.string(),
-    enderecoUsuario: z.string(),
+    telefoneUsuario: z.string(),
+    cepUsuario: z.string(),
+    logradouroUsuario: z.string(),
     numeroUsuario: z.string(),
     complementoUsuario: z.string(),
     usuarioCidade: z.string(),
@@ -36,18 +38,23 @@ type RegisterFormProps = {
 
 export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
     const { toast } = useToast();
+    const navigate = useNavigate();
+    const { signIn } = useAuthStore((state) => ({
+        signIn: state.setToken
+    }));
     const form = useForm<registerSc>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
             username: "",
             email: "",
             password: "",
+            passwordConfirmation: "",
             razaoSocial: "",
             cnpj: "",
             inscricaoMunicipal: "",
-            telefone: "",
-            cep: "",
-            enderecoUsuario: "",
+            telefoneUsuario: "",
+            cepUsuario: "",
+            logradouroUsuario: "",
             numeroUsuario: "",
             complementoUsuario: "",
             usuarioBairro: "",
@@ -60,16 +67,24 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
         try {
             const response = await baseApi.post("/auth/register", {
                 ...data,
-                usuarioBairro: Number(data.usuarioBairro),
-                usuarioCidade: Number(data.usuarioCidade)
+                bairroUsuario: Number(data.usuarioBairro),
+                cidadeUsuario: Number(data.usuarioCidade)
             });
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 toast({
                     variant: "success",
                     title: "Sucesso",
                     description: "Cadastro efetuado com sucesso"
                 })
+
+                signIn(response.data.accessToken, response.data.refreshToken);
+
+                setTimeout(() => {
+                    navigate("/home");
+                }, 1000);
+
+                return;
             }
         } catch (err) {
             console.log('Error');

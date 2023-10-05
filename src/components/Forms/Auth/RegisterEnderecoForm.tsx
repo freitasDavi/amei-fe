@@ -20,7 +20,7 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
             <div className="w-full flex gap-6">
                 <FormField
                     control={control}
-                    name="cep"
+                    name="cepUsuario"
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="cepUsuario">CEP</FormLabel>
@@ -28,7 +28,7 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                                 <Input id="cepUsuario" placeholder="00000-000   " {...field} />
                             </FormControl>
                             <FormMessage>
-                                {formState.errors.cep && formState.errors.cep.message}
+                                {formState.errors.cepUsuario && formState.errors.cepUsuario.message}
                             </FormMessage>
                         </FormItem>
                     )}
@@ -53,7 +53,7 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
             <div className="w-full flex gap-6">
                 <FormField
                     control={control}
-                    name="enderecoUsuario"
+                    name="logradouroUsuario"
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="enderecoUsuario">Endereço</FormLabel>
@@ -61,7 +61,7 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                                 <Input id="enderecoUsuario" placeholder="Rua Brasil" {...field} />
                             </FormControl>
                             <FormMessage>
-                                {formState.errors.enderecoUsuario && formState.errors.enderecoUsuario.message}
+                                {formState.errors.logradouroUsuario && formState.errors.logradouroUsuario.message}
                             </FormMessage>
                         </FormItem>
                     )}
