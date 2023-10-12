@@ -15,24 +15,7 @@ export function ListarServicos() {
 
     useEffect(() => {
         async function recuperarServicos() {
-            try {
-                const res = await baseApi.get('/servicos');
-
-                setData(res.data);
-                toast({
-                    title: "Sucesso",
-                    variant: "success",
-                    description: "Registros recuperados com sucesso",
-                    duration: 5000
-                });
-
-            } catch (err) {
-                toast({
-                    title: 'Ops',
-                    variant: "destructive",
-                    description: "Algo não saiu como planejado"
-                })
-            }
+            await onClickPesquisar();
         }
 
         recuperarServicos();
@@ -43,12 +26,6 @@ export function ListarServicos() {
             const res = await baseApi.get('/servicos');
 
             setData(res.data);
-            toast({
-                title: "Sucesso",
-                variant: "success",
-                description: "Registros recuperados com sucesso",
-                duration: 5000
-            });
 
         } catch (err) {
             toast({

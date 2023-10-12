@@ -4,6 +4,7 @@ import { Client } from "@/pages/Clients/Client";
 import Home from "@/pages/Home";
 import { IndexPage } from "@/pages/Index";
 import { Login } from "@/pages/Login";
+import { Orcamento } from "@/pages/Orcamentos";
 import { Protected } from "@/pages/Protected";
 import { ListarServicos } from "@/pages/Servicos";
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
@@ -17,6 +18,7 @@ export const router = createBrowserRouter(
                 <Route path="/clients" element={<Client />} />
                 <Route path="/protected" element={<Protected />} />
                 <Route path="/servicos" element={<ListarServicos />} />
+                <Route path="/orcamentos" element={<Orcamento />} />
             </Route>
             <Route path="/" element={<IndexPage />} />
             <Route path="/login" element={<Login />} />
