@@ -123,7 +123,7 @@ export function CadastroServico() {
                                     )}
                                 />
 
-                                <Button type="submit" variant="secondary">Salvar</Button>
+                                <Button type="submit" variant="default">Salvar</Button>
                             </form>
                         </Form>
                     </DialogDescription>

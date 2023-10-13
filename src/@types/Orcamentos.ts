@@ -14,10 +14,10 @@ export type Orcamentos = {
 };
 
 
-type ItensOrcamento = {
+export type ItensOrcamento = {
     id?: number;
     valorUnitario: number;
     valorTotal: number;
     descricao: string;
-    codigoOrcamento: number;
+    codigoOrcamento?: number;
 };
