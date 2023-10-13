@@ -54,10 +54,7 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems }: Props) {
     return (
         <section>
             <div className="flex justify-evenly gap-10 p5">
-                <FormItem className="flex-1">
-                    <FormLabel htmlFor="descricao" >Descrição</FormLabel>
-                    <Input name="descricao" id="descricao" value={data.descricao} onChange={(e) => handleInputChange(e)} />
-                </FormItem>
+
                 <FormItem className="flex-1">
                     <FormLabel htmlFor="quantidade" >Quantidade</FormLabel>
                     <Input type="number" name="quantidade" id="quantidade" value={data.quantidade} onChange={(e) => handleInputChange(e)} />
@@ -66,11 +63,15 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems }: Props) {
                     <FormLabel htmlFor="valorUnitario" >Valor unitário</FormLabel>
                     <Input type="number" name="valorUnitario" id="valorUnitario" value={data.valorUnitario} onChange={(e) => handleInputChange(e)} />
                 </FormItem>
+                <FormItem className="flex-1">
+                    <FormLabel htmlFor="valorTotal" >Valor total</FormLabel>
+                    <Input type="number" name="valorTotal" id="valorTotal" value={data.valorTotal} onChange={(e) => handleInputChange(e)} />
+                </FormItem>
             </div>
             <div className="my-4 grid grid-cols-3 gap-10 items-end">
                 <FormItem className="col-span-2">
-                    <FormLabel htmlFor="valorTotal" >Valor unitário</FormLabel>
-                    <Input type="number" name="valorTotal" id="valorTotal" value={data.valorTotal} onChange={(e) => handleInputChange(e)} />
+                    <FormLabel htmlFor="descricao" >Descrição</FormLabel>
+                    <Input name="descricao" id="descricao" value={data.descricao} onChange={(e) => handleInputChange(e)} />
                 </FormItem>
                 <Button onClick={handleSalvarItemOrcamento} type="button" className="col-span-1">Adicionar</Button>
             </div>

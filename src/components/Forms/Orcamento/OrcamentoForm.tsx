@@ -17,6 +17,7 @@ import useAuthStore from "@/store/AuthStore";
 import { AxiosError } from "axios";
 import { useToast } from "@/components/ui/use-toast";
 import { baseApi } from "@/lib/api";
+import { useNavigate } from "react-router-dom";
 
 const schemaOrcamento = z.object({
     id: z.coerce.number().optional(),
@@ -35,6 +36,7 @@ const schemaOrcamento = z.object({
 type orcamentoSc = z.infer<typeof schemaOrcamento>;
 
 export function OrcamentoForm() {
+    const navigate = useNavigate();
     const user = useAuthStore(state => state.userData);
     const { toast } = useToast();
     const [items, setItems] = useState<ItensOrcamento[]>([]);
@@ -59,11 +61,20 @@ export function OrcamentoForm() {
     async function handleNovoOrcamento(data: orcamentoSc) {
         try {
 
-            const res = await baseApi.post("/orcamentos", {
+            await baseApi.post("/orcamentos", {
                 ...data,
                 itensOrcamentos: items
             });
 
+            toast({
+                title: "Sucesso",
+                variant: "success",
+                description: "Orçamento realizado com sucesso",
+            })
+
+            setTimeout(() => {
+                navigate("/orcamentos");
+            }, 1500);
 
 
         } catch (err) {
