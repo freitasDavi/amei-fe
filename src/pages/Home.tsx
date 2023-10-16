@@ -16,7 +16,7 @@ export default function Home() {
             <section id="cards" className="w-full flex gap-8">
                 <CardSlider
                     icon="Money"
-                    path="/orcamento"
+                    path="/orcamentos"
                     title="Orçamento"
                 />
                 <CardSlider

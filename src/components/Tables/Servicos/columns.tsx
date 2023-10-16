@@ -13,14 +13,14 @@ export const columns: ColumnDef<Servicos>[] = [
                 className="border-slate-400"
                 checked={table.getIsAllPageRowsSelected()}
                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
+                aria-label="Selecionar todos"
             />
         ),
         cell: ({ row }) => (
             <Checkbox
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Selecionar linha serviço"
+                aria-label="Selecionar serviço"
             />
         ),
         enableSorting: false,

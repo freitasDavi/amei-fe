@@ -30,11 +30,14 @@ const useAuthStore = create(persist((set) => ({
         token: bearer,
         refreshToken: refresh,
         userData: userData,
-        isLogged: true
     }),
 }), {
     name: '@tkn-auth',
-    partialize: (state: AuthState) => ({ token: state.token, refreshToken: state.refreshToken }),
+    partialize: (state: AuthState) => ({
+        token: state.token,
+        refreshToken: state.refreshToken,
+        userData: state.userData
+    }),
     storage: createJSONStorage(() => localStorage)
 }));
 

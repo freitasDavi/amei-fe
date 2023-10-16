@@ -28,16 +28,26 @@ module.exports = {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
+        "primary-800": "#0C659D",
+        "primary-700": "#0E75B6",
+        "primary-600": "#1088D4",
+        "primary-400": "#4CB5F9",
+        "primary-300": "#72C4F9",
+        "primary-200": "#9ED6FA",
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
-          DEFAULT: "var(--destructive)",
+          DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
         success: {
-          DEFAULT: "var(--success)",
+          DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
         },
         muted: {
@@ -77,7 +87,7 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        'sans':  ['Open Sans', 'sans-serif'],
+        'sans': ['Open Sans', 'sans-serif'],
         'logo': ['Manjari', 'sans-serif']
       }
     },
