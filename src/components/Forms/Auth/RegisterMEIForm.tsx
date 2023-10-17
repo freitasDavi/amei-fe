@@ -3,19 +3,26 @@ import { useFormContext } from "react-hook-form"
 import { registerSc } from "./RegisterForm";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
+import { useEffect } from "react";
+import { maskCnpj, maskPhone } from "@/utils/masks";
 
 type Props = {
     changeStep: (newStep: number) => void;
 }
 
 export function RegisterMEIForm({ changeStep }: Props) {
-    const { control, formState } = useFormContext<registerSc>();
-
+    const { control, formState, setValue, watch } = useFormContext<registerSc>();
+    const phone = watch('telefoneUsuario');
+    const cnpj = watch('cnpj');
     const onClickAdvance = () => {
         console.log("avançando...");
         changeStep(2);
     }
+
+    useEffect(() => {
+        setValue('telefoneUsuario', maskPhone(phone))
+        setValue('cnpj', maskCnpj(cnpj))
+    }, [phone, cnpj])
 
     return (
         <div className="w-full flex flex-col gap-4">
@@ -42,7 +49,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="telefoneUsuario">Telefone</FormLabel>
                             <FormControl>
-                                <Input id="telefoneUsuario" placeholder="048 99999-9999" {...field} />
+                                <Input id="telefoneUsuario" placeholder="(48) 99999-9999" pattern="/\(\d\d\)\d\d\d\d\d-\d\d\d\d/i" {...field} />
                             </FormControl>
                             <FormMessage>
                                 {formState.errors.telefoneUsuario && formState.errors.telefoneUsuario.message}
@@ -60,7 +67,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="cnpjUsuario">CNPJ</FormLabel>
                             <FormControl>
-                                <Input id="cnpjUsuario" placeholder="000.000.000-00" {...field} />
+                                <Input id="cnpjUsuario" placeholder="00 000 000/0000-00" {...field} />
                             </FormControl>
                             <FormMessage>
                                 {formState.errors.cnpj && formState.errors.cnpj.message}

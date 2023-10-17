@@ -18,6 +18,7 @@ import { AxiosError } from "axios";
 import { useToast } from "@/components/ui/use-toast";
 import { baseApi } from "@/lib/api";
 import { useNavigate } from "react-router-dom";
+import { maskPhone, removePhoneMask } from "@/utils/masks";
 
 const schemaOrcamento = z.object({
     id: z.coerce.number().optional(),
@@ -51,6 +52,8 @@ export function OrcamentoForm() {
             valorTotalDoOrcamento: 0,
         }
     });
+    const phone = form.watch("telefoneCliente");
+
 
     useEffect(() => {
         if (user) {
@@ -58,11 +61,16 @@ export function OrcamentoForm() {
         }
     }, [user]);
 
+    useEffect(() => {
+        form.setValue("telefoneCliente", maskPhone(phone));
+    }, [phone]);
+
     async function handleNovoOrcamento(data: orcamentoSc) {
         try {
 
             await baseApi.post("/orcamentos", {
                 ...data,
+                telefoneCliente: removePhoneMask(data.telefoneCliente),
                 itensOrcamentos: items
             });
 

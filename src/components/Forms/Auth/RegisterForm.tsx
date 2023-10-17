@@ -8,6 +8,7 @@ import { baseApi } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 import useAuthStore from "@/store/AuthStore";
 import { useNavigate } from "react-router-dom";
+import { removeCepMask, removeCnpjMask, removePhoneMask } from "@/utils/masks";
 
 const registerSchema = z.object({
     username: z.string().max(20, "Seu usuário pode conter no máximo 20 caracteres"),
@@ -17,7 +18,7 @@ const registerSchema = z.object({
     razaoSocial: z.string(),
     cnpj: z.string(),
     inscricaoMunicipal: z.string().optional(),
-    telefoneUsuario: z.string(),
+    telefoneUsuario: z.string().max(17, 'Seu telefone deve conter no máximo 17 caracteres'),
     cepUsuario: z.string(),
     logradouroUsuario: z.string(),
     numeroUsuario: z.string(),
@@ -67,6 +68,9 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
         try {
             const response = await baseApi.post("/auth/register", {
                 ...data,
+                telefoneUsuario: removePhoneMask(data.telefoneUsuario),
+                cnpj: removeCnpjMask(data.cnpj),
+                cepUsuario: removeCepMask(data.cepUsuario),
                 bairroUsuario: Number(data.usuarioBairro),
                 cidadeUsuario: Number(data.usuarioCidade)
             });

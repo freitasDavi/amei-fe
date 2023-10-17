@@ -3,13 +3,20 @@ import { registerSc } from "./RegisterForm";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import { maskCep } from "@/utils/masks";
 
 type Props = {
     changeStep: (newStep: number) => void;
 }
 
 export function RegisterEnderecoForm({ changeStep }: Props) {
-    const { control, formState } = useFormContext<registerSc>();
+    const { control, formState, watch, setValue } = useFormContext<registerSc>();
+    const cep = watch("cepUsuario");
+
+    useEffect(() => {
+        setValue("cepUsuario", maskCep(cep))
+    }, [cep])
 
     const onClickHandleStep = (passo: number) => {
         changeStep(passo);
