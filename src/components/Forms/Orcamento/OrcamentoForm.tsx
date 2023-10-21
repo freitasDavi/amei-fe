@@ -19,11 +19,12 @@ import { useToast } from "@/components/ui/use-toast";
 import { baseApi } from "@/lib/api";
 import { useNavigate } from "react-router-dom";
 import { maskPhone, removePhoneMask } from "@/utils/masks";
+import { ComboClientes } from "@/components/Comboboxes/ComboClientes";
 
 const schemaOrcamento = z.object({
     id: z.coerce.number().optional(),
     nomeCliente: z.string(),
-    telefoneCliente: z.string().max(11, 'O telefone deve ter no máximo 11 caractéres'),
+    telefoneCliente: z.string().max(15, 'O telefone deve ter no máximo 11 caractéres'),
     dataEmissaoOrcamento: z.date().optional(),
     dataValidadeOrcamento: z.date(),
     valorTotalDoOrcamento: z.coerce.number(),
@@ -34,7 +35,7 @@ const schemaOrcamento = z.object({
 })
 
 
-type orcamentoSc = z.infer<typeof schemaOrcamento>;
+export type orcamentoSc = z.infer<typeof schemaOrcamento>;
 
 export function OrcamentoForm() {
     const navigate = useNavigate();
@@ -120,9 +121,10 @@ export function OrcamentoForm() {
                             <FormItem className="flex-1">
                                 <FormLabel htmlFor="clienteOrcamento">Cliente existente
                                 </FormLabel>
-                                <FormControl>
+                                <ComboClientes field={field} />
+                                {/* <FormControl>
                                     <Input id="descricaoServico" type="number" placeholder="Josefino ferramentas" {...field} />
-                                </FormControl>
+                                </FormControl> */}
                                 <FormMessage />
                             </FormItem>
                         )}
