@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Money, Calendar, Users, FlagBanner, Package } from "@phosphor-icons/react"
+import { Money, Calendar, Users, FlagBanner, Package, GraduationCap } from "@phosphor-icons/react"
 import { createElement } from "react";
 
 type CardSliderProps = {
@@ -18,6 +18,7 @@ export function CardSlider({ title, icon, path }: CardSliderProps) {
         if (icon == "Users") renderIcon = Users;
         if (icon == "FlagBanner") renderIcon = FlagBanner;
         if (icon == "Package") renderIcon = Package;
+        if (icon == "GraduationCap") renderIcon = GraduationCap;
 
         return createElement(renderIcon!, { size: 32, weight: "fill" });
     }

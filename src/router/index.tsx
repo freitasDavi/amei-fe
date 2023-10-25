@@ -1,6 +1,7 @@
 import { DefaultLayout } from "@/layouts/default";
 import { Register } from "@/pages/Auth/Register";
 import { Client } from "@/pages/Clients/Client";
+import { CursosPage } from "@/pages/Cursos";
 import Home from "@/pages/Home";
 import { IndexPage } from "@/pages/Index";
 import { Login } from "@/pages/Login";
@@ -21,6 +22,7 @@ export const router = createBrowserRouter(
                 <Route path="/servicos" element={<ListarServicos />} />
                 <Route path="/orcamentos" element={<Orcamento />} />
                 <Route path="/orcamentos/novo" element={<NovoOrcamento />} />
+                <Route path="/cursos" element={<CursosPage />} />
             </Route>
             <Route path="/" element={<IndexPage />} />
             <Route path="/login" element={<Login />} />
