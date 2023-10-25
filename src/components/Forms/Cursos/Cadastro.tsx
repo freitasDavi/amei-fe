@@ -13,6 +13,10 @@ import { z } from "zod";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { ComboCidade } from "@/components/Comboboxes/ComboCidade";
+import { Anchor } from "@radix-ui/react-popover"
+import { useToast } from "@/components/ui/use-toast";
+import { AxiosError } from "axios";
+import { baseApi } from "@/lib/api";
 
 const cursoSchema = z.object({
     id: z.number().optional(),
@@ -25,8 +29,13 @@ const cursoSchema = z.object({
 
 type cursoSc = z.infer<typeof cursoSchema>;
 
+type CadastroCursoProps = {
+    pesquisar: () => void;
+}
 
-export function CadastroCurso() {
+
+export function CadastroCurso({ pesquisar }: CadastroCursoProps) {
+    const { toast } = useToast();
     const [open, setOpen] = useState(false);
     const form = useForm<cursoSc>({
         resolver: zodResolver(cursoSchema),
@@ -42,8 +51,40 @@ export function CadastroCurso() {
     async function handleCadastroCurso(data: cursoSc) {
         try {
 
-        } catch (err) {
+            const response = await baseApi.post("/cursos", {
+                ...data
+            });
 
+            if (response.status == 200) {
+                toast({
+                    variant: "success",
+                    title: "Sucesso",
+                    description: "Serviço cadastrado com sucesso",
+                    duration: 5000
+                })
+
+                form.reset();
+                setOpen(false);
+                pesquisar();
+            }
+
+        } catch (err) {
+            if (err instanceof AxiosError) {
+                toast({
+                    variant: "destructive",
+                    title: "Erro",
+                    description: err.message,
+                    duration: 10000
+                })
+                return;
+            }
+
+            toast({
+                variant: "destructive",
+                title: "Erro",
+                description: "Erro ao cadastrar novo serviço",
+                duration: 10000
+            })
         }
     }
 
@@ -106,7 +147,7 @@ export function CadastroCurso() {
                                     render={({ field }) => (
                                         <FormItem className="flex-1 flex flex-col gap-2 mt-1">
                                             <FormLabel htmlFor="dataValidadeOrcamento">Data do curso</FormLabel>
-                                            <Popover>
+                                            <Popover modal>
                                                 <PopoverTrigger asChild>
                                                     <FormControl >
                                                         <Button size="sm" variant="outline" className={cn(
@@ -124,6 +165,7 @@ export function CadastroCurso() {
                                                         </Button>
                                                     </FormControl>
                                                 </PopoverTrigger>
+                                                <Anchor />
                                                 <PopoverContent className="w-auto p-0" align="start">
                                                     <Calendar
                                                         mode="single"

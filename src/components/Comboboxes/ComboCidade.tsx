@@ -49,7 +49,7 @@ export function ComboCidade({ field, setCidade }: Props) {
     }
 
     return (
-        <Popover>
+        <Popover modal>
             <PopoverTrigger asChild>
                 <FormControl>
                     <Button
