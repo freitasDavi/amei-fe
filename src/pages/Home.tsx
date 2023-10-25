@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { BellSimpleRinging } from "@phosphor-icons/react"
 import { CardSlider } from "@/components/Slider/CardSlider";
 
@@ -18,6 +17,11 @@ export default function Home() {
                     icon="Money"
                     path="/orcamentos"
                     title="Orçamento"
+                />
+                <CardSlider
+                    icon="GraduationCap"
+                    path="/cursos"
+                    title="Cursos"
                 />
                 <CardSlider
                     icon="Package"
