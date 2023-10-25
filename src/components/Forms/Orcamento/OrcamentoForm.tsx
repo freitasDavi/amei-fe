@@ -106,8 +106,22 @@ export function OrcamentoForm() {
         }
     }
 
+    // Set Items da Lista + calcula total
     const setItemsF = (novoItem: ItensOrcamento) => {
         setItems(i => [...i, novoItem]);
+        let curItems = items;
+
+        curItems.push(novoItem);
+        debugger;
+        var valorTotal = curItems.reduce((acc, item) => acc + item.valorTotal, 0);
+
+        form.setValue("valorTotalDoOrcamento", valorTotal);
+    }
+
+    // Set dados do cliente selecionado;
+    const setCliente = (cliente: ComboClientes) => {
+        form.setValue('nomeCliente', cliente.nome);
+        form.setValue('telefoneCliente', cliente.telefone);
     }
 
     return (
@@ -118,10 +132,10 @@ export function OrcamentoForm() {
                         control={form.control}
                         name="clienteOrcamento"
                         render={({ field }) => (
-                            <FormItem className="flex-1">
+                            <FormItem className="mt-[10px] flex-1 flex flex-col">
                                 <FormLabel htmlFor="clienteOrcamento">Cliente existente
                                 </FormLabel>
-                                <ComboClientes field={field} />
+                                <ComboClientes field={field} setCliente={setCliente} />
                                 {/* <FormControl>
                                     <Input id="descricaoServico" type="number" placeholder="Josefino ferramentas" {...field} />
                                 </FormControl> */}

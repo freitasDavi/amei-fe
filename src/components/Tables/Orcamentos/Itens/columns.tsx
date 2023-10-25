@@ -3,10 +3,10 @@ import { ColumnDef } from "@tanstack/react-table";
 
 
 export const columns: ColumnDef<ItensOrcamento>[] = [
-    {
-        accessorKey: "id",
-        header: "Código"
-    },
+    // {
+    //     accessorKey: "id",
+    //     header: "Código"
+    // },
     {
         accessorKey: "descricao",
         header: "Decrição"

@@ -4,7 +4,7 @@ import { DataTable } from "@/components/Tables/Servicos/data-table";
 import { Button } from "@/components/ui/button";
 import { FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { z } from "zod"
 
 const schemaItemOrc = z.object({
@@ -50,6 +50,16 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems }: Props) {
             [event?.target.name]: event.target.value
         });
     }
+
+    // Calcula o valor total do item!
+    useEffect(() => {
+        if (data.quantidade && data.valorUnitario) {
+            setData({
+                ...data,
+                valorTotal: data.quantidade * data.valorUnitario
+            })
+        }
+    }, [data.quantidade, data.valorUnitario]);
 
     return (
         <section>
