@@ -2,6 +2,7 @@
 
 export type Agendamentos = {
     id: number;
+    nomeAgendamento: string,
     dataAgendamento: Date,
     enderecoAgendamento: string,
     responsavelAgendamento: string,

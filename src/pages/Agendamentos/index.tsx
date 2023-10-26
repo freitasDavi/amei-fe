@@ -1,11 +1,12 @@
 import { Agendamentos } from "@/@types/Agendamentos"
+import { PaginationType } from "@/@types/Pagination";
+import { CadastroAgendamento } from "@/components/Forms/Agendamentos/Cadastro";
+import { columns } from "@/components/Tables/Agendamentos/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { baseApi } from "@/lib/api";
 import { useEffect, useState } from "react"
-
-
 
 export function AgendamentosPage() {
     const { toast } = useToast();
@@ -21,9 +22,9 @@ export function AgendamentosPage() {
 
     async function onClickPesquisar() {
         try {
-            const res = await baseApi.get('/agendamentos');
+            const res = await baseApi.get<PaginationType<Agendamentos>>('/agendamentos');
 
-            setData(res.data);
+            setData(res.data.content);
 
         } catch (err) {
             toast({
@@ -39,11 +40,11 @@ export function AgendamentosPage() {
             <h1 className="font-medium text-3xl text-primary-logo">Agendamentos</h1>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação do agendamento">
                 <Button variant="default" type="button" onClick={onClickPesquisar}>Pesquisar</Button>
-                {/* TODO: Cadastro */}
+                <CadastroAgendamento pesquisar={onClickPesquisar} />
             </div>
             <section className="mt-10">
                 <DataTable
-                    columns={ }
+                    columns={columns}
                     data={data}
                 />
             </section>
