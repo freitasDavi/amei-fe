@@ -37,7 +37,7 @@ export function CadastroServico() {
         try {
             const response = await baseApi.post("/servicos", {
                 ...data,
-                servicoUsuario: 1
+                servicoUsuario: userData?.id
             });
 
             if (response.status == 200) {
