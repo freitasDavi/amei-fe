@@ -30,8 +30,8 @@ export default function Home() {
                 />
                 <CardSlider
                     icon="Calendar"
-                    path="/agendamento"
-                    title="Agendamento"
+                    path="/agendamentos"
+                    title="Agendamentos"
                 />
                 <CardSlider
                     icon="Users"
