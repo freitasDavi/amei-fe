@@ -1,3 +1,4 @@
+import { ComboBairro } from "@/components/Comboboxes/ComboBairro";
 import { ComboCidade } from "@/components/Comboboxes/ComboCidade";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -213,7 +214,8 @@ export function CadastroAgendamento({ pesquisar }: Props) {
                                         <FormItem className="mt-[10px] flex-1 flex flex-col">
                                             <FormLabel htmlFor="cidadeAgendamento">Bairro</FormLabel>
                                             {/* TODO: Trocar pelo Combo de Bairro */}
-                                            <ComboCidade field={field} />
+                                            {/* <ComboCidade field={field} /> */}
+                                            <ComboBairro field={field} codigoCidade={1} />
                                             <FormMessage />
                                         </FormItem>
                                     )}
