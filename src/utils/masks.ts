@@ -24,6 +24,7 @@ function removeCnpjMask(cnpj: String) {
         replace('.', "")
         .replace('/', "")
         .replace(' ', "")
+        .replace(' ', "")
         .replace('-', "");
 }
 
