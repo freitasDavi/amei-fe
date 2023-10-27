@@ -1,13 +1,14 @@
 
 
-import { Clients } from "@/@types/Clients";
+import { Clientes } from "@/@types/Clients";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { maskCnpj, maskPhone } from "@/utils/masks";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
 
-export const columns: ColumnDef<Clients>[] = [
+export const columns: ColumnDef<Clientes>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -40,21 +41,20 @@ export const columns: ColumnDef<Clients>[] = [
         }
     },
     {
-        accessorKey: "nome",
+        accessorKey: "nomeCliente",
         header: "Nome"
     },
     {
-        accessorKey: "inscricao",
+        accessorFn: (row) => maskCnpj(row.cnpjCliente),
         header: "CNPJ"
     },
     {
-        accessorKey: "telefone",
+        accessorFn: (row) => maskPhone(row.telefoneCliente),
         header: "Telefone",
 
     },
     {
-        // accessorKey: "cidade",
-        accessorFn: (row) => `${row.cidade} - ${row.estado}`,
-        header: "Cidade - Estado",
+        accessorKey: "emailCliente",
+        header: "Email"
     }
 ]

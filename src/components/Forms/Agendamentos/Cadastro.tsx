@@ -96,12 +96,6 @@ export function CadastroAgendamento({ pesquisar }: Props) {
                 description: "Erro ao cadastrar novo serviço",
                 duration: 10000
             })
-
-            pesquisar();
-
-            setTimeout(() => {
-                setOpen(false);
-            }, 1000);
         }
     }
 
