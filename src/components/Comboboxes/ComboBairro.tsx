@@ -13,7 +13,7 @@ type Props = {
     field: any
 }
 
-type ComboBairro = {
+export type ComboBairro = {
     id: number;
     nomeBairro: string;
 }
@@ -25,7 +25,6 @@ async function fetchBairros(codigoCidade?: number) {
 }
 
 export function ComboBairro({ codigoCidade, field }: Props) {
-    // const [data, setData] = useState<ComboBairro[]>([]);
     const { data, error, isPending } = useQuery({
         queryKey: ['ComboBairro'],
         queryFn: () => fetchBairros(codigoCidade)

@@ -30,7 +30,7 @@ export function ComboClientes({ field, setCliente }: Props) {
     useEffect(() => {
         async function getClients() {
             try {
-                const response = await baseApi.get<PaginationType<ComboClientes>>("/clientes");
+                const response = await baseApi.get<PaginationType<ComboClientes>>("/clientes/combo");
 
                 setData(response.data.content);
             } catch (error) {

@@ -18,7 +18,7 @@ export const router = createBrowserRouter(
         <Route>
             <Route element={<DefaultLayout />}>
                 <Route path="/home" element={<Home />} />
-                <Route path="/clients" element={<Client />} />
+                <Route path="/clientes" element={<Client />} />
                 <Route path="/protected" element={<Protected />} />
                 <Route path="/servicos" element={<ListarServicos />} />
                 <Route path="/orcamentos" element={<Orcamento />} />
