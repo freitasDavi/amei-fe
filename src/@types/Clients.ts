@@ -15,3 +15,10 @@ export type Clientes = {
     clienteCidade: number;
     clienteBairro: ComboBairro
 }
+
+export type ClienteResponseDTO = {
+    id: number;
+    nome: string;
+    email: string;
+    telefone: string;
+}
