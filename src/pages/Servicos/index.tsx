@@ -37,7 +37,7 @@ export function ListarServicos() {
     }
 
     return (
-        <div className="w-full h-full px-10 py-10">
+        <div className="w-full h-full px-10">
             <h1 className="font-medium text-3xl text-primary-logo">Listagem de serviços</h1>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da Lista">
                 <Button variant="default" type="button" onClick={onClickPesquisar}>Pesquisar</Button>

@@ -21,7 +21,7 @@ export function Client() {
 
 
     return (
-        <main className="w-full h-full p-10">
+        <main className="w-full h-full px-10">
             <h1 className="font-medium text-3xl text-primary-logo">Clientes</h1>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da lista">
                 <Button onClick={() => refetch()} variant="default" type="button">Pesquisar</Button>

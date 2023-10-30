@@ -19,7 +19,7 @@ export function OrdemServicoLista() {
     });
 
     return (
-        <main className="w-full h-full p-10">
+        <main className="w-full h-full px-10">
             <h1 className="font-medium text-3xl text-primary-logo">Ordens de Serviço</h1>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da lisat">
                 <Button onClick={() => refetch()} >Pesquisar</Button>

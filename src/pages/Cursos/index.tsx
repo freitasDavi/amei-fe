@@ -26,7 +26,7 @@ export function CursosPage() {
     }
 
     return (
-        <main className="w-full h-full px-10 py-10">
+        <main className="w-full h-full px-10">
             <h1 className="font-medium text-3xl text-primary-logo">Cursos</h1>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da página de cursos">
                 <Button onClick={onClickPesquisar} variant="default">Pesquisar</Button>
