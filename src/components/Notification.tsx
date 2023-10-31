@@ -2,7 +2,7 @@ import { Cronometro } from "@/@types/Cronometro";
 import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
 import { BellSimpleRinging, BellSlash } from "@phosphor-icons/react";
-import { useQuery, QueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -14,7 +14,7 @@ async function fetchActiveCronometros(codigoUsuario: number) {
 }
 
 export function Notification() {
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
     const userData = useAuthStore(state => state.userData);
 
     if (!userData) {

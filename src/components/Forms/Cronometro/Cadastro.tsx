@@ -1,16 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
+import { useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";
 
 
 export function CadastroCronometro() {
+    const queryClient = useQueryClient();
     const [open, setOpen] = useState(false);
     const userData = useAuthStore(state => state.userData);
     const { toast } = useToast();
@@ -29,6 +30,7 @@ export function CadastroCronometro() {
                 usuario: userData.id
             });
 
+            queryClient.invalidateQueries({ queryKey: ['CronometrosAtivos'] });
             setNome("");
             setOpen(false);
 
