@@ -1,10 +1,24 @@
+import { ComboBairro } from "@/components/Comboboxes/ComboBairro";
 
-export type Clients = {
+export type Clientes = {
+    id: number;
+    nomeCliente: string;
+    emailCliente: string;
+    telefoneCliente: string;
+    cepCliente: string;
+    enderecoCliente: string;
+    numeroCliente: string;
+    complementoCliente: string;
+    cnpjCliente: string;
+    inscricaoMunicipal: string;
+    usuarioCliente: number;
+    clienteCidade: number;
+    clienteBairro: ComboBairro
+}
+
+export type ClienteResponseDTO = {
     id: number;
     nome: string;
-    numero: string;
-    estado: string;
-    cidade: string;
-    inscricao: string;
+    email: string;
     telefone: string;
 }

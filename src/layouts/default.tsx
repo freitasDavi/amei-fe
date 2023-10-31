@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/Navbar";
+import { Notification } from "@/components/Notification";
 import { Toaster } from "@/components/ui/toaster";
 import useAuthStore from "@/store/AuthStore";
 import { Navigate, Outlet, useLocation } from "react-router-dom"
@@ -14,8 +15,11 @@ export function DefaultLayout() {
             ) : (
                 <div className="flex ">
                     <Navbar />
-                    <main className="w-full bg-[#E9E9FA]">
-                        <Outlet />
+                    <main className="w-full bg-[#E9E9FA] relative">
+                        <Notification />
+                        <div className="mt-10">
+                            <Outlet />
+                        </div>
                         <Toaster />
                     </main>
                     {/* <Footer /> */}

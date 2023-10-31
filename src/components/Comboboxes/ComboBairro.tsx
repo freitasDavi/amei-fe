@@ -13,7 +13,7 @@ type Props = {
     field: any
 }
 
-type ComboBairro = {
+export type ComboBairro = {
     id: number;
     nomeBairro: string;
 }

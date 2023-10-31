@@ -1,33 +1,15 @@
-import { BellSimpleRinging } from "@phosphor-icons/react"
 import { CardSlider } from "@/components/Slider/CardSlider";
+import { UltimosAgendamentos } from "@/components/Tables/Agendamentos/UltimosAgendamentos";
+import useAuthStore from "@/store/AuthStore";
 
 export default function Home() {
+    const userData = useAuthStore(state => state.userData);
+    // TODO: Verificar se o usuário é ADM e ocultar a aba de cursos, ou trocar o link!
 
     return (
-        <div className="w-full px-14">
-            <section id="notifications" className="my-8 h-12 flex justify-end items-center">
-                <div className="bg-white p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in
-                text-[#FACC15] hover:text-[#81d8f3]">
-                    <BellSimpleRinging weight="light" size={28} />
-                </div>
-            </section>
-            <h1 className="text-[4rem] font-logo text-primary-logo font-bold mb-8">Bem vindo</h1>
+        <div className="w-full px-10 overflow-x-hidden">
+            <h1 className="text-[4rem] font-logo text-primary-logo font-bold mb-8">Bem-vindo {userData?.username}</h1>
             <section id="cards" className="w-full flex gap-8">
-                <CardSlider
-                    icon="Money"
-                    path="/orcamentos"
-                    title="Orçamento"
-                />
-                <CardSlider
-                    icon="GraduationCap"
-                    path="/cursos"
-                    title="Cursos"
-                />
-                <CardSlider
-                    icon="Package"
-                    path="/ordens"
-                    title="Ordem de Serviço"
-                />
                 <CardSlider
                     icon="Calendar"
                     path="/agendamentos"
@@ -39,10 +21,34 @@ export default function Home() {
                     title="Clientes"
                 />
                 <CardSlider
+                    icon="GraduationCap"
+                    path="/cursos"
+                    title="Cursos"
+                />
+                <CardSlider
+                    icon="Money"
+                    path="/orcamentos"
+                    title="Orçamento"
+                />
+                <CardSlider
+                    icon="Package"
+                    path="/ordens"
+                    title="Ordem de Serviço"
+                />
+                <CardSlider
                     icon="FlagBanner"
                     path="/servicos"
                     title="Serviços"
                 />
+                <CardSlider
+                    icon="Alarm"
+                    path="/timer"
+                    title="Timer"
+                />
+            </section>
+            <section className="mt-10 grid grid-cols-2">
+                <div ></div>
+                <UltimosAgendamentos />
             </section>
         </div>
     )

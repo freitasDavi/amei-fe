@@ -38,7 +38,7 @@ export function Navbar() {
                     <ul className="space-y-1 border-t border-gray-100 pt-4 h-2/3 flex flex-col items-center justify-evenly">
                         <li>
                             <Link
-                                to="/clients"
+                                to="/orcamentos"
                                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                             >
                                 <MathOperations weight="fill" size={28} className="opacity-75" />
@@ -55,7 +55,7 @@ export function Navbar() {
 
                                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                             >
-                                <Link to="/">
+                                <Link to="/agendamentos">
                                     <Calendar size={28} className="opacity-75" />
                                 </Link>
                                 <span
@@ -68,7 +68,7 @@ export function Navbar() {
 
                         <li>
                             <Link
-                                to="/"
+                                to="/clientes"
                                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                             >
                                 <Users size={28} className="opacity-75" />
