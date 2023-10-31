@@ -2,6 +2,8 @@ import { Agendamentos } from "@/@types/Agendamentos";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { ArrowUpDown } from "lucide-react";
 
 
@@ -43,7 +45,8 @@ export const columns: ColumnDef<Agendamentos>[] = [
         header: "Responsável"
     },
     {
-        accessorKey: "dataAgendamento",
+        accessorFn: (row) => format(new Date(row.dataAgendamento), "dd/MM/yyyy HH:mm", { locale: ptBR }),
+
         header: "Data agendamento"
     },
     {
