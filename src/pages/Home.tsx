@@ -7,7 +7,7 @@ export default function Home() {
 
     return (
         <div className="w-full px-10 overflow-x-hidden">
-            <h1 className="text-[4rem] font-logo text-primary-logo font-bold mb-8">Bem vindo {userData?.username}</h1>
+            <h1 className="text-[4rem] font-logo text-primary-logo font-bold mb-8">Bem-vindo {userData?.username}</h1>
             <section id="cards" className="w-full flex gap-8">
                 <CardSlider
                     icon="Calendar"
