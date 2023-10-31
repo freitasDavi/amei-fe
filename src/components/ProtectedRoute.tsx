@@ -1,5 +1,4 @@
 import useAuthStore from "@/store/AuthStore";
-import { Navigate } from "react-router-dom";
 
 
 export function Protected({ children }: { children: React.ReactNode }) {

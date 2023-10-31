@@ -19,13 +19,15 @@ export type ComboBairro = {
 }
 
 async function fetchBairros(codigoCidade?: number) {
+    codigoCidade && console.log(codigoCidade)
     const response = await baseApi.get<PaginationType<ComboBairro>>("bairros");
 
     return response.data.content;
 }
 
 export function ComboBairro({ codigoCidade, field }: Props) {
-    const { data, error, isPending } = useQuery({
+    // const [data, setData] = useState<ComboBairro[]>([]);
+    const { data } = useQuery({
         queryKey: ['ComboBairro'],
         queryFn: () => fetchBairros(codigoCidade)
     })

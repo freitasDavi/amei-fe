@@ -19,6 +19,8 @@ import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import calendarDone from "../../../../public/lottie/calendar-done.json";
+import Lottie from "lottie-react";
 
 const agendamentoSchema = z.object({
     id: z.coerce.number().optional(),
@@ -42,6 +44,7 @@ type Props = {
 
 export function CadastroAgendamento({ pesquisar }: Props) {
     const [open, setOpen] = useState(false);
+    const [openSuccess, setOpenSuccess] = useState(false);
     const user = useAuthStore(state => state.userData);
     const form = useForm<agendamentoSc>({
         resolver: zodResolver(agendamentoSchema),
@@ -73,11 +76,9 @@ export function CadastroAgendamento({ pesquisar }: Props) {
                 codigoUsuario: user?.id
             });
 
-            toast({
-                title: "Sucesso",
-                variant: "success",
-                description: "Agendamento cadastrado com sucesso"
-            })
+            setOpenSuccess(true);
+            form.reset();
+            pesquisar();
 
         } catch (err) {
             if (err instanceof AxiosError) {
@@ -97,6 +98,13 @@ export function CadastroAgendamento({ pesquisar }: Props) {
                 duration: 10000
             })
         }
+    }
+
+    const closeBothModals = () => {
+        setOpenSuccess(false);
+        setTimeout(() => {
+            setOpen(false);
+        }, 500);
     }
 
     // Máscara nos telefones
@@ -260,6 +268,12 @@ export function CadastroAgendamento({ pesquisar }: Props) {
                             <Button type="submit" variant="default">Salvar</Button>
                         </form>
                     </Form>
+                    <Dialog modal open={openSuccess} onOpenChange={closeBothModals}>
+                        <DialogContent>
+                            <DialogHeader>Agendamento salvo com sucesso</DialogHeader>
+                            <Lottie animationData={calendarDone} loop={false} onComplete={() => closeBothModals()} />
+                        </DialogContent>
+                    </Dialog>
                 </DialogDescription>
             </DialogContent>
         </Dialog>
