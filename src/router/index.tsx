@@ -2,6 +2,7 @@ import { DefaultLayout } from "@/layouts/default";
 import { AgendamentosPage } from "@/pages/Agendamentos";
 import { Register } from "@/pages/Auth/Register";
 import { Client } from "@/pages/Clients/Client";
+import { CronometroPage } from "@/pages/Cronometro";
 import { CursosPage } from "@/pages/Cursos";
 import Home from "@/pages/Home";
 import { IndexPage } from "@/pages/Index";
@@ -27,6 +28,7 @@ export const router = createBrowserRouter(
                 <Route path="/cursos" element={<CursosPage />} />
                 <Route path="/agendamentos" element={<AgendamentosPage />} />
                 <Route path="/ordens" element={<OrdemServicoLista />} />
+                <Route path="/timer" element={<CronometroPage />} />
             </Route>
             <Route path="/" element={<IndexPage />} />
             <Route path="/login" element={<Login />} />

@@ -1,4 +1,4 @@
-import { Agendamentos } from "@/@types/Agendamentos";
+import { Cronometro } from "@/@types/Cronometro";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
@@ -7,8 +7,7 @@ import { ptBR } from "date-fns/locale";
 import { ArrowUpDown } from "lucide-react";
 
 
-
-export const columns: ColumnDef<Agendamentos>[] = [
+export const columns: ColumnDef<Cronometro>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -41,24 +40,25 @@ export const columns: ColumnDef<Agendamentos>[] = [
         }
     },
     {
-        accessorKey: "responsavelAgendamento",
-        header: "Responsável"
-    },
-    {
-        accessorFn: (row) => format(new Date(row.dataAgendamento), "dd/MM/yyyy HH:mm", { locale: ptBR }),
+        accessorKey: "nome",
+        header: "Nome"
 
-        header: "Data agendamento"
     },
     {
-        accessorKey: "enderecoAgendamento",
-        header: "Endereço"
+        accessorFn: (row) => format(new Date(row.inicio), "dd/MM/yyyy HH:mm", { locale: ptBR }),
+        header: "Início"
     },
     {
-        accessorFn: (row) => row.agendamentoCidade.nomeCidade,
-        header: "Cidade"
+        accessorFn: (row) => format(new Date(row.fim), "dd/MM/yyyy HH:mm", { locale: ptBR }),
+        header: "Fim"
     },
-    // {
-    // accessorFn: (row) => row.clienteAgendamento.nomeCliente,
-    // header: "Cliente?"
-    // }
+    {
+        accessorKey: "completo",
+        cell: (props) => {
+            if (props.getValue()) return <p className="px-2 py-1 bg-green-200 text-slate-500 rounded-lg w-16 flex justify-center">Sim</p>;
+
+            return <p className="px-2 py-1 bg-red-200 text-slate-500 rounded-lg w-16 flex justify-center">Não</p>;
+        },
+        header: "Completo"
+    }
 ]
