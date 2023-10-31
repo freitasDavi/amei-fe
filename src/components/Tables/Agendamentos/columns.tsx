@@ -1,10 +1,12 @@
 import { Agendamentos } from "@/@types/Agendamentos";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { MagnifyingGlass } from "@phosphor-icons/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { ArrowUpDown } from "lucide-react";
+import { Link } from "react-router-dom";
 
 
 
@@ -61,4 +63,37 @@ export const columns: ColumnDef<Agendamentos>[] = [
     // accessorFn: (row) => row.clienteAgendamento.nomeCliente,
     // header: "Cliente?"
     // }
+]
+
+
+export const columnsHome: ColumnDef<Agendamentos>[] = [
+    {
+        id: "select",
+        header: ({ table }) => (
+            <p>Visualizar</p>
+        ),
+        accessorKey: "id",
+        cell: (props) => (
+            <Link to={`/agendamentos/${props.getValue()}`}>
+                <MagnifyingGlass className="text-primary-logo hover:text-primary-logo-dark" size={20} weight="bold" />
+            </Link>
+        ),
+    },
+    {
+        accessorKey: "responsavelAgendamento",
+        header: "Responsável"
+    },
+    {
+        accessorFn: (row) => format(new Date(row.dataAgendamento), "dd/MM/yyyy HH:mm", { locale: ptBR }),
+
+        header: "Data agendamento"
+    },
+    {
+        accessorKey: "enderecoAgendamento",
+        header: "Endereço"
+    },
+    {
+        accessorFn: (row) => row.agendamentoCidade.nomeCidade,
+        header: "Cidade"
+    }
 ]

@@ -1,4 +1,5 @@
 import { CardSlider } from "@/components/Slider/CardSlider";
+import { UltimosAgendamentos } from "@/components/Tables/Agendamentos/UltimosAgendamentos";
 import useAuthStore from "@/store/AuthStore";
 
 export default function Home() {
@@ -44,6 +45,10 @@ export default function Home() {
                     path="/timer"
                     title="Timer"
                 />
+            </section>
+            <section className="mt-10 grid grid-cols-2">
+                <div ></div>
+                <UltimosAgendamentos />
             </section>
         </div>
     )
