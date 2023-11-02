@@ -19,7 +19,7 @@ import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import calendarDone from "../../../../public/lottie/calendar-done.json";
+import calendarDone from "../../../assets/lottie/calendar-done.json";
 import Lottie from "lottie-react";
 
 const agendamentoSchema = z.object({
