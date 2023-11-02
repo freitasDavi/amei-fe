@@ -11,6 +11,7 @@ import { Orcamento } from "@/pages/Orcamentos";
 import { NovoOrcamento } from "@/pages/Orcamentos/Novo";
 import { OrdemServicoLista } from "@/pages/Ordens";
 import { PerfilPage } from "@/pages/Perfil";
+import { PagamentoSucesso } from "@/pages/Perfil/PagamentoSucesso";
 import { Protected } from "@/pages/Protected";
 import { ListarServicos } from "@/pages/Servicos";
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
@@ -31,6 +32,7 @@ export const router = createBrowserRouter(
                 <Route path="/ordens" element={<OrdemServicoLista />} />
                 <Route path="/timer" element={<CronometroPage />} />
                 <Route path="/meuPerfil" element={<PerfilPage />} />
+                <Route path="/pagamento/sucesso" element={<PagamentoSucesso />} />
             </Route>
             <Route path="/" element={<IndexPage />} />
             <Route path="/login" element={<Login />} />
