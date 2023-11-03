@@ -1,5 +1,5 @@
 import { Elements } from "@stripe/react-stripe-js"
-import { Stripe } from "@stripe/stripe-js"
+import { Stripe, StripeElementsOptions } from "@stripe/stripe-js"
 import { CheckoutForm } from "./CheckoutForm"
 
 type Props = {
@@ -8,8 +8,9 @@ type Props = {
 }
 
 export function FormPagamento({ secretKey, stripePromise }: Props) {
-    const options = {
-        clientSecret: secretKey
+    const options: StripeElementsOptions = {
+        clientSecret: secretKey,
+        loader: "auto"
     }
 
     return (

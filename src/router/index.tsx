@@ -14,7 +14,7 @@ import { PerfilPage } from "@/pages/Perfil";
 import { PagamentoSucesso } from "@/pages/Perfil/PagamentoSucesso";
 import { Protected } from "@/pages/Protected";
 import { ListarServicos } from "@/pages/Servicos";
-import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
+import { Route, createBrowserRouter, createHashRouter, createRoutesFromElements } from "react-router-dom";
 
 
 export const router = createBrowserRouter(

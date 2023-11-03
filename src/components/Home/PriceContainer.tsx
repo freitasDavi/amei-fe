@@ -14,9 +14,9 @@ export function PriceContainer() {
                     {/* <!-- Pricing Card --> */}
                     <PriceCard title="Free" price={0} description="Best option for personal use & for your next project." />
                     {/* <!-- Pricing Card --> */}
-                    <PriceCard title="MEI" price={10} description="Relevant for multiple users, extended & premium support." />
+                    <PriceCard title="MEI" price={60} description="Relevant for multiple users, extended & premium support." />
                     {/* <!-- Pricing Card --> */}
-                    <PriceCard title="Premium" price={20} description="Best for large scale uses and extended redistribution rights." />
+                    <PriceCard title="Empreendedor" price={80} description="Best for large scale uses and extended redistribution rights." />
 
                 </div>
             </div>
