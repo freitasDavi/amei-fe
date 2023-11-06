@@ -38,7 +38,7 @@ export function Perfil() {
         <div className="w-full h-full px-10">
             <h1 className="font-medium text-3xl text-primary-logo">Meu Perfil</h1>
             <div className="flex mt-10 gap-10">
-                <div className="bg-blue-400 py-4 px-10 rounded-lg text-white shadow-md" id="submenu">
+                <div className="bg-blue-400 py-4 px-10 rounded-lg text-white shadow-md max-h-[90px]" id="submenu">
                     <ul>
                         <li>
                             <NavLink to="/meuPerfil/" className={({ isActive }) =>
