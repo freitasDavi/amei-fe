@@ -1,4 +1,5 @@
 import { DefaultLayout } from "@/layouts/default";
+import { Perfil } from "@/layouts/perfil";
 import { AgendamentosPage } from "@/pages/Agendamentos";
 import { Register } from "@/pages/Auth/Register";
 import { Client } from "@/pages/Clients/Client";
@@ -11,6 +12,7 @@ import { Orcamento } from "@/pages/Orcamentos";
 import { NovoOrcamento } from "@/pages/Orcamentos/Novo";
 import { OrdemServicoLista } from "@/pages/Ordens";
 import { PerfilPage } from "@/pages/Perfil";
+import { PagamentoAssinatura } from "@/pages/Perfil/PagamentoAssinatura";
 import { PagamentoSucesso } from "@/pages/Perfil/PagamentoSucesso";
 import { Protected } from "@/pages/Protected";
 import { ListarServicos } from "@/pages/Servicos";
@@ -31,7 +33,10 @@ export const router = createBrowserRouter(
                 <Route path="/agendamentos" element={<AgendamentosPage />} />
                 <Route path="/ordens" element={<OrdemServicoLista />} />
                 <Route path="/timer" element={<CronometroPage />} />
-                <Route path="/meuPerfil" element={<PerfilPage />} />
+                <Route path="/meuPerfil" element={<Perfil />} >
+                    <Route path="/meuPerfil" element={<PerfilPage />} />
+                    <Route path="/meuPerfil/assinatura" element={<PagamentoAssinatura />} />
+                </Route>
                 <Route path="/pagamento/sucesso" element={<PagamentoSucesso />} />
             </Route>
             <Route path="/" element={<IndexPage />} />

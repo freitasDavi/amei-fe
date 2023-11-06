@@ -1,32 +1,25 @@
-import { FormPagamento } from "@/components/Forms/Pagamentos/FormPagamento";
 import { baseApi } from "@/lib/api";
-import { loadStripe } from "@stripe/stripe-js";
-import { useEffect, useState } from "react"
-
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+import useAuthStore from "@/store/AuthStore"
 
 export function PerfilPage() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [key, setKey] = useState("");
+    const user = useAuthStore(state => state.userData);
 
-    useEffect(() => {
-        async function getPaymentIntent() {
-            const response = await baseApi.get("/pagamentos/novoPagamento")
+    const navigateToCustomerPortal = async () => {
+        if (!user) return;
 
-            setKey(response.data.client_secret);
-            setIsLoading(false);
+        const response = await baseApi.get(`/pagamentos/customerPortal/${user.id}`);
+
+        if (response.data) {
+            window.open(response.data.portal_url, '_blank')?.focus();
         }
 
-        getPaymentIntent();
-    }, []);
+    }
 
     return (
         <div className="w-full h-full px-10">
             <div className="flex gap-2 items-baseline">
                 <h1 className="font-medium text-3xl text-primary-logo">Meu perfil</h1>
-                {!isLoading && key && (
-                    <FormPagamento secretKey={key} stripePromise={stripePromise} />
-                )}
+                <button type="button" onClick={navigateToCustomerPortal}>Painel de assinatura</button>
             </div>
         </div>
     )
