@@ -9,7 +9,8 @@ import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
 import { ArrowBendDownLeft } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 
 async function fetchAgendamentos(userId: number | undefined) {
     if (!userId) return;
@@ -21,11 +22,30 @@ async function fetchAgendamentos(userId: number | undefined) {
 
 
 export function AgendamentosPage() {
+    const [open, setOpen] = useState(false);
     const user = useAuthStore(state => state.userData);
+    const [searchParams] = useSearchParams();
     const { data, refetch, isPending, isFetching } = useQuery({
         queryKey: ["agendamentos"],
         queryFn: () => fetchAgendamentos(user?.id),
     });
+    const [agendamentoSelecionado, setAgendamentoSelecionado] = useState<Agendamentos | undefined>(undefined);
+
+    let idSelecionado = searchParams.get('id');
+
+    useEffect(() => {
+
+        if (data && idSelecionado && !open) {
+            let current = data.content.find(x => x.id == Number(searchParams.get('id')));
+
+            if (current) {
+                setAgendamentoSelecionado(current);
+                setOpen(true);
+            }
+
+        }
+
+    }, [idSelecionado]);
 
     return (
         <div className="w-full h-full px-10">
@@ -35,7 +55,7 @@ export function AgendamentosPage() {
             </div>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação do agendamento">
                 <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
-                <CadastroAgendamento pesquisar={refetch} />
+                <CadastroAgendamento pesquisar={refetch} open={open} setOpen={setOpen} data={agendamentoSelecionado} />
             </div>
             <section className="mt-10">
                 {isPending || isFetching ? (

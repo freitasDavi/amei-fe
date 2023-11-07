@@ -52,7 +52,7 @@ export function ComboClientes({ field, setCliente }: Props) {
     }
 
     return (
-        <Popover>
+        <Popover modal>
             <PopoverTrigger asChild>
                 <FormControl>
                     <Button
