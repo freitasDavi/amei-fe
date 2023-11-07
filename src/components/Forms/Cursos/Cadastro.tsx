@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { format } from "date-fns";
@@ -17,6 +17,8 @@ import { Anchor } from "@radix-ui/react-popover"
 import { useToast } from "@/components/ui/use-toast";
 import { AxiosError } from "axios";
 import { baseApi } from "@/lib/api";
+import { Cursos } from "@/@types/Cursos";
+import { useSearchParams } from "react-router-dom";
 
 const cursoSchema = z.object({
     id: z.number().optional(),
@@ -31,12 +33,15 @@ type cursoSc = z.infer<typeof cursoSchema>;
 
 type CadastroCursoProps = {
     pesquisar: () => void;
+    open: boolean;
+    setOpen: (opt: boolean) => void;
+    data: Cursos | undefined
 }
 
 
-export function CadastroCurso({ pesquisar }: CadastroCursoProps) {
+export function CadastroCurso({ pesquisar, open, setOpen, data }: CadastroCursoProps) {
     const { toast } = useToast();
-    const [open, setOpen] = useState(false);
+    const [_, setSearchParams] = useSearchParams();
     const form = useForm<cursoSc>({
         resolver: zodResolver(cursoSchema),
         defaultValues: {
@@ -51,22 +56,28 @@ export function CadastroCurso({ pesquisar }: CadastroCursoProps) {
     async function handleCadastroCurso(data: cursoSc) {
         try {
 
-            const response = await baseApi.post("/cursos", {
-                ...data
-            });
+            if (data.id) {
+                await baseApi.put(`/cursos/${data.id}`, {
+                    ...data
+                });
 
-            if (response.status == 200) {
-                toast({
-                    variant: "success",
-                    title: "Sucesso",
-                    description: "Serviço cadastrado com sucesso",
-                    duration: 5000
-                })
-
-                form.reset();
-                setOpen(false);
-                pesquisar();
+                setSearchParams("");
+            } else {
+                await baseApi.post("/cursos", {
+                    ...data
+                });
             }
+
+            toast({
+                variant: "success",
+                title: "Sucesso",
+                description: "Serviço cadastrado com sucesso",
+                duration: 5000
+            })
+
+            form.reset();
+            setOpen(false);
+            pesquisar();
 
         } catch (err) {
             if (err instanceof AxiosError) {
@@ -87,6 +98,17 @@ export function CadastroCurso({ pesquisar }: CadastroCursoProps) {
             })
         }
     }
+
+    useEffect(() => {
+        if (data) {
+            form.setValue("codigoCidade", data.codigoCidade)
+            form.setValue("data", new Date(data.data))
+            form.setValue("descricao", data.descricao)
+            form.setValue("id", data.id)
+            form.setValue("nome", data.nome)
+            form.setValue("url", data.url);
+        }
+    }, [data])
 
     return (
         <Dialog modal={true} open={open} onOpenChange={setOpen}>

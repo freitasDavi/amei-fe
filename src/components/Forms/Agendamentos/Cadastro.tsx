@@ -23,6 +23,7 @@ import calendarDone from "../../../assets/lottie/calendar-done.json";
 import Lottie from "lottie-react";
 import { Agendamentos } from "@/@types/Agendamentos";
 import { ComboClientes } from "@/components/Comboboxes/ComboClientes";
+import { useSearchParams } from "react-router-dom";
 
 const agendamentoSchema = z.object({
     id: z.coerce.number().optional(),
@@ -48,6 +49,7 @@ type Props = {
 }
 
 export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
+    const [_, setSearchParams] = useSearchParams();
     const [openSuccess, setOpenSuccess] = useState(false);
     const user = useAuthStore(state => state.userData);
     const form = useForm<agendamentoSc>({
@@ -80,6 +82,8 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                     telefoneSecundario: data.telefoneSecundario ? removePhoneMask(data.telefoneSecundario) : "",
                     codigoUsuario: user?.id
                 });
+
+                setSearchParams("");
             } else {
                 await baseApi.post('agendamentos', {
                     ...data,
