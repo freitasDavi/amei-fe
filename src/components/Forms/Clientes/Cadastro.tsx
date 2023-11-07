@@ -1,3 +1,4 @@
+import { Clientes } from "@/@types/Clients";
 import { ComboBairro } from "@/components/Comboboxes/ComboBairro";
 import { ComboCidade } from "@/components/Comboboxes/ComboCidade";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 import { z } from "zod";
 
 const clienteSchema = z.object({
@@ -34,9 +36,13 @@ type clienteSc = z.infer<typeof clienteSchema>;
 
 type CadastroClienteProps = {
     pesquisar: () => void;
+    open: boolean;
+    setOpen: (opt: boolean) => void;
+    data: Clientes | undefined
 }
 
-export function CadastroCliente({ pesquisar }: CadastroClienteProps) {
+export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClienteProps) {
+    const [_, setSearchParams] = useSearchParams();
     const user = useAuthStore(state => state.userData);
     const form = useForm<clienteSc>({
         resolver: zodResolver(clienteSchema),
@@ -56,7 +62,6 @@ export function CadastroCliente({ pesquisar }: CadastroClienteProps) {
         }
     });
     const { toast } = useToast();
-    const [open, setOpen] = useState(false);
 
     const cep = form.watch('cepCliente');
     const cnpj = form.watch('cnpjCliente');
@@ -77,17 +82,48 @@ export function CadastroCliente({ pesquisar }: CadastroClienteProps) {
             form.setValue("telefoneCliente", maskPhone(telefone))
     }, [telefone])
 
+    useEffect(() => {
+        if (data) {
+            form.setValue("cepCliente", data.cepCliente);
+            form.setValue("clienteBairro", data.clienteBairro.id);
+            form.setValue("clienteCidade", data.clienteCidade);
+            form.setValue("cnpjCliente", data.cnpjCliente);
+            form.setValue("complementoCliente", data.complementoCliente);
+            form.setValue("emailCliente", data.emailCliente);
+            form.setValue("enderecoCliente", data.enderecoCliente);
+            form.setValue("inscricaoMunicipal", data.inscricaoMunicipal);
+            form.setValue("nomeCliente", data.nomeCliente);
+            form.setValue("numeroCliente", data.numeroCliente);
+            form.setValue("telefoneCliente", data.telefoneCliente);
+            form.setValue("usuarioCliente", data.usuarioCliente);
+            form.setValue("id", data.id);
+        }
+    }, [data]);
+
     async function handleCadastroCliente(data: clienteSc) {
         try {
             if (!user) throw new Error("!!!!!!!!!!!");
 
-            await baseApi.post('clientes', {
-                ...data,
-                cnpjCliente: data.cnpjCliente ? removeCnpjMask(data.cnpjCliente) : "",
-                telefoneCliente: data.telefoneCliente ? removePhoneMask(data.telefoneCliente) : "",
-                cepCliente: data.cepCliente ? removeCepMask(data.cepCliente) : "",
-                usuarioCliente: user.id
-            });
+            if (data.id) {
+                await baseApi.put(`clientes/${data.id}`, {
+                    ...data,
+                    cnpjCliente: data.cnpjCliente ? removeCnpjMask(data.cnpjCliente) : "",
+                    telefoneCliente: data.telefoneCliente ? removePhoneMask(data.telefoneCliente) : "",
+                    cepCliente: data.cepCliente ? removeCepMask(data.cepCliente) : "",
+                    usuarioCliente: data.usuarioCliente
+                });
+
+                setSearchParams("")
+            } else {
+                await baseApi.post('clientes', {
+                    ...data,
+                    cnpjCliente: data.cnpjCliente ? removeCnpjMask(data.cnpjCliente) : "",
+                    telefoneCliente: data.telefoneCliente ? removePhoneMask(data.telefoneCliente) : "",
+                    cepCliente: data.cepCliente ? removeCepMask(data.cepCliente) : "",
+                    usuarioCliente: user.id
+                });
+            }
+
 
             toast({
                 title: "Sucesso",
@@ -100,6 +136,7 @@ export function CadastroCliente({ pesquisar }: CadastroClienteProps) {
                 form.reset();
                 setOpen(false);
             }, 500);
+
         } catch (err) {
             if (err instanceof AxiosError) {
                 toast({

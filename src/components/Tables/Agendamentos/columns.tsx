@@ -29,27 +29,18 @@ export const columns: ColumnDef<Agendamentos>[] = [
         header: "Cidade"
     },
     {
-        id: "select",
+        accessorKey: "id",
         header: 'Ações',
-        cell: ({ row }) => (
+        cell: (props) => (
             <div>
-                {/* <Checkbox
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Selecionar serviço"
-                /> */}
-                <Link to={`/agendamentos?id=${row.id}`} className="text-primary-logo hover:text-primary-logo-dark">
+                <Link to={`/agendamentos?id=${props.getValue()}`} className="text-primary-logo hover:text-primary-logo-dark">
                     <Pen size={20} weight="fill" />
                 </Link>
             </div>
         ),
         enableSorting: false,
         enableHiding: false
-    },
-    // {
-    // accessorFn: (row) => row.clienteAgendamento.nomeCliente,
-    // header: "Cliente?"
-    // }
+    }
 ]
 
 
