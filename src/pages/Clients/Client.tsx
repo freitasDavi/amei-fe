@@ -1,6 +1,7 @@
 import { Clientes } from "@/@types/Clients"
 import { PaginationType } from "@/@types/Pagination";
 import { CadastroCliente } from "@/components/Forms/Clientes/Cadastro";
+import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/Clients/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,7 @@ async function fetchClientes() {
 }
 
 export function Client() {
-    const { data, refetch } = useQuery({
+    const { data, refetch, isFetching } = useQuery({
         queryKey: ['Clientes'],
         queryFn: () => fetchClientes()
     })
@@ -32,14 +33,19 @@ export function Client() {
                 <Button onClick={() => refetch()} variant="default" type="button">Pesquisar</Button>
                 <CadastroCliente pesquisar={refetch} />
             </div>
-            {data && (
-                <section>
-                    <DataTable
-                        columns={columns}
-                        data={data.content}
-                    />
-                </section>
-            )}
+            {isFetching ? (
+                <div className="flex-1 flex justify-center">
+                    <Loading />
+                </div>
+            )
+                : data && (
+                    <section>
+                        <DataTable
+                            columns={columns}
+                            data={data.content}
+                        />
+                    </section>
+                )}
         </main>
     )
 }

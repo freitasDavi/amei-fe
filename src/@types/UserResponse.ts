@@ -13,6 +13,6 @@ export type User = {
     enderecoUsuario: string,
     numeroUsuario: string,
     complementoUsuario: string,
-    plano: number,
+    plano: string,
     bairro: ComboBairro
 }

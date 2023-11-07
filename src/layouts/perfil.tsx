@@ -47,7 +47,7 @@ export function Perfil() {
                             </NavLink>
                         </li>
                         <li>
-                            {data?.plano == 0
+                            {data?.plano == "FREE"
                                 ? (
                                     <NavLink to="/meuPerfil/assinatura" className={({ isActive }) =>
                                         isActive ? "text-blue-800 cursor-default" : "hover:text-blue-800 drop-shadow-md hover:drop-shadow-none"
