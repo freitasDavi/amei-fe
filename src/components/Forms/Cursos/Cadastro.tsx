@@ -76,6 +76,7 @@ export function CadastroCurso({ pesquisar, open, setOpen, data }: CadastroCursoP
             })
 
             form.reset();
+            setSearchParams("");
             setOpen(false);
             pesquisar();
 
