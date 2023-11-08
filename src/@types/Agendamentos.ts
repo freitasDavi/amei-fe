@@ -15,5 +15,9 @@ export type Agendamentos = {
     agendamentoCidade: {
         id: number,
         nomeCidade: string
+    },
+    agendamentoBairro: {
+        id: number,
+        nomeBairro: string
     }
 }

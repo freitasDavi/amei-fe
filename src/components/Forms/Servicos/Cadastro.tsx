@@ -1,3 +1,4 @@
+import { Servicos } from "@/@types/Servicos";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -7,8 +8,9 @@ import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 import { z } from "zod";
 
 const servicoSchema = z.object({
@@ -20,9 +22,16 @@ const servicoSchema = z.object({
 
 type servicoSc = z.infer<typeof servicoSchema>;
 
-export function CadastroServico() {
-    const [open, setOpen] = useState(false);
+type Props = {
+    pesquisar: () => void;
+    open: boolean;
+    setOpen: (opt: boolean) => void;
+    data: Servicos | undefined
+}
+
+export function CadastroServico({ pesquisar, open, setOpen, data }: Props) {
     const userData = useAuthStore(state => state.userData);
+    const [_, setSearchParams] = useSearchParams();
     const { toast } = useToast();
     const form = useForm<servicoSc>({
         resolver: zodResolver(servicoSchema),
@@ -35,19 +44,25 @@ export function CadastroServico() {
 
     async function handleServicoSubmit(data: servicoSc) {
         try {
-            const response = await baseApi.post("/servicos", {
-                ...data,
-                servicoUsuario: userData?.id
-            });
 
-            if (response.status == 200) {
-                toast({
-                    variant: "success",
-                    title: "Sucesso",
-                    description: "Serviço cadastrado com sucesso",
-                    duration: 5000
-                })
+            if (data.id) {
+                await baseApi.put(`/servicos/${data.id}`, {
+                    ...data,
+                });
+            } else {
+                await baseApi.post("/servicos", {
+                    ...data,
+                    servicoUsuario: userData?.id
+                });
             }
+
+
+            toast({
+                variant: "success",
+                title: "Sucesso",
+                description: "Serviço salvo com sucesso",
+                duration: 5000
+            })
 
             setOpen(false);
         } catch (err) {
@@ -69,6 +84,15 @@ export function CadastroServico() {
             })
         }
     }
+
+    useEffect(() => {
+        if (data) {
+            form.setValue("codigoCNAE", data.codigoCNAE);
+            form.setValue("descricaoServico", data.descricaoServico);
+            form.setValue("valorServico", data.valorServico);
+            form.setValue("id", data.id);
+        }
+    }, [data]);
 
     return (
         <Dialog modal={true} open={open} onOpenChange={setOpen}>

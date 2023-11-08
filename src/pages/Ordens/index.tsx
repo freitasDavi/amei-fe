@@ -1,5 +1,6 @@
 import { OrdemServico } from "@/@types/OrdemServico";
 import { PaginationType } from "@/@types/Pagination";
+import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/OrdemServico/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,7 @@ async function fetchOrdens() {
 }
 
 export function OrdemServicoLista() {
-    const { data, refetch } = useQuery({
+    const { data, refetch, isFetching } = useQuery({
         queryKey: ["OrdensServico"],
         queryFn: () => fetchOrdens()
     });
@@ -30,7 +31,9 @@ export function OrdemServicoLista() {
                 <Button onClick={() => refetch()} >Pesquisar</Button>
 
             </div>
-            {data && (
+            {isFetching ? (
+                <div className="flex-1 flex justify-center"><Loading /></div>
+            ) : data && (
                 <section>
                     <DataTable
                         columns={columns}

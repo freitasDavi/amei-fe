@@ -1,4 +1,5 @@
 import { CadastroCronometro } from "@/components/Forms/Cronometro/Cadastro";
+import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/Cronometro/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
 import { baseApi } from "@/lib/api";
@@ -34,7 +35,9 @@ export function CronometroPage() {
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da lista">
                 <CadastroCronometro />
             </div>
-            {data && (
+            {isFetching ? (
+                <div className="flex-1 flex justify-center"><Loading /></div>
+            ) : data && (
                 <section>
                     <DataTable
                         columns={columns}
