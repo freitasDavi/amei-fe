@@ -1,40 +1,29 @@
 import { Orcamentos } from "@/@types/Orcamentos"
+import { PaginationType } from "@/@types/Pagination";
+import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/Orcamentos/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { baseApi } from "@/lib/api";
+import useAuthStore from "@/store/AuthStore";
 import { ArrowBendDownLeft } from "@phosphor-icons/react";
-import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
+async function fetchOrcamentos(userId: number | undefined) {
+    if (!userId) return;
 
+    const res = await baseApi.get<PaginationType<Orcamentos>>('/orcamentos');
+
+    return res.data;
+}
 
 export function Orcamento() {
-    const { toast } = useToast();
-    const [data, setData] = useState<Orcamentos[]>([]);
-
-    useEffect(() => {
-        async function recuperarOrcamentos() {
-            await onClickPesquisar();
-        }
-
-        recuperarOrcamentos();
-    }, []);
-
-    async function onClickPesquisar() {
-        try {
-            const res = await baseApi.get('/orcamentos');
-
-            setData(res.data);
-        } catch (err) {
-            toast({
-                title: 'Ops',
-                variant: "destructive",
-                description: "Algo não saiu como planejado"
-            })
-        }
-    }
+    const user = useAuthStore(state => state.userData);
+    const { data, refetch, isFetching } = useQuery({
+        queryKey: ['orcamentos'],
+        queryFn: () => fetchOrcamentos(user?.id)
+    })
 
     return (
         <div className="w-full h-full px-10">
@@ -43,19 +32,20 @@ export function Orcamento() {
                 <h1 className="font-medium text-3xl text-primary-logo">Orçamentos</h1>
             </div>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da Lista">
-                <Button variant="default" type="button" onClick={onClickPesquisar}>Pesquisar</Button>
+                <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
                 <Link to="novo"><Button variant="default" type="button">Novo</Button></Link>
             </div>
-            <section>
-                {/* {data && ( */}
+            {isFetching ? (
+                <div className="flex-1 flex justify-center"><Loading /></div>
+            ) : (
                 <section className="mt-10">
                     <DataTable
                         columns={columns}
-                        data={data}
+                        data={data ? data.content : []}
                     />
                 </section>
-                {/* )} */}
-            </section>
+            )}
+
         </div>
     )
 }

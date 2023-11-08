@@ -11,7 +11,7 @@ export function Footer() {
                 <p className="my-6 text-gray-500 dark:text-gray-400">Open-source library of over 400+ web components and interactive elements built for better web.</p>
                 <ul className="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
                     <li>
-                        <a href="#home" className="mr-4 hover:underline md:mr-6 ">Home</a>
+                        <a href="#home" className="mr-4 hover:underline md:mr-6 ">Início</a>
                     </li>
                     <li>
                         <a href="#us" className="mr-4 hover:underline md:mr-6">Nós</a>
@@ -22,9 +22,9 @@ export function Footer() {
                     <li>
                         <a href="#pricing" className="mr-4 hover:underline md:mr-6">Planos</a>
                     </li>
-                    <li>
+                    {/* <li>
                         <a href="#contact" className="mr-4 hover:underline md:mr-6">Contato</a>
-                    </li>
+                    </li> */}
                     {/* 
                     <li>
                         <a href="#" className="mr-4 hover:underline md:mr-6">FAQs</a>

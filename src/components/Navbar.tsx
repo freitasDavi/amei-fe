@@ -100,7 +100,7 @@ export function Navbar() {
             <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
                 <div className="py-4">
                     <Link
-                        to="/"
+                        to="/meuPerfil"
                         className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-blue-700"
                     >
                         <GearSix size={28} className="opacity-75" />

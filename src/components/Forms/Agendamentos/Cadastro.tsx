@@ -19,8 +19,11 @@ import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import calendarDone from "../../../../public/lottie/calendar-done.json";
+import calendarDone from "../../../assets/lottie/calendar-done.json";
 import Lottie from "lottie-react";
+import { Agendamentos } from "@/@types/Agendamentos";
+import { ComboClientes } from "@/components/Comboboxes/ComboClientes";
+import { useSearchParams } from "react-router-dom";
 
 const agendamentoSchema = z.object({
     id: z.coerce.number().optional(),
@@ -39,11 +42,14 @@ const agendamentoSchema = z.object({
 type agendamentoSc = z.infer<typeof agendamentoSchema>;
 
 type Props = {
-    pesquisar: () => void
+    pesquisar: () => void,
+    data?: Agendamentos,
+    open: boolean,
+    setOpen: (newValue: boolean) => void
 }
 
-export function CadastroAgendamento({ pesquisar }: Props) {
-    const [open, setOpen] = useState(false);
+export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
+    const [_, setSearchParams] = useSearchParams();
     const [openSuccess, setOpenSuccess] = useState(false);
     const user = useAuthStore(state => state.userData);
     const form = useForm<agendamentoSc>({
@@ -69,12 +75,25 @@ export function CadastroAgendamento({ pesquisar }: Props) {
         try {
             if (!user) throw new Error("!!!!!!!!!!!");
 
-            await baseApi.post('agendamentos', {
-                ...data,
-                telefoneAgendamento: data.telefoneAgendamento ? removePhoneMask(data.telefoneAgendamento) : "",
-                telefoneSecundario: data.telefoneSecundario ? removePhoneMask(data.telefoneSecundario) : "",
-                codigoUsuario: user?.id
-            });
+            if (data.id) {
+                await baseApi.put(`agendamentos/${data.id}`, {
+                    ...data,
+                    telefoneAgendamento: data.telefoneAgendamento ? removePhoneMask(data.telefoneAgendamento) : "",
+                    telefoneSecundario: data.telefoneSecundario ? removePhoneMask(data.telefoneSecundario) : "",
+                    codigoUsuario: user?.id
+                });
+
+                setSearchParams("");
+            } else {
+                await baseApi.post('agendamentos', {
+                    ...data,
+                    telefoneAgendamento: data.telefoneAgendamento ? removePhoneMask(data.telefoneAgendamento) : "",
+                    telefoneSecundario: data.telefoneSecundario ? removePhoneMask(data.telefoneSecundario) : "",
+                    codigoUsuario: user?.id
+                });
+            }
+
+
 
             setOpenSuccess(true);
             form.reset();
@@ -107,6 +126,22 @@ export function CadastroAgendamento({ pesquisar }: Props) {
         }, 500);
     }
 
+    useEffect(() => {
+        if (data) {
+            form.setValue('codigoBairro', data.agendamentoBairro.id);
+            form.setValue('codigoCidade', data.agendamentoCidade.id);
+            form.setValue('codigoCliente', data.clienteAgendamento?.id);
+            form.setValue('codigoUsuario', user?.id);
+            form.setValue('dataAgendamento', new Date(data.dataAgendamento));
+            form.setValue('enderecoAgendamento', data.enderecoAgendamento);
+            form.setValue('id', data.id);
+            form.setValue('nomeAgendamento', data.nomeAgendamento);
+            form.setValue('responsavelAgendamento', data.responsavelAgendamento);
+            form.setValue('telefoneAgendamento', data.telefoneAgendamento);
+            form.setValue('telefoneSecundario', data.telefoneSecundario);
+        }
+    }, [data]);
+
     // Máscara nos telefones
     useEffect(() => {
         if (fone)
@@ -117,6 +152,10 @@ export function CadastroAgendamento({ pesquisar }: Props) {
         if (foneSecundario)
             form.setValue("telefoneSecundario", maskPhone(foneSecundario));
     }, [foneSecundario])
+
+    const setCliente = (cliente: ComboClientes) => {
+        console.log(cliente.nome);
+    }
 
     return (
         <Dialog modal open={open} onOpenChange={setOpen}>
@@ -152,7 +191,7 @@ export function CadastroAgendamento({ pesquisar }: Props) {
                                                 <PopoverTrigger asChild>
                                                     <FormControl >
                                                         <Button size="default" variant="outline" className={cn(
-                                                            "pl-3 text-left font-normal justify-start",
+                                                            "pl-3 text-left font-normal justify-start text-gray-900",
                                                             !field.value && "text-muted-foreground"
                                                         )}>
                                                             {field.value ? (
@@ -184,6 +223,23 @@ export function CadastroAgendamento({ pesquisar }: Props) {
                             </div>
 
                             <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                <FormField
+                                    control={form.control}
+                                    name="codigoCliente"
+                                    render={({ field }) => (
+                                        <FormItem className="mt-[10px] flex-1 flex flex-col">
+                                            <FormLabel htmlFor="clienteOrcamento">Cliente existente
+                                            </FormLabel>
+                                            <ComboClientes field={field} setCliente={setCliente} />
+                                            {/* <FormControl>
+                                    <Input id="descricaoServico" type="number" placeholder="Josefino ferramentas" {...field} />
+                                </FormControl> */}
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
                                 <FormField
                                     control={form.control}
                                     name="responsavelAgendamento"

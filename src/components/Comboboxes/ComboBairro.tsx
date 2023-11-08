@@ -39,7 +39,7 @@ export function ComboBairro({ codigoCidade, field }: Props) {
             <PopoverTrigger asChild>
                 <FormControl>
                     <Button
-                        variant="outline">
+                        variant="outline" className="text-gray-900">
                         {field.value
                             ? data.find((bairro) => bairro.id === Number(field.value))?.nomeBairro
                             : "Selecione um bairro"
