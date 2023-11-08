@@ -23,7 +23,7 @@ export function CheckoutForm() {
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: "http://localhost:5173/pagamento/sucesso/"
+                return_url: `${import.meta.env.VITE_BASE_URL}/pagamento/sucesso/`
             }
         });
 
