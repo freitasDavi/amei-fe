@@ -58,7 +58,7 @@ export function RegisterLoginForm({ changeStep }: Props) {
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="password">Senha</FormLabel>
                             <FormControl>
-                                <Input id="password" placeholder="•••••••••" {...field} />
+                                <Input type="password" id="password" placeholder="•••••••••" {...field} />
                             </FormControl>
                             <FormMessage>
                                 {formState.errors.password && formState.errors.password.message}
@@ -74,7 +74,7 @@ export function RegisterLoginForm({ changeStep }: Props) {
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="passwordConfirmation">Confirme sua senha</FormLabel>
                             <FormControl>
-                                <Input id="passwordConfirmation" placeholder="••••••••" {...field} />
+                                <Input type="password" id="passwordConfirmation" placeholder="••••••••" {...field} />
                             </FormControl>
                         </FormItem>
                     )}

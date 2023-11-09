@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { baseApi } from "@/lib/api";
 import { PaginationType } from "@/@types/Pagination";
 import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {
     codigoCidade?: number;
@@ -22,26 +23,29 @@ async function fetchBairros(codigoCidade?: number) {
     codigoCidade && console.log(codigoCidade)
     const response = await baseApi.get<PaginationType<ComboBairro>>("bairros");
 
-    return response.data.content;
+    return response.data;
 }
 
 export function ComboBairro({ codigoCidade, field }: Props) {
     // const [data, setData] = useState<ComboBairro[]>([]);
-    const { data } = useQuery({
+    const { data, isFetching } = useQuery({
         queryKey: ['ComboBairro'],
         queryFn: () => fetchBairros(codigoCidade)
     })
 
-    if (!codigoCidade || !data) return null;
+    if (data?.content.length === 0 || isFetching) {
+        return <Skeleton className="h-10 w-full" />
+    };
 
     return (
         <Popover modal>
             <PopoverTrigger asChild>
                 <FormControl>
                     <Button
+                        disabled={!codigoCidade}
                         variant="outline" className="text-gray-900">
                         {field.value
-                            ? data.find((bairro) => bairro.id === Number(field.value))?.nomeBairro
+                            ? data?.content.find((bairro) => bairro.id === Number(field.value))?.nomeBairro
                             : "Selecione um bairro"
                         }
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -53,7 +57,7 @@ export function ComboBairro({ codigoCidade, field }: Props) {
                     <CommandInput placeholder="Selecione um bairro..." />
                     <CommandEmpty>Bairro não encontrado</CommandEmpty>
                     <CommandGroup>
-                        {data.map((bairro) => (
+                        {data?.content.map((bairro) => (
                             <CommandItem
                                 className="z-10"
                                 value={bairro.nomeBairro}

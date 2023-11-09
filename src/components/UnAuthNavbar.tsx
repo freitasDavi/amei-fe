@@ -1,56 +1,24 @@
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
-import useAuthStore from "@/store/AuthStore";
 
 export function UnAuthNavbar() {
-    const navigate = useNavigate();
-    const setLogout = useAuthStore((state) => state.setLogout);
-
-    function handleLogout() {
-        setLogout();
-
-        setTimeout(() => {
-            navigate("/login");
-        }, 500);
-    }
-
     return (
-        <nav className="bg-primary-logo fixed w-full z-20 top-0 left-0 border-b border-slate-100">
-            <div className="max-w-screen-xl flex flex-wrap items-baseline justify-between mx-auto p-4">
-                <a href="https://flowbite.com/" className="text-white font-logo text-5xl font-semibold ">
-                    a-mei
-                </a>
-                <div className="flex md:order-2">
-                    {/* TODO: Aqui que vai o Avatar */}
-                    <button
-                        onClick={() => handleLogout()}
-                        type="button" className="focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 text-white bg-pink-600 hover:bg-pink-700 focus:ring-pink-800">
-                        Login
-                    </button>
-                    {/* <button data-collapse-toggle="navbar-sticky" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
-                        <span className="sr-only">Open main menu</span>
-                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
-                        </svg>
-                    </button> */}
+        <header>
+            <nav className="bg-primary-logo border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+                <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                    <Link to="/" className="flex items-center">
+                        <img src="/assets/LOGO-COMPLETA-BRANCA.png" className="mr-3 h-6 sm:h-9" alt="Logo amei" />
+                    </Link>
+                    <div className="flex items-center lg:order-2">
+                        {/* <Link to="/login" className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</Link> */}
+                        <Link to="/login" className="text-white bg-primary-logo hover:bg-primary-logo-dark focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Log in</Link>
+                        <button data-collapse-toggle="mobile-menu-2" type="button" className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+                            <span className="sr-only">Abrir menu principal</span>
+                            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
+                            <svg className="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+                        </button>
+                    </div>
                 </div>
-                <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                    {/* <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-gray-800 md:bg-rose-900 border-gray-700">
-                        <li>
-                            <Link to="/" className="block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 md:text-gray-900" aria-current="page">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/clients" className="block py-2 pl-3 pr-4 rounded md:p-0 md:hover:text-gray-900 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Clientes</Link>
-                        </li>
-                        <li>
-                            <Link to="/protected" className="block py-2 pl-3 pr-4 rounded md:p-0 md:hover:text-gray-900 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Protected</Link>
-                        </li>
-                        <li>
-                            <Link to="/" className="block py-2 pl-3 pr-4 rounded md:p-0 md:hover:text-gray-900 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Contact</Link>
-                        </li>
-                    </ul> */}
-                </div>
-            </div>
-        </nav>
+            </nav>
+        </header>
     )
 }

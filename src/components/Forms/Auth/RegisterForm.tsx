@@ -23,8 +23,8 @@ const registerSchema = z.object({
     logradouroUsuario: z.string(),
     numeroUsuario: z.string(),
     complementoUsuario: z.string(),
-    usuarioCidade: z.string(),
-    usuarioBairro: z.string()
+    usuarioCidade: z.coerce.number(),
+    usuarioBairro: z.coerce.number()
 }).refine((data) => data.password === data.passwordConfirmation, {
     path: ["passwordConfirmation"],
     message: "A senhas devem ser iguais"
@@ -58,8 +58,8 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
             logradouroUsuario: "",
             numeroUsuario: "",
             complementoUsuario: "",
-            usuarioBairro: "",
-            usuarioCidade: "",
+            usuarioBairro: 0,
+            usuarioCidade: 0,
         }
     })
 
@@ -113,6 +113,15 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
                 {currentStep == 2 && <RegisterEnderecoForm changeStep={changeStep} />}
                 {/* Infos Login */}
                 {currentStep == 3 && <RegisterLoginForm changeStep={changeStep} />}
+
+                {Object.keys(form.formState.errors).length > 0 && (
+                    <div className="bg-red-200 rounded-lg border-2 border-red-400 p-4 my-4 flex flex-col gap-2">
+                        <h2 className="text-xl text-red-600 font-semibold">Atenção: </h2>
+                        {Object.entries(form.formState.errors).map(([key, value]) => (
+                            <p className="text-slate-700" key={key}>{value.message}</p>
+                        ))}
+                    </div>
+                )}
             </form>
         </FormProvider>
     )

@@ -6,7 +6,9 @@ type InternalAxiosRequestConfigWithRetry = InternalAxiosRequestConfig<any> & {
 };
 
 export const baseApi = axios.create({
-    baseURL: "https://amei-be.onrender.com/api"
+    // baseURL: "https://amei-be.onrender.com/api"
+    baseURL: import.meta.env.VITE_BE_BASE_URL
+    //baseURL: "https://amei-be.onrender.com/api"
     //baseURL: "http://localhost:8080/api"
 });
 

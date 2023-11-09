@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { maskCep } from "@/utils/masks";
+import { ComboCidade } from "@/components/Comboboxes/ComboCidade";
+import { ComboBairro } from "@/components/Comboboxes/ComboBairro";
 
 type Props = {
     changeStep: (newStep: number) => void;
@@ -13,6 +15,7 @@ type Props = {
 export function RegisterEnderecoForm({ changeStep }: Props) {
     const { control, formState, watch, setValue } = useFormContext<registerSc>();
     const cep = watch("cepUsuario");
+    const codigoCidade = watch("usuarioCidade");
 
     useEffect(() => {
         setValue("cepUsuario", maskCep(cep))
@@ -44,11 +47,9 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                     control={control}
                     name="usuarioCidade"
                     render={({ field }) => (
-                        <FormItem className="flex-1">
+                        <FormItem className="flex-1 flex flex-col mt-[10px]">
                             <FormLabel htmlFor="usuarioCidade">Cidade</FormLabel>
-                            <FormControl>
-                                <Input id="usuarioCidade" placeholder="Içara" type="number" {...field} />
-                            </FormControl>
+                            <ComboCidade field={field} />
                             <FormMessage>
                                 {formState.errors.usuarioCidade && formState.errors.usuarioCidade.message}
                             </FormMessage>
@@ -78,11 +79,9 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                     control={control}
                     name="usuarioBairro"
                     render={({ field }) => (
-                        <FormItem className="flex-1">
+                        <FormItem className="flex-1 flex flex-col mt-[10px]">
                             <FormLabel htmlFor="usuarioBairro">Bairro</FormLabel>
-                            <FormControl>
-                                <Input id="usuarioBairro" placeholder="Centro" type="number" {...field} />
-                            </FormControl>
+                            <ComboBairro field={field} codigoCidade={Number(codigoCidade)} />
                             <FormMessage>
                                 {formState.errors.usuarioBairro && formState.errors.usuarioBairro.message}
                             </FormMessage>
