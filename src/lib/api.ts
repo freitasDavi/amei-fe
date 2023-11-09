@@ -7,7 +7,7 @@ type InternalAxiosRequestConfigWithRetry = InternalAxiosRequestConfig<any> & {
 
 export const baseApi = axios.create({
     // baseURL: "https://amei-be.onrender.com/api"
-    baseURL: "http://localhost:8080/api"
+    baseURL: import.meta.env.VITE_BE_BASE_URL
 });
 
 // Add token to every request
