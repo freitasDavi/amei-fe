@@ -7,6 +7,8 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {
     field: any;
@@ -18,25 +20,19 @@ export type ComboCidade = {
     nomeCidade: string;
 }
 
+async function fetchCidades() {
+    const response = await baseApi.get<PaginationType<ComboCidade>>("/cidade");
+
+    return response.data;
+}
+
 export function ComboCidade({ field, setCidade }: Props) {
     const [cidadeSelecionada, setCidadeSelecionada] = useState<ComboCidade>();
-    const [data, setData] = useState<ComboCidade[]>([]);
+    const { data, isFetching } = useQuery({
+        queryKey: ["cidades"],
+        queryFn: fetchCidades,
+    })
 
-    // TODO: Remove useEffect to fetch data from API
-
-    useEffect(() => {
-        async function getClients() {
-            try {
-                const response = await baseApi.get<PaginationType<ComboCidade>>("/cidade");
-
-                setData(response.data.content);
-            } catch (error) {
-                console.warn("Erro ao recuperar cidades" + error);
-            }
-        }
-
-        getClients();
-    }, []);
 
     useEffect(() => {
         if (setCidade && cidadeSelecionada !== undefined)
@@ -44,8 +40,8 @@ export function ComboCidade({ field, setCidade }: Props) {
 
     }, [field.value]);
 
-    if (data.length === 0) {
-        return null;
+    if (data?.content.length === 0 || isFetching) {
+        return <Skeleton className="w-full h-10" />;
     }
 
     return (
@@ -61,7 +57,7 @@ export function ComboCidade({ field, setCidade }: Props) {
                         )}
                     >
                         {field.value
-                            ? data.find((cidade) => cidade.id === Number(field.value))?.nomeCidade
+                            ? data?.content.find((cidade) => cidade.id === Number(field.value))?.nomeCidade
                             : "Selecione uma cidade"
                         }
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -73,7 +69,7 @@ export function ComboCidade({ field, setCidade }: Props) {
                     <CommandInput placeholder="Selecione uma cidade..." />
                     <CommandEmpty>Cidade não encontrado</CommandEmpty>
                     <CommandGroup>
-                        {data.map((cidade) => (
+                        {data?.content.map((cidade) => (
                             <CommandItem
                                 className="z-10"
                                 value={cidade.nomeCidade}
