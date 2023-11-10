@@ -1,3 +1,4 @@
+import { GraficoHome } from "@/components/Graficos/GraficoHome";
 import { CardSlider } from "@/components/Slider/CardSlider";
 import { UltimosAgendamentos } from "@/components/Tables/Agendamentos/UltimosAgendamentos";
 import useAuthStore from "@/store/AuthStore";
@@ -47,7 +48,7 @@ export default function Home() {
                 />
             </section>
             <section className="mt-10 grid grid-cols-2">
-                <div ></div>
+                <GraficoHome />
                 <UltimosAgendamentos />
             </section>
         </div>
