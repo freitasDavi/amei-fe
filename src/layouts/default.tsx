@@ -15,9 +15,9 @@ export function DefaultLayout() {
             ) : (
                 <div className="flex ">
                     <Navbar />
-                    <main className="w-full bg-[#E9E9FA] relative">
+                    <main className="w-screen bg-[#E9E9FA] relative">
                         <Notification />
-                        <div className="mt-10">
+                        <div className="mt-10 ">
                             <Outlet />
                         </div>
                         <Toaster />

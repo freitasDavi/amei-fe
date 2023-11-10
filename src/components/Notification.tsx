@@ -39,7 +39,7 @@ export function Notification() {
     }
 
     return (
-        <section id="notifications" className="absolute right-10 mt-10 mx-10 h-12 flex justify-end items-center">
+        <section id="notifications" className="absolute right-32 mt-10 mx-10 h-12 flex justify-end items-center">
             <Popover>
                 <PopoverTrigger>
                     <div className="bg-white p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in text-[#FACC15] hover:text-[#facc15b6]">
@@ -71,7 +71,7 @@ export function Notification() {
 
 const Bell = () => {
     return (
-        <section id="notifications" className="absolute right-10 mt-10 mx-10 h-12 flex justify-end items-center">
+        <section id="notifications" className="absolute right-32 mt-10 mx-10 h-12 flex justify-end items-center">
             <Popover>
                 <PopoverTrigger><div className="bg-white p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in
                 text-[#FACC15] hover:text-[#81d8f3]">
