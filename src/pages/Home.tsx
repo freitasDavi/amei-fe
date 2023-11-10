@@ -1,5 +1,5 @@
 import { GraficoHome } from "@/components/Graficos/GraficoHome";
-import { CardSlider } from "@/components/Slider/CardSlider";
+import { Slider } from "@/components/Slider/Slider";
 import { UltimosAgendamentos } from "@/components/Tables/Agendamentos/UltimosAgendamentos";
 import useAuthStore from "@/store/AuthStore";
 
@@ -8,46 +8,12 @@ export default function Home() {
     // TODO: Verificar se o usuário é ADM e ocultar a aba de cursos, ou trocar o link!
 
     return (
-        <div className="w-full px-10 overflow-x-hidden">
+        <div className="w-[96%] px-10 overflow-x-hidden">
             <h1 className="text-[4rem] font-logo text-primary-logo font-bold mb-8">Bem-vindo {userData?.username}</h1>
-            <section id="cards" className="w-full flex gap-8">
-                <CardSlider
-                    icon="Calendar"
-                    path="/agendamentos"
-                    title="Agendamentos"
-                />
-                <CardSlider
-                    icon="Users"
-                    path="/clientes"
-                    title="Clientes"
-                />
-                <CardSlider
-                    icon="GraduationCap"
-                    path="/cursos"
-                    title="Cursos"
-                />
-                <CardSlider
-                    icon="Money"
-                    path="/orcamentos"
-                    title="Orçamento"
-                />
-                <CardSlider
-                    icon="Package"
-                    path="/ordens"
-                    title="Ordem de Serviço"
-                />
-                <CardSlider
-                    icon="FlagBanner"
-                    path="/servicos"
-                    title="Serviços"
-                />
-                <CardSlider
-                    icon="Alarm"
-                    path="/timer"
-                    title="Timer"
-                />
+            <section id="cards" className="">
+                <Slider />
             </section>
-            <section className="mt-10 grid grid-cols-2">
+            <section className="mt-10 grid grid-cols-1 md:grid-cols-2">
                 <GraficoHome />
                 <UltimosAgendamentos />
             </section>

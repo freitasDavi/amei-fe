@@ -1,22 +1,64 @@
-import { LineChart, Line } from "recharts"
+import { ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Legend, CartesianGrid, Bar } from "recharts"
 
 const data = [
-    { name: "2017", react: 32, angular: 37, vue: 60 },
-    { name: "2018", react: 42, angular: 42, vue: 54 },
-    { name: "2019", react: 51, angular: 41, vue: 54 },
-    { name: "2020", react: 60, angular: 37, vue: 27 },
-    { name: "2021", react: 95, angular: 31, vue: 49 },
-    { name: "2021", react: 95, angular: 44, vue: 49 },
-]
+    {
+        name: 'Janeiro',
+        Faturamento: 200,
+    },
+    {
+        name: 'Favereiro',
+        Faturamento: 3000,
+    },
+    {
+        name: 'Março',
+        Faturamento: 2000,
+    },
+    {
+        name: 'Abril',
+        Faturamento: 2780,
+    },
+    {
+        name: 'Maio',
+        Faturamento: 1890,
+    },
+    {
+        name: 'Junho',
+        Faturamento: 2390,
+    },
+    {
+        name: 'Julho',
+        Faturamento: 3490,
+    },
+];
 
 
 export function GraficoHome() {
     return (
-        <div>
-            <LineChart width={600} height={300} data={data}>
-                <Line type="monotone" dataKey="react" stroke="#8884d8" />
-            </LineChart>
+        <div className="w-full max-h-[500px] flex flex-col gap-4 p-4">
+            <h2 className="text-xl text-primary-logo font-semibold">Faturamentos</h2>
+            <ResponsiveContainer width="100%">
+                <BarChart
+                    width={500}
+                    height={300}
+                    data={data}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5
+                    }}
+                    barSize={20}
+                >
+                    <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <Bar dataKey="Faturamento" fill="#1C9AEA" background={{ fill: '#eee' }} />
+                </BarChart>
+            </ResponsiveContainer>
 
         </div>
+
     )
 }
