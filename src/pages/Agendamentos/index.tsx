@@ -6,6 +6,7 @@ import { columns } from "@/components/Tables/Agendamentos/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
 import { Button } from "@/components/ui/button";
 import { baseApi } from "@/lib/api";
+import { AgendamentosPDF } from "@/reports/Agendamentos";
 import useAuthStore from "@/store/AuthStore";
 import { ArrowBendDownLeft } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
@@ -56,6 +57,7 @@ export function AgendamentosPage() {
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação do agendamento">
                 <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
                 <CadastroAgendamento pesquisar={refetch} open={open} setOpen={setOpen} data={agendamentoSelecionado} />
+                <Button variant="default" type="button" onClick={() => AgendamentosPDF({ data: data?.content! })}>Gerar PDF</Button>
             </div>
             <section className="mt-10">
                 {isPending || isFetching ? (
