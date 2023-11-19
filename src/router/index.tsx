@@ -5,6 +5,7 @@ import { Register } from "@/pages/Auth/Register";
 import { Client } from "@/pages/Clients/Client";
 import { CronometroPage } from "@/pages/Cronometro";
 import { CursosPage } from "@/pages/Cursos";
+import { ErrorPage } from "@/pages/ErrorPage";
 import Home from "@/pages/Home";
 import { IndexPage } from "@/pages/Index";
 import { Login } from "@/pages/Login";
@@ -21,7 +22,7 @@ import { Route, createBrowserRouter, createHashRouter, createRoutesFromElements 
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route>
+        <Route errorElement={<ErrorPage />} >
             <Route element={<DefaultLayout />}>
                 <Route path="/home" element={<Home />} />
                 <Route path="/clientes" element={<Client />} />
