@@ -70,7 +70,7 @@ export function Slider() {
                     <CardSlider
                         icon="Alarm"
                         path="/timer"
-                        title="Timer"
+                        title="Relógio"
                     />
                 </SwiperSlide>
             </Swiper>
