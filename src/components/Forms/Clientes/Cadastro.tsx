@@ -128,7 +128,7 @@ export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClie
             toast({
                 title: "Sucesso",
                 variant: "success",
-                description: "Agendamento cadastrado com sucesso"
+                description: "Cliente salvo com sucesso"
             })
 
             pesquisar();
@@ -162,7 +162,7 @@ export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClie
             <DialogTrigger className="">
                 <Button type="button" variant="default">Novo</Button>
             </DialogTrigger>
-            <DialogContent className="min-w-[800px]">
+            <DialogContent className="min-w-[800px] max-h-[550px] overflow-auto">
                 <DialogHeader>Novo Cliente</DialogHeader>
                 <DialogDescription>
                     <Form {...form}>
@@ -188,7 +188,7 @@ export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClie
                                         <FormItem className="flex-1 flex flex-col gap-2 mt-1">
                                             <FormLabel htmlFor="cnpjCliente">CPF/CNPJ</FormLabel>
                                             <FormControl>
-                                                <Input id="cnpjCliente" placeholder="000.00.00-0/00" {...field} />
+                                                <Input id="cnpjCliente" maxLength={18} placeholder="000.00.00-0/00" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -204,7 +204,7 @@ export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClie
                                         <FormItem className="flex-1">
                                             <FormLabel htmlFor="telefoneCliente">Telefone</FormLabel>
                                             <FormControl>
-                                                <Input id="telefoneCliente" placeholder="(48) 99999-9999" {...field} />
+                                                <Input id="telefoneCliente" maxLength={15} placeholder="(48) 99999-9999" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -234,7 +234,7 @@ export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClie
                                         <FormItem className="flex-1 mt-1">
                                             <FormLabel htmlFor="cepCliente">CEP</FormLabel>
                                             <FormControl>
-                                                <Input id="cepCliente" placeholder="888888-000" {...field} />
+                                                <Input id="cepCliente" maxLength={9} placeholder="888888-000" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

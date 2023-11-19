@@ -30,7 +30,8 @@ export function ComboBairro({ codigoCidade, field }: Props) {
     // const [data, setData] = useState<ComboBairro[]>([]);
     const { data, isFetching } = useQuery({
         queryKey: ['ComboBairro'],
-        queryFn: () => fetchBairros(codigoCidade)
+        queryFn: () => fetchBairros(codigoCidade),
+        refetchOnWindowFocus: false
     })
 
     if (data?.content.length === 0 || isFetching) {

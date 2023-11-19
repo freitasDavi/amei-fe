@@ -62,7 +62,7 @@ export const columnsHome: ColumnDef<Agendamentos>[] = [
         header: "Responsável"
     },
     {
-        accessorFn: (row) => format(new Date(row.dataAgendamento), "dd/MM/yyyy HH:mm", { locale: ptBR }),
+        accessorFn: (row) => format(new Date(row.dataAgendamento), "dd/MM/yyyy", { locale: ptBR }),
 
         header: "Data agendamento"
     },

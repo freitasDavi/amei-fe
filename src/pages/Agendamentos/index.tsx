@@ -57,7 +57,7 @@ export function AgendamentosPage() {
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação do agendamento">
                 <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
                 <CadastroAgendamento pesquisar={refetch} open={open} setOpen={setOpen} data={agendamentoSelecionado} />
-                <Button variant="default" type="button" onClick={() => AgendamentosPDF({ data: data?.content! })}>Gerar PDF</Button>
+                <Button variant="default" type="button" onClick={() => AgendamentosPDF({ data: data?.content! })}>Extrato</Button>
             </div>
             <section className="mt-10">
                 {isPending || isFetching ? (

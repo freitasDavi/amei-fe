@@ -49,7 +49,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="telefoneUsuario">Telefone</FormLabel>
                             <FormControl>
-                                <Input id="telefoneUsuario" placeholder="(48) 99999-9999" pattern="/\(\d\d\)\d\d\d\d\d-\d\d\d\d/i" {...field} />
+                                <Input id="telefoneUsuario" maxLength={15} placeholder="(48) 99999-9999" pattern="/\(\d\d\)\d\d\d\d\d-\d\d\d\d/i" {...field} />
                             </FormControl>
                             <FormMessage>
                                 {formState.errors.telefoneUsuario && formState.errors.telefoneUsuario.message}
@@ -67,7 +67,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="cnpjUsuario">CNPJ</FormLabel>
                             <FormControl>
-                                <Input id="cnpjUsuario" placeholder="00 000 000/0000-00" {...field} />
+                                <Input id="cnpjUsuario" maxLength={18} placeholder="00 000 000/0000-00" {...field} />
                             </FormControl>
                             <FormMessage>
                                 {formState.errors.cnpj && formState.errors.cnpj.message}
@@ -83,7 +83,7 @@ export function RegisterMEIForm({ changeStep }: Props) {
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="inscricaoMunicipalUsuario">Inscrição municipal</FormLabel>
                             <FormControl>
-                                <Input id="inscricaoMunicipalUsuario" placeholder="000000.000.00" {...field} />
+                                <Input id="inscricaoMunicipalUsuario" maxLength={7} placeholder="0000000" {...field} />
                             </FormControl>
                             <FormMessage>
                                 {formState.errors.inscricaoMunicipal && formState.errors.inscricaoMunicipal.message}

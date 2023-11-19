@@ -9,6 +9,7 @@ import { useToast } from "@/components/ui/use-toast";
 import useAuthStore from "@/store/AuthStore";
 import { useNavigate } from "react-router-dom";
 import { removeCepMask, removeCnpjMask, removePhoneMask } from "@/utils/masks";
+import { useState } from "react";
 
 const registerSchema = z.object({
     username: z.string().max(20, "Seu usuário pode conter no máximo 20 caracteres"),
@@ -35,9 +36,10 @@ export type registerSc = z.infer<typeof registerSchema>;
 type RegisterFormProps = {
     changeStep: (newStep: number) => void;
     currentStep: number;
+    setIsLoading: (value: boolean) => void;
 }
 
-export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
+export function RegisterForm({ changeStep, currentStep, setIsLoading }: RegisterFormProps) {
     const { toast } = useToast();
     const navigate = useNavigate();
     const { signIn } = useAuthStore((state) => ({
@@ -66,6 +68,8 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
     const handleSubmitRegisterForm = async (data: registerSc) => {
 
         try {
+            setIsLoading(true);
+
             const response = await baseApi.post("/auth/register", {
                 ...data,
                 telefoneUsuario: removePhoneMask(data.telefoneUsuario),
@@ -101,6 +105,8 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
                 title: "Erro",
                 description: "Erro ao realizar cadastro de usuário",
             })
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -124,5 +130,6 @@ export function RegisterForm({ changeStep, currentStep }: RegisterFormProps) {
                 )}
             </form>
         </FormProvider>
+
     )
 }
