@@ -53,7 +53,7 @@ export const columnsHome: ColumnDef<Agendamentos>[] = [
         accessorKey: "id",
         cell: (props) => (
             <Link to={`/agendamentos/${props.getValue()}`}>
-                <MagnifyingGlass className="text-primary-logo hover:text-primary-logo-dark" size={20} weight="bold" />
+                <MagnifyingGlass className="text-primary-logo hover:text-primary-logo-dark dark:text-white dark:hover:text-slate-300" size={20} weight="bold" />
             </Link>
         ),
     },

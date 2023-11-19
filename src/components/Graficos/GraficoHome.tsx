@@ -23,7 +23,7 @@ const data = [
 export function GraficoHome() {
     return (
         <div className="w-full max-h-[500px] flex flex-col gap-4 p-4">
-            <h2 className="text-xl text-primary-logo font-semibold">Faturamentos</h2>
+            <h2 className="text-xl text-primary-logo font-semibold dark:text-white">Faturamentos</h2>
             <ResponsiveContainer width="100%">
                 <BarChart
                     width={500}

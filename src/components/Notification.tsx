@@ -41,7 +41,7 @@ export function Notification() {
     return (
         <section id="notifications" className="absolute right-32 mt-10 mx-10 h-12 flex justify-end items-center gap-4">
             <Popover>
-                <PopoverTrigger><div className="bg-white p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in
+                <PopoverTrigger><div className="bg-white dark:bg-slate-800 dark:hover:bg-slate-950 p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in
                 text-[#FACC15] hover:text-[#81d8f3]">
                     <BellSimpleRinging weight="light" size={28} />
                 </div></PopoverTrigger>
@@ -52,7 +52,7 @@ export function Notification() {
 
             <Popover>
                 <PopoverTrigger>
-                    <div className="bg-white p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in text-[#81d8f3] hover:text-[#1C9AEA]">
+                    <div className="bg-white dark:bg-slate-800 dark:hover:bg-slate-950 p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in text-[#81d8f3] hover:text-[#1C9AEA]">
                         <Alarm weight="fill" size={28} className="relative" />
                         <p className="absolute -top-2 -right-2 py-1 px-2 bg-red-500 rounded-lg text-xs text-white">1</p>
                     </div>
@@ -82,7 +82,7 @@ const Bell = () => {
     return (
         <section id="notifications" className="absolute right-32 mt-10 mx-10 h-12 flex justify-end items-center">
             <Popover>
-                <PopoverTrigger><div className="bg-white p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in
+                <PopoverTrigger><div className="bg-white dark:bg-slate-800 dark:hover:bg-slate-950 p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in
                 text-[#FACC15] hover:text-[#81d8f3]">
                     <BellSimpleRinging weight="light" size={28} />
                 </div></PopoverTrigger>
