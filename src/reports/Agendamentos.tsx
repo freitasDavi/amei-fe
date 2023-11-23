@@ -2,36 +2,41 @@ import { Agendamentos } from "@/@types/Agendamentos";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts"
 import { TDocumentDefinitions, Content } from "pdfmake/interfaces";
-import logoBase64 from '@/assets/LOGO-COMPLETA-AZUL.png?url';
-
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { getState } from "@/store/AuthStore";
 
 type Report = {
     data: Agendamentos[]
 }
 
 export async function AgendamentosPDF({ data }: Report) {
+    const client = getState().userData;
+    var today = format(new Date(), "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-    const file = await createFile(logoBase64, 'logo.png', 'image/png');
 
     const reportTitle: Content = [
         {
-            stack: [
-                'Agendamentos', {
-                    image: `data:image/jpeg;base64,${logoBase64}`
+            columns: [
+                {
+                    text: 'Criciúma, ' + today,
+                    fontSize: 10,
+                },
+                {
+                    text: client?.username!,
+                    alignment: 'right',
+                    bold: true,
+                    fontSize: 12,
                 }
             ],
-            // text: 'Agendamentos',
-            fontSize: 15,
-            bold: true,
-            margin: [15, 20, 0, 45]
-        }
-    ];
+            color: 'white',
+            margin: [15, 20, 15, 200],
+        }];
 
     const dados = data?.map((agendamento) => {
         return [
             { text: agendamento.responsavelAgendamento, fontSize: 9, margin: [0, 2, 0, 2] },
-            { text: agendamento.dataAgendamento, fontSize: 9, margin: [0, 2, 0, 2] },
+            { text: format(new Date(agendamento.dataAgendamento), 'dd/MM/yyyy', { locale: ptBR }), fontSize: 9, margin: [0, 2, 0, 2] },
             { text: agendamento.enderecoAgendamento, fontSize: 9, margin: [0, 2, 0, 2] },
             { text: agendamento.agendamentoCidade.nomeCidade, fontSize: 9, margin: [0, 2, 0, 2] },
 
@@ -40,6 +45,10 @@ export async function AgendamentosPDF({ data }: Report) {
 
     const details = [
         {
+            marginTop: 20,
+            marginRight: 15,
+            marginBottom: 10,
+            marginLeft: 15,
             table: {
                 headerRows: 1,
                 widths: ['*', '*', '*', '*'],
@@ -66,31 +75,54 @@ export async function AgendamentosPDF({ data }: Report) {
     const rodape = function (currentPage: number, totalPages: number): Content {
         return [
             {
-                text: `${currentPage.toString()} / ${totalPages.toString()}`,
-                alignment: 'right',
+                columns: [
+                    {
+                        text: 'Emitido por amei - https://amei.onrender.com/',
+                        margin: [10, 10, 0, 10],
+                    },
+                    {
+                        text: `${currentPage.toString()} / ${totalPages.toString()}`,
+                        alignment: 'right',
+                        margin: [0, 10, 20, 0]
+                    }
+                ],
+                color: 'white',
                 fontSize: 9,
-                margin: [0, 10, 20, 0]
             }
         ]
     };
 
+    const titulo: Content = {
+        text: 'Relatório de agendamentos',
+        alignment: 'center',
+        color: "white",
+        fontSize: 16,
+        bold: true
+    }
+
     const docDefinitions: TDocumentDefinitions = {
         pageSize: 'A4',
         pageMargins: [15, 50, 15, 40],
-
+        background: function () {
+            return {
+                canvas: [
+                    {
+                        type: 'rect',
+                        x: 0, y: 0, w: 595.28, h: 80.89,
+                        color: '#1e40af'
+                    },
+                    {
+                        type: 'rect',
+                        x: 0, y: 800, w: 595.28, h: 41.89,
+                        color: '#1e40af'
+                    }
+                ]
+            };
+        },
         header: [reportTitle],
-        content: [details],
+        content: [titulo, ...details],
         footer: rodape
     }
 
     pdfMake.createPdf(docDefinitions).download();
 }
-
-async function createFile(path: string, name: string, type: string): Promise<File> {
-    let response = await fetch(path);
-    let data = await response.blob();
-    let metadata = {
-        type: type
-    };
-    return new File([data], name, metadata);
-};
