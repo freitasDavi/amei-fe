@@ -2,18 +2,26 @@ import { Agendamentos } from "@/@types/Agendamentos";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts"
 import { TDocumentDefinitions, Content } from "pdfmake/interfaces";
+import logoBase64 from '@/assets/LOGO-COMPLETA-AZUL.png?url';
 
 
 type Report = {
     data: Agendamentos[]
 }
 
-export function AgendamentosPDF({ data }: Report) {
+export async function AgendamentosPDF({ data }: Report) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+    const file = await createFile(logoBase64, 'logo.png', 'image/png');
 
     const reportTitle: Content = [
         {
-            text: 'Agendamentos',
+            stack: [
+                'Agendamentos', {
+                    image: `data:image/jpeg;base64,${logoBase64}`
+                }
+            ],
+            // text: 'Agendamentos',
             fontSize: 15,
             bold: true,
             margin: [15, 20, 0, 45]
@@ -77,3 +85,12 @@ export function AgendamentosPDF({ data }: Report) {
 
     pdfMake.createPdf(docDefinitions).download();
 }
+
+async function createFile(path: string, name: string, type: string): Promise<File> {
+    let response = await fetch(path);
+    let data = await response.blob();
+    let metadata = {
+        type: type
+    };
+    return new File([data], name, metadata);
+};
