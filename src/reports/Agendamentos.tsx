@@ -7,6 +7,7 @@ import { ptBR } from "date-fns/locale";
 import { getState } from "@/store/AuthStore";
 
 type Report = {
+    filtro: Object
     data: Agendamentos[]
 }
 
@@ -30,7 +31,7 @@ export async function AgendamentosPDF({ data }: Report) {
                 }
             ],
             color: 'white',
-            margin: [15, 20, 15, 200],
+            margin: [15, 20, 25, 200],
         }];
 
     const dados = data?.map((agendamento) => {
@@ -100,6 +101,12 @@ export async function AgendamentosPDF({ data }: Report) {
         bold: true
     }
 
+    const filtroRel: Content = {
+        text: 'Filtro: 18/10/2023 - 25/12/2023',
+        fontSize: 10,
+        margin: [15, 20, 0, 0]
+    };
+
     const docDefinitions: TDocumentDefinitions = {
         pageSize: 'A4',
         pageMargins: [15, 50, 15, 40],
@@ -120,7 +127,7 @@ export async function AgendamentosPDF({ data }: Report) {
             };
         },
         header: [reportTitle],
-        content: [titulo, ...details],
+        content: [titulo, filtroRel, ...details],
         footer: rodape
     }
 
