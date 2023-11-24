@@ -56,9 +56,14 @@ function getTitulo(tituloRel: string) {
     return titulo;
 }
 
-function getFiltro() {
+function getFiltro(filtro: string) {
+
+    if (!filtro) {
+        return {} as Content
+    }
+
     const filtroRel: Content = {
-        text: 'Filtro: 18/10/2023 - 25/12/2023',
+        text: `Período: ${filtro}`,
         fontSize: 10,
         margin: [15, 20, 0, 0]
     };

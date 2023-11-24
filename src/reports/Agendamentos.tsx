@@ -9,7 +9,9 @@ import { getFiltro, getTitulo, header, rodape } from "./index";
 import { maskCnpj, maskPhone } from "@/utils/masks";
 
 type Report = {
-    filtro: Object
+    filtro: {
+        periodo?: string
+    }
     data: DadosRel[]
 }
 
@@ -87,7 +89,7 @@ export async function AgendamentosPDF({ data, filtro }: Report) {
             };
         },
         header: [header],
-        content: [getTitulo('Agendamentos por clientes'), filtro && getFiltro(), tabela],
+        content: [getTitulo('Agendamentos por clientes'), filtro && getFiltro(filtro.periodo!), tabela],
         footer: rodape
     }
 
