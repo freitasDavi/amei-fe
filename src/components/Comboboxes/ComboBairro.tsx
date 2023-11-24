@@ -44,7 +44,7 @@ export function ComboBairro({ codigoCidade, field }: Props) {
                 <FormControl>
                     <Button
                         disabled={!codigoCidade}
-                        variant="outline" className="text-gray-900">
+                        variant="outline" className="justify-between text-gray-900 dark:text-white">
                         {field.value
                             ? data?.content.find((bairro) => bairro.id === Number(field.value))?.nomeBairro
                             : "Selecione um bairro"

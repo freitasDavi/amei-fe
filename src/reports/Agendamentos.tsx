@@ -5,48 +5,38 @@ import { TDocumentDefinitions, Content } from "pdfmake/interfaces";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { getState } from "@/store/AuthStore";
+import { getFiltro, getTitulo, header, rodape } from "./index";
+import { maskCnpj, maskPhone } from "@/utils/masks";
 
 type Report = {
     filtro: Object
-    data: Agendamentos[]
+    data: DadosRel[]
 }
 
-export async function AgendamentosPDF({ data }: Report) {
-    const client = getState().userData;
-    var today = format(new Date(), "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+export type DadosRel = {
+    cnpjCliente: string,
+    nomeCliente: string,
+    telefoneCliente: string,
+    totalAgendamentos: number
+}
 
-    const reportTitle: Content = [
-        {
-            columns: [
-                {
-                    text: 'Criciúma, ' + today,
-                    fontSize: 10,
-                },
-                {
-                    text: client?.username!,
-                    alignment: 'right',
-                    bold: true,
-                    fontSize: 12,
-                }
-            ],
-            color: 'white',
-            margin: [15, 20, 25, 200],
-        }];
+export async function AgendamentosPDF({ data, filtro }: Report) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     const dados = data?.map((agendamento) => {
         return [
-            { text: agendamento.responsavelAgendamento, fontSize: 9, margin: [0, 2, 0, 2] },
-            { text: format(new Date(agendamento.dataAgendamento), 'dd/MM/yyyy', { locale: ptBR }), fontSize: 9, margin: [0, 2, 0, 2] },
-            { text: agendamento.enderecoAgendamento, fontSize: 9, margin: [0, 2, 0, 2] },
-            { text: agendamento.agendamentoCidade.nomeCidade, fontSize: 9, margin: [0, 2, 0, 2] },
+            { text: agendamento.nomeCliente, fontSize: 9, margin: [0, 2, 0, 2] },
+            // { text: format(new Date(agendamento.dataAgendamento), 'dd/MM/yyyy', { locale: ptBR }), fontSize: 9, margin: [0, 2, 0, 2] },
+            { text: maskCnpj(agendamento.cnpjCliente), fontSize: 9, margin: [0, 2, 0, 2] },
+            { text: maskPhone(agendamento.telefoneCliente), fontSize: 9, margin: [0, 2, 0, 2] },
+            { text: agendamento.totalAgendamentos, fontSize: 9, margin: [0, 2, 20, 2], alignment: 'right' },
 
         ]
     });
 
-    const details = [
+    const tabela = [
         {
-            marginTop: 20,
+            marginTop: 35,
             marginRight: 15,
             marginBottom: 10,
             marginLeft: 15,
@@ -55,10 +45,10 @@ export async function AgendamentosPDF({ data }: Report) {
                 widths: ['*', '*', '*', '*'],
                 body: [
                     [
-                        { text: 'Responsável', style: 'tableHeader', fontSize: 10, },
-                        { text: 'Data agendamento', style: 'tableHeader', fontSize: 10 },
-                        { text: 'Endereço', style: 'tableHeader', fontSize: 10 },
-                        { text: 'Cidade', style: 'tableHeader', fontSize: 10 },
+                        { text: 'Nome', style: 'tableHeader', fontSize: 10, },
+                        { text: 'CNPJ', style: 'tableHeader', fontSize: 10 },
+                        { text: 'Telefone', style: 'tableHeader', fontSize: 10 },
+                        { text: 'Total de agendamentos', style: 'tableHeader', fontSize: 10 },
                     ],
                     ...dados
                 ]
@@ -73,41 +63,11 @@ export async function AgendamentosPDF({ data }: Report) {
         }
     ];
 
-    const rodape = function (currentPage: number, totalPages: number): Content {
-        return [
-            {
-                columns: [
-                    {
-                        text: 'Emitido por amei - https://amei.onrender.com/',
-                        margin: [10, 10, 0, 10],
-                    },
-                    {
-                        text: `${currentPage.toString()} / ${totalPages.toString()}`,
-                        alignment: 'right',
-                        margin: [0, 10, 20, 0]
-                    }
-                ],
-                color: 'white',
-                fontSize: 9,
-            }
-        ]
-    };
-
-    const titulo: Content = {
-        text: 'Relatório de agendamentos',
-        alignment: 'center',
-        color: "white",
-        fontSize: 16,
-        bold: true
-    }
-
-    const filtroRel: Content = {
-        text: 'Filtro: 18/10/2023 - 25/12/2023',
-        fontSize: 10,
-        margin: [15, 20, 0, 0]
-    };
 
     const docDefinitions: TDocumentDefinitions = {
+        info: {
+            title: `RelatórioDeAgendamentos-${new Date()}`
+        },
         pageSize: 'A4',
         pageMargins: [15, 50, 15, 40],
         background: function () {
@@ -126,10 +86,10 @@ export async function AgendamentosPDF({ data }: Report) {
                 ]
             };
         },
-        header: [reportTitle],
-        content: [titulo, filtroRel, ...details],
+        header: [header],
+        content: [getTitulo('Agendamentos por clientes'), filtro && getFiltro(), tabela],
         footer: rodape
     }
 
-    pdfMake.createPdf(docDefinitions).download();
+    pdfMake.createPdf(docDefinitions).download(`RelatórioDeAgendamentos-${format(new Date(), 'dd-MM-yyyy', { locale: ptBR })}`);
 }

@@ -191,7 +191,7 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                                                 <PopoverTrigger asChild>
                                                     <FormControl >
                                                         <Button size="default" variant="outline" className={cn(
-                                                            "pl-3 text-left font-normal justify-start text-gray-900",
+                                                            "pl-3 text-left font-normal justify-start text-gray-900 dark:text-white",
                                                             !field.value && "text-muted-foreground"
                                                         )}>
                                                             {field.value ? (

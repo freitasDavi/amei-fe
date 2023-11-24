@@ -53,7 +53,7 @@ export function ComboCidade({ field, setCidade }: Props) {
                         variant="outline"
                         role="combobox"
                         className={cn(
-                            "justify-between text-gray-900",
+                            "justify-between text-gray-900 dark:text-white",
                             !field.value && "text-muted-foreground"
                         )}
                     >

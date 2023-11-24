@@ -107,12 +107,12 @@ export function LoginForm() {
                         )}
                     />
                     <div className="flex flex-row-reverse justify-between items-baseline">
-                        <Button className="bg-primary-logo hover:bg-primary-logo-dark" type="submit">Entrar</Button>
+                        <Button className="bg-primary-logo hover:bg-primary-logo-dark dark:text-white" type="submit">Entrar</Button>
 
 
-                        <p className="mt-4 text-sm text-gray-500 sm:mt-0">
+                        <p className="mt-4 text-sm text-gray-500 dark:text-gray-200 sm:mt-0">
                             Não tem uma conta?
-                            <Link to="/register" className="ml-2 text-primary-logo-dark hover:underline">Cadastre-se</Link>.
+                            <Link to="/register" className="ml-2 text-primary-logo-dark dark:text-primary-logo hover:underline">Cadastre-se</Link>.
                         </p>
                     </div>
                 </form>
