@@ -2,15 +2,18 @@
 
 export type Orcamentos = {
     id?: number;
-    telefoneClienteOrcamento: string;
+    nomeCliente: string;
+    telefoneCliente: string;
     dataEmissaoOrcamento?: Date;
     dataValidadeOrcamento: Date;
     valorTotalDoOrcamento: number;
     observacoesOrcamento: string;
     usuarioOrcamento: number;
-    //clienteOrcamento: number;
+    clienteOrcamento: {
+        id: number;
+    };
     //orcamentoOrdemServico?: number;
-    itensOrcamento?: ItensOrcamento[];
+    itensOrcamentos?: ItensOrcamento[];
 };
 
 export type OrcamentosTable = {
@@ -34,4 +37,5 @@ export type ItensOrcamento = {
     valorTotal: number;
     descricao: string;
     codigoOrcamento?: number;
+    quantidade: number;
 };

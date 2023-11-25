@@ -1,11 +1,8 @@
 import { Agendamentos } from "@/@types/Agendamentos";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { MagnifyingGlass, Pen } from "@phosphor-icons/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { ArrowUpDown } from "lucide-react";
 import { Link } from "react-router-dom";
 
 

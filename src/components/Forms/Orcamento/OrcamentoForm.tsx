@@ -12,7 +12,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { ptBR } from "date-fns/locale";
 import { OrcamentoItemForm } from "./OrcamentoItemForm";
 import { useEffect, useState } from "react";
-import { ItensOrcamento } from "@/@types/Orcamentos";
+import { ItensOrcamento, Orcamentos } from "@/@types/Orcamentos";
 import useAuthStore from "@/store/AuthStore";
 import { AxiosError } from "axios";
 import { useToast } from "@/components/ui/use-toast";
@@ -31,13 +31,15 @@ const schemaOrcamento = z.object({
     observacoesOrcamento: z.string(),
     usuarioOrcamento: z.coerce.number(),
     clienteOrcamento: z.coerce.number().optional(),
-    orcamentoOrdemServico: z.number().optional(),
 })
-
 
 export type orcamentoSc = z.infer<typeof schemaOrcamento>;
 
-export function OrcamentoForm() {
+type OrcamentoFormProps = {
+    orcamento: Orcamentos | undefined
+}
+
+export function OrcamentoForm({ orcamento }: OrcamentoFormProps) {
     const navigate = useNavigate();
     const user = useAuthStore(state => state.userData);
     const { toast } = useToast();
@@ -55,6 +57,33 @@ export function OrcamentoForm() {
     });
     const phone = form.watch("telefoneCliente");
 
+    useEffect(() => {
+        if (orcamento) {
+            form.setValue("id", orcamento.id);
+            form.setValue("nomeCliente", orcamento.nomeCliente);
+            form.setValue("telefoneCliente", orcamento.telefoneCliente);
+            form.setValue("dataEmissaoOrcamento", new Date(orcamento.dataEmissaoOrcamento!));
+            form.setValue("dataValidadeOrcamento", new Date(orcamento.dataValidadeOrcamento));
+            form.setValue("valorTotalDoOrcamento", orcamento.valorTotalDoOrcamento);
+            form.setValue("observacoesOrcamento", orcamento.observacoesOrcamento);
+            form.setValue("usuarioOrcamento", orcamento.usuarioOrcamento);
+            form.setValue("clienteOrcamento", orcamento.clienteOrcamento.id);
+
+            var itemsOrc: ItensOrcamento[] = [];
+
+            orcamento.itensOrcamentos!.forEach(i => {
+                itemsOrc.push({
+                    id: i.id,
+                    quantidade: i.quantidade,
+                    descricao: i.descricao,
+                    valorUnitario: i.valorUnitario,
+                    valorTotal: i.valorTotal,
+                })
+            });
+
+            setItems(itemsOrc);
+        }
+    }, [orcamento]);
 
     useEffect(() => {
         if (user) {
@@ -69,11 +98,22 @@ export function OrcamentoForm() {
     async function handleNovoOrcamento(data: orcamentoSc) {
         try {
 
-            await baseApi.post("/orcamentos", {
-                ...data,
-                telefoneCliente: removePhoneMask(data.telefoneCliente),
-                itensOrcamentos: items
-            });
+            if (data.id) {
+                await baseApi.put(`/orcamentos/${data.id}`, {
+                    ...data,
+                    telefoneCliente: removePhoneMask(data.telefoneCliente),
+                    itensOrcamentos: items
+                });
+
+            } else {
+                await baseApi.post("/orcamentos", {
+                    ...data,
+                    telefoneCliente: removePhoneMask(data.telefoneCliente),
+                    itensOrcamentos: items
+                });
+
+            }
+
 
             toast({
                 title: "Sucesso",
@@ -116,6 +156,16 @@ export function OrcamentoForm() {
         var valorTotal = curItems.reduce((acc, item) => acc + item.valorTotal, 0);
 
         form.setValue("valorTotalDoOrcamento", valorTotal);
+    }
+
+    const removeItem = (descricao: string) => {
+        var currentItems = items.filter(i => i.descricao !== descricao);
+        setItems(currentItems);
+
+        var valorTotal = currentItems.reduce((acc, item) => acc + item.valorTotal, 0);
+
+        form.setValue("valorTotalDoOrcamento", valorTotal);
+
     }
 
     // Set dados do cliente selecionado;
@@ -172,7 +222,7 @@ export function OrcamentoForm() {
                 </div>
 
                 <fieldset className="border-primary-300 border-4 rounded-lg justify-evenly gap-10 p-5">
-                    <OrcamentoItemForm codigoOrcamento={form.getValues().id} items={items} setItems={setItemsF} />
+                    <OrcamentoItemForm codigoOrcamento={form.getValues().id} items={items} setItems={setItemsF} removeItem={removeItem} />
                 </fieldset>
 
                 <div className="flex justify-evenly gap-10 p-5">

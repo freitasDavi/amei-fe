@@ -30,6 +30,7 @@ export const router = createBrowserRouter(
                 <Route path="/servicos" element={<ListarServicos />} />
                 <Route path="/orcamentos" element={<Orcamento />} />
                 <Route path="/orcamentos/novo" element={<NovoOrcamento />} />
+                <Route path="/orcamentos/edit/:id" element={<NovoOrcamento />} />
                 <Route path="/cursos" element={<CursosPage />} />
                 <Route path="/agendamentos" element={<AgendamentosPage />} />
                 <Route path="/ordens" element={<OrdemServicoLista />} />
