@@ -1,4 +1,4 @@
-import { Orcamentos } from "@/@types/Orcamentos"
+import { OrcamentosTable } from "@/@types/Orcamentos"
 import { PaginationType } from "@/@types/Pagination";
 import { exportCSV } from "@/api/Orcamento";
 import { Loading } from "@/components/Loading";
@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 async function fetchOrcamentos(userId: number | undefined) {
     if (!userId) return;
 
-    const res = await baseApi.get<PaginationType<Orcamentos>>('/orcamentos');
+    const res = await baseApi.get<PaginationType<OrcamentosTable>>('/orcamentos');
 
     return res.data;
 }
