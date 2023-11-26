@@ -1,44 +1,46 @@
-import { ItensOrcamento } from "@/@types/Orcamentos";
-import { columns } from "@/components/Tables/Orcamentos/Itens/columns";
-import { DataTable } from "@/components/Tables/Servicos/data-table";
+import { ItensOrdem } from "@/@types/OrdemServico";
 import { Button } from "@/components/ui/button";
 import { FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ChangeEvent, useEffect, useState } from "react";
-import { z } from "zod"
+import { z } from "zod";
 
-const schemaItemOrc = z.object({
+
+const schemaItemOrdem = z.object({
     id: z.coerce.number().optional(),
     valorUnitario: z.coerce.number(),
     valorTotal: z.coerce.number().optional(),
-    descricao: z.string(),
+    descricaoItemOrdem: z.string(),
     quantidade: z.coerce.number(),
-    codigoOrcamento: z.coerce.number().optional()
+    OrdemDeServico: z.coerce.number().optional()
 });
 
-type itemOrcSchema = z.infer<typeof schemaItemOrc>;
+type itemOrdemSchema = z.infer<typeof schemaItemOrdem>;
 
 
 type Props = {
-    items: ItensOrcamento[],
-    codigoOrcamento?: number;
-    setItems: (item: ItensOrcamento) => void;
-    removeItem: (descricao: string) => void;
+    items: ItensOrdem[],
+    codigoOrdem?: number;
+    setItems: (item: ItensOrdem) => void;
+    removeItem: (id: number) => void;
 }
 
-export function OrcamentoItemForm({ items, codigoOrcamento, setItems, removeItem }: Props) {
-    const [data, setData] = useState<itemOrcSchema>({} as itemOrcSchema);
+export function OrdensItemForm({ items, codigoOrdem, setItems, removeItem }: Props) {
+    const [data, setData] = useState<itemOrdemSchema>({} as itemOrdemSchema);
 
     async function handleSalvarItemOrcamento() {
-        var newItem: ItensOrcamento = {
-            descricao: data.descricao,
+        var newItem: ItensOrdem = {
+            descricaoItemOrdem: data.descricaoItemOrdem,
             valorTotal: data.valorTotal!,
             valorUnitario: data.valorUnitario,
-            quantidade: data.quantidade
+            quantidade: data.quantidade,
+            id: items.length + 1
         }
 
-        if (codigoOrcamento) {
-            newItem.codigoOrcamento = codigoOrcamento;
+        console.log(newItem);
+
+        if (codigoOrdem) {
+            newItem.OrdemDeServico = codigoOrdem;
         }
 
         setItems(newItem);
@@ -61,8 +63,8 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems, removeItem
         }
     }, [data.quantidade, data.valorUnitario]);
 
-    const onClickRemoveItem = (descricao: string) => {
-        removeItem(descricao);
+    const onClickRemoveItem = (id: number) => {
+        removeItem(id);
     }
 
     return (
@@ -84,8 +86,8 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems, removeItem
             </div>
             <div className="my-4 grid grid-cols-3 gap-10 items-end">
                 <FormItem className="col-span-2">
-                    <FormLabel htmlFor="descricao" >Descrição</FormLabel>
-                    <Input name="descricao" id="descricao" value={data.descricao} onChange={(e) => handleInputChange(e)} />
+                    <FormLabel htmlFor="descricaoItemOrdem" >Descrição</FormLabel>
+                    <Input name="descricaoItemOrdem" id="descricao" value={data.descricaoItemOrdem} onChange={(e) => handleInputChange(e)} />
                 </FormItem>
                 <Button onClick={handleSalvarItemOrcamento} type="button" className="col-span-1">Adicionar</Button>
             </div>
@@ -115,9 +117,9 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems, removeItem
                         </thead>
                         <tbody>
                             {items.map((i) => (
-                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={i.descricao}>
+                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={i.id}>
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {i.descricao}
+                                        {i.descricaoItemOrdem}
                                     </th>
                                     <td className="px-6 py-4">
                                         {i.quantidade}
@@ -129,7 +131,7 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems, removeItem
                                         {i.valorTotal}
                                     </td>
                                     <td className="px-6 py-4">
-                                        <Button onClick={() => onClickRemoveItem(i.descricao)}>
+                                        <Button onClick={() => onClickRemoveItem(i.id!)}>
                                             Remover
                                         </Button>
                                     </td>

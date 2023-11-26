@@ -12,12 +12,13 @@ import { Login } from "@/pages/Login";
 import { Orcamento } from "@/pages/Orcamentos";
 import { NovoOrcamento } from "@/pages/Orcamentos/Novo";
 import { OrdemServicoLista } from "@/pages/Ordens";
+import { NovaOrdem } from "@/pages/Ordens/Novo";
 import { PerfilPage } from "@/pages/Perfil";
 import { PagamentoAssinatura } from "@/pages/Perfil/PagamentoAssinatura";
 import { PagamentoSucesso } from "@/pages/Perfil/PagamentoSucesso";
 import { Protected } from "@/pages/Protected";
 import { ListarServicos } from "@/pages/Servicos";
-import { Route, createBrowserRouter, createHashRouter, createRoutesFromElements } from "react-router-dom";
+import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
 
 export const router = createBrowserRouter(
@@ -34,6 +35,8 @@ export const router = createBrowserRouter(
                 <Route path="/cursos" element={<CursosPage />} />
                 <Route path="/agendamentos" element={<AgendamentosPage />} />
                 <Route path="/ordens" element={<OrdemServicoLista />} />
+                <Route path="/ordens/novo" element={<NovaOrdem />} />
+                <Route path="/ordens/edit/:id" element={<NovaOrdem />} />
                 <Route path="/timer" element={<CronometroPage />} />
                 <Route path="/meuPerfil" element={<Perfil />} >
                     <Route path="/meuPerfil" element={<PerfilPage />} />

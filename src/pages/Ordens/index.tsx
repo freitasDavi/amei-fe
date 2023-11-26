@@ -29,7 +29,7 @@ export function OrdemServicoLista() {
             </div>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da lisat">
                 <Button onClick={() => refetch()} >Pesquisar</Button>
-
+                <Link to="/ordens/novo"><Button>Novo</Button></Link>
             </div>
             {isFetching ? (
                 <div className="flex-1 flex justify-center"><Loading /></div>
