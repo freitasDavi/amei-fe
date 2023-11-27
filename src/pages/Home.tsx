@@ -9,11 +9,11 @@ export default function Home() {
 
     return (
         <div className="w-[96%] px-10 overflow-x-hidden">
-            <h1 className="text-[4rem] font-logo text-primary-logo font-bold mb-8">Bem-vindo {userData?.username}</h1>
+            <h1 className="text-[4rem] font-logo text-primary-logo font-bold mb-8 dark:text-white">Bem-vindo, {userData?.username}</h1>
             <section id="cards" className="">
                 <Slider />
             </section>
-            <section className="mt-10 grid grid-cols-1 md:grid-cols-2">
+            <section className="mt-10 grid grid-cols-1 md:grid-cols-2 min-h-[350px]">
                 <GraficoHome />
                 <UltimosAgendamentos />
             </section>

@@ -15,7 +15,7 @@ import { Link, useSearchParams } from "react-router-dom";
 async function fetchServicos(userId: number | undefined) {
     if (!userId) return;
 
-    const res = await baseApi.get<PaginationType<Servicos>>(`/servicos?servicoUsuario=${userId}`);
+    const res = await baseApi.get<PaginationType<Servicos>>(`/servicos?codigoUsuario=${userId}`);
 
     return res.data;
 }

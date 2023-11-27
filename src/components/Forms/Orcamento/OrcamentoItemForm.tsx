@@ -23,9 +23,10 @@ type Props = {
     items: ItensOrcamento[],
     codigoOrcamento?: number;
     setItems: (item: ItensOrcamento) => void;
+    removeItem: (descricao: string) => void;
 }
 
-export function OrcamentoItemForm({ items, codigoOrcamento, setItems }: Props) {
+export function OrcamentoItemForm({ items, codigoOrcamento, setItems, removeItem }: Props) {
     const [data, setData] = useState<itemOrcSchema>({} as itemOrcSchema);
 
     async function handleSalvarItemOrcamento() {
@@ -33,12 +34,11 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems }: Props) {
             descricao: data.descricao,
             valorTotal: data.valorTotal!,
             valorUnitario: data.valorUnitario,
+            quantidade: data.quantidade
         }
 
         if (codigoOrcamento) {
             newItem.codigoOrcamento = codigoOrcamento;
-
-            return;
         }
 
         setItems(newItem);
@@ -60,6 +60,10 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems }: Props) {
             })
         }
     }, [data.quantidade, data.valorUnitario]);
+
+    const onClickRemoveItem = (descricao: string) => {
+        removeItem(descricao);
+    }
 
     return (
         <section>
@@ -86,10 +90,56 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems }: Props) {
                 <Button onClick={handleSalvarItemOrcamento} type="button" className="col-span-1">Adicionar</Button>
             </div>
             <div className="mt-10">
-                <DataTable
-                    data={items}
-                    columns={columns}
-                />
+
+
+                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" className="px-6 py-3">
+                                    Descrição
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Quantidade
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Valor unitário
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Valor total
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Remover
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {items.map((i) => (
+                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={i.descricao}>
+                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {i.descricao}
+                                    </th>
+                                    <td className="px-6 py-4">
+                                        {i.quantidade}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {i.valorUnitario}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {i.valorTotal}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <Button onClick={() => onClickRemoveItem(i.descricao)}>
+                                            Remover
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
+
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </section>
     )

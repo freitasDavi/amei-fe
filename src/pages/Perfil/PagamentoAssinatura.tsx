@@ -13,6 +13,7 @@ export function PagamentoAssinatura() {
 
     useEffect(() => {
         async function getCheckoutSession() {
+            setIsLoading(true);
             const response = await baseApi.get(`/pagamentos/novaAssinatura/${planoSelecionado}`)
 
             setKey(response.data.client_secret);

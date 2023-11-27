@@ -1,4 +1,5 @@
 import { User } from "@/@types/UserResponse";
+import { Loading } from "@/components/Loading";
 import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
 import { useQuery } from "@tanstack/react-query";
@@ -17,9 +18,10 @@ export function Perfil() {
 
     if (!user) return <div>Loading...</div>;
 
-    const { data } = useQuery({
+    const { data, isFetching } = useQuery({
         queryKey: ["usuario"],
-        queryFn: () => fetchUserData(user.id)
+        queryFn: () => fetchUserData(user.id),
+        refetchOnWindowFocus: false
     });
 
     const navigateToCustomerPortal = async () => {
@@ -68,7 +70,11 @@ export function Perfil() {
                     </ul>
                 </div>
                 <div className="flex-1">
-                    <Outlet context={{ user: data } satisfies ContextType} />
+                    {isFetching ? (
+                        <Loading />
+                    ) : (
+                        <Outlet context={{ user: data } satisfies ContextType} />
+                    )}
                 </div>
             </div>
         </div>

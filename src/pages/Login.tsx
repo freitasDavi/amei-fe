@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export function Login() {
     return (
         <div>
-            <section className="bg-white">
+            <section className="bg-white dark:bg-slate-800">
                 <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
                     <aside
                         className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6"
@@ -27,7 +27,7 @@ export function Login() {
                             </Link>
 
                             <h1
-                                className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl"
+                                className="mt-6 text-2xl font-bold text-gray-900 dark:text-slate-200 sm:text-3xl"
                             >
                                 Bem vindo de volta 👋🏼
                             </h1>

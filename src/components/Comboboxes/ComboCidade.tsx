@@ -21,7 +21,7 @@ export type ComboCidade = {
 }
 
 async function fetchCidades() {
-    const response = await baseApi.get<PaginationType<ComboCidade>>("/cidade");
+    const response = await baseApi.get<PaginationType<ComboCidade>>("/cidade?size=650");
 
     return response.data;
 }
@@ -31,6 +31,7 @@ export function ComboCidade({ field, setCidade }: Props) {
     const { data, isFetching } = useQuery({
         queryKey: ["cidades"],
         queryFn: fetchCidades,
+        refetchOnWindowFocus: false,
     })
 
 
@@ -52,7 +53,7 @@ export function ComboCidade({ field, setCidade }: Props) {
                         variant="outline"
                         role="combobox"
                         className={cn(
-                            "justify-between text-gray-900",
+                            "justify-between text-gray-900 dark:text-white",
                             !field.value && "text-muted-foreground"
                         )}
                     >
@@ -64,7 +65,7 @@ export function ComboCidade({ field, setCidade }: Props) {
                     </Button>
                 </FormControl>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent className="max-h-[200px] overflow-auto">
                 <Command className="z-10">
                     <CommandInput placeholder="Selecione uma cidade..." />
                     <CommandEmpty>Cidade não encontrado</CommandEmpty>

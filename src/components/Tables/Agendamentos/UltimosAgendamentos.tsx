@@ -24,7 +24,7 @@ export function UltimosAgendamentos() {
 
     return (
         <div className="p-4 flex flex-col gap-4">
-            <h1 className="text-xl text-primary-logo font-semibold">Últimos Agendamentos</h1>
+            <h1 className="text-xl text-primary-logo font-semibold dark:text-white">Últimos Agendamentos</h1>
             {/* {data && ( */}
             <DataTable
                 data={data ? data : []}

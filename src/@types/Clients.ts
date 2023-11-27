@@ -21,4 +21,5 @@ export type ClienteResponseDTO = {
     nome: string;
     email: string;
     telefone: string;
+    cnpjCliente: string;
 }

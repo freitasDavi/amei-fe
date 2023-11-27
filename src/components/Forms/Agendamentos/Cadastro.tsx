@@ -50,7 +50,6 @@ type Props = {
 
 export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
     const [_, setSearchParams] = useSearchParams();
-    const [openSuccess, setOpenSuccess] = useState(false);
     const user = useAuthStore(state => state.userData);
     const form = useForm<agendamentoSc>({
         resolver: zodResolver(agendamentoSchema),
@@ -93,11 +92,11 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                 });
             }
 
-
-
-            setOpenSuccess(true);
             form.reset();
             pesquisar();
+            setTimeout(() => {
+                setOpen(false);
+            }, 500);
 
         } catch (err) {
             if (err instanceof AxiosError) {
@@ -117,13 +116,6 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                 duration: 10000
             })
         }
-    }
-
-    const closeBothModals = () => {
-        setOpenSuccess(false);
-        setTimeout(() => {
-            setOpen(false);
-        }, 500);
     }
 
     useEffect(() => {
@@ -173,7 +165,7 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                                     name="nomeAgendamento"
                                     render={({ field }) => (
                                         <FormItem className="flex-1">
-                                            <FormLabel htmlFor="nomeAgendamento">Nome</FormLabel>
+                                            <FormLabel htmlFor="nomeAgendamento">Descrição</FormLabel>
                                             <FormControl>
                                                 <Input id="nomeAgendamento" placeholder="Trocar rebimboca da parafuseta" {...field} />
                                             </FormControl>
@@ -186,12 +178,12 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                                     name="dataAgendamento"
                                     render={({ field }) => (
                                         <FormItem className="flex-1 flex flex-col gap-2 mt-1">
-                                            <FormLabel htmlFor="dataValidadeOrcamento">Validade do orçamento</FormLabel>
+                                            <FormLabel htmlFor="dataValidadeOrcamento">Data do agendamento</FormLabel>
                                             <Popover modal>
                                                 <PopoverTrigger asChild>
                                                     <FormControl >
                                                         <Button size="default" variant="outline" className={cn(
-                                                            "pl-3 text-left font-normal justify-start text-gray-900",
+                                                            "pl-3 text-left font-normal justify-start text-gray-900 dark:text-white",
                                                             !field.value && "text-muted-foreground"
                                                         )}>
                                                             {field.value ? (
@@ -324,12 +316,6 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                             <Button type="submit" variant="default">Salvar</Button>
                         </form>
                     </Form>
-                    <Dialog modal open={openSuccess} onOpenChange={closeBothModals}>
-                        <DialogContent>
-                            <DialogHeader>Agendamento salvo com sucesso</DialogHeader>
-                            <Lottie animationData={calendarDone} loop={false} onComplete={() => closeBothModals()} />
-                        </DialogContent>
-                    </Dialog>
                 </DialogDescription>
             </DialogContent>
         </Dialog>

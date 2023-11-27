@@ -2,6 +2,7 @@ import { CadastroCronometro } from "@/components/Forms/Cronometro/Cadastro";
 import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/Cronometro/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
+import { Button } from "@/components/ui/button";
 import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
 import { ArrowBendDownLeft } from "@phosphor-icons/react";
@@ -19,9 +20,10 @@ export function CronometroPage() {
 
     if (!userData) return null;
 
-    const { data, isFetching } = useQuery({
+    const { data, isFetching, refetch } = useQuery({
         queryKey: ["Cronometros"],
-        queryFn: () => fetchCronometros(userData.id)
+        queryFn: () => fetchCronometros(userData.id),
+        refetchOnWindowFocus: false
     })
 
     if (isFetching) return <div>Carregando...</div>
@@ -33,6 +35,7 @@ export function CronometroPage() {
                 <h1 className="font-medium text-3xl text-primary-logo">Cronômetros realizados</h1>
             </div>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da lista">
+                <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
                 <CadastroCronometro />
             </div>
             {isFetching ? (

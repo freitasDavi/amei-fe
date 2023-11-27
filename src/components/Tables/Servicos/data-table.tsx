@@ -29,14 +29,14 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="rounded-md border border-white">
+            <div className="rounded-md border border-white dark:border-slate-700">
                 <Table >
                     <TableHeader >
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id} className="bg-white hover:bg-white">
+                            <TableRow key={headerGroup.id} className="bg-white dark:bg-slate-600 hover:bg-white">
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id} className="text-slate-500">
+                                        <TableHead key={header.id} className="text-slate-500 dark:text-white">
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -55,7 +55,7 @@ export function DataTable<TData, TValue>({
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
-                                    className="bg-white text-slate-900 hover:bg-primary-200"
+                                    className="bg-white dark:bg-slate-600 text-slate-900 dark:text-slate-200 hover:bg-primary-200 dark:hover:bg-primary-logo-dark"
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
@@ -75,10 +75,10 @@ export function DataTable<TData, TValue>({
                 </Table>
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
-                <Button variant="outline" size="sm" className="text-slate-800" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+                <Button variant="outline" size="sm" className="text-slate-800 dark:text-slate-200" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
                     Página anterior
                 </Button>
-                <Button variant="outline" size="sm" className="text-slate-800" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+                <Button variant="outline" size="sm" className="text-slate-800 dark:text-slate-200" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
                     Próxima página
                 </Button>
             </div>

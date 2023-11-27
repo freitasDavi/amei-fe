@@ -35,7 +35,7 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="cepUsuario">CEP</FormLabel>
                             <FormControl>
-                                <Input id="cepUsuario" placeholder="00000-000   " {...field} />
+                                <Input id="cepUsuario" placeholder="00000-000" maxLength={9} {...field} />
                             </FormControl>
                             <FormMessage>
                                 {formState.errors.cepUsuario && formState.errors.cepUsuario.message}

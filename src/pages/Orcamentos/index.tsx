@@ -1,5 +1,6 @@
-import { Orcamentos } from "@/@types/Orcamentos"
+import { OrcamentosTable } from "@/@types/Orcamentos"
 import { PaginationType } from "@/@types/Pagination";
+import { exportCSV } from "@/api/Orcamento";
 import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/Orcamentos/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
@@ -13,7 +14,7 @@ import { Link } from "react-router-dom";
 async function fetchOrcamentos(userId: number | undefined) {
     if (!userId) return;
 
-    const res = await baseApi.get<PaginationType<Orcamentos>>('/orcamentos');
+    const res = await baseApi.get<PaginationType<OrcamentosTable>>('/orcamentos');
 
     return res.data;
 }
@@ -34,6 +35,7 @@ export function Orcamento() {
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da Lista">
                 <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
                 <Link to="novo"><Button variant="default" type="button">Novo</Button></Link>
+                <Button variant="default" type="button" onClick={() => exportCSV()}>Exportar CSV</Button>
             </div>
             {isFetching ? (
                 <div className="flex-1 flex justify-center"><Loading /></div>

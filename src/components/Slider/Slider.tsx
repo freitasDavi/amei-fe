@@ -17,7 +17,7 @@ export function Slider() {
             <Swiper
                 modules={[Navigation]}
                 spaceBetween={0}
-                slidesPerView={6}
+                slidesPerView={5}
                 navigation={{
                     nextEl: '.review-swipper-button-next',
                     prevEl: '.review-swipper-button-prev'
@@ -70,7 +70,7 @@ export function Slider() {
                     <CardSlider
                         icon="Alarm"
                         path="/timer"
-                        title="Timer"
+                        title="Relógio"
                     />
                 </SwiperSlide>
             </Swiper>

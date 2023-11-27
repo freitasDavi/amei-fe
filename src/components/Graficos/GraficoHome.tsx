@@ -2,40 +2,28 @@ import { ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Legend, Cartesian
 
 const data = [
     {
-        name: 'Janeiro',
+        name: 'Agosto',
         Faturamento: 200,
     },
     {
-        name: 'Favereiro',
+        name: 'Setembro',
         Faturamento: 3000,
     },
     {
-        name: 'Março',
+        name: 'Outubro',
         Faturamento: 2000,
     },
     {
-        name: 'Abril',
+        name: 'Novembro',
         Faturamento: 2780,
-    },
-    {
-        name: 'Maio',
-        Faturamento: 1890,
-    },
-    {
-        name: 'Junho',
-        Faturamento: 2390,
-    },
-    {
-        name: 'Julho',
-        Faturamento: 3490,
-    },
+    }
 ];
 
 
 export function GraficoHome() {
     return (
         <div className="w-full max-h-[500px] flex flex-col gap-4 p-4">
-            <h2 className="text-xl text-primary-logo font-semibold">Faturamentos</h2>
+            <h2 className="text-xl text-primary-logo font-semibold dark:text-white">Faturamentos</h2>
             <ResponsiveContainer width="100%">
                 <BarChart
                     width={500}

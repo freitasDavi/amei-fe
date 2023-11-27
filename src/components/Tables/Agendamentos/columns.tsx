@@ -1,11 +1,8 @@
 import { Agendamentos } from "@/@types/Agendamentos";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { MagnifyingGlass, Pen } from "@phosphor-icons/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { ArrowUpDown } from "lucide-react";
 import { Link } from "react-router-dom";
 
 
@@ -53,7 +50,7 @@ export const columnsHome: ColumnDef<Agendamentos>[] = [
         accessorKey: "id",
         cell: (props) => (
             <Link to={`/agendamentos/${props.getValue()}`}>
-                <MagnifyingGlass className="text-primary-logo hover:text-primary-logo-dark" size={20} weight="bold" />
+                <MagnifyingGlass className="text-primary-logo hover:text-primary-logo-dark dark:text-white dark:hover:text-slate-300" size={20} weight="bold" />
             </Link>
         ),
     },
@@ -62,7 +59,7 @@ export const columnsHome: ColumnDef<Agendamentos>[] = [
         header: "Responsável"
     },
     {
-        accessorFn: (row) => format(new Date(row.dataAgendamento), "dd/MM/yyyy HH:mm", { locale: ptBR }),
+        accessorFn: (row) => format(new Date(row.dataAgendamento), "dd/MM/yyyy", { locale: ptBR }),
 
         header: "Data agendamento"
     },

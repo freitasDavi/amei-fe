@@ -1,7 +1,9 @@
 import { OrdemServico } from "@/@types/OrdemServico";
 import { Checkbox } from "@/components/ui/checkbox";
 import { maskPhone } from "@/utils/masks";
+import { Pen } from "@phosphor-icons/react";
 import { ColumnDef } from "@tanstack/react-table";
+import { Link } from "react-router-dom";
 
 
 export const columns: ColumnDef<OrdemServico>[] = [
@@ -43,5 +45,17 @@ export const columns: ColumnDef<OrdemServico>[] = [
     }, {
         accessorFn: (row) => row.clienteOrdem.nome,
         header: "Cliente"
+    }, {
+        accessorKey: "id",
+        header: 'Ações',
+        cell: (props) => (
+            <div>
+                <Link to={`/ordens/edit/${props.getValue()}`} className="text-primary-logo hover:text-primary-logo-dark">
+                    <Pen size={20} weight="fill" />
+                </Link>
+            </div>
+        ),
+        enableSorting: false,
+        enableHiding: false
     }
 ];

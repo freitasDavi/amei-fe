@@ -6,6 +6,7 @@ import { columns } from "@/components/Tables/Agendamentos/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
 import { Button } from "@/components/ui/button";
 import { baseApi } from "@/lib/api";
+import { ParametrosAgendamentoRel } from "@/reports/forms/ParametrosAgendamentoRel";
 import useAuthStore from "@/store/AuthStore";
 import { ArrowBendDownLeft } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
@@ -15,11 +16,10 @@ import { Link, useSearchParams } from "react-router-dom";
 async function fetchAgendamentos(userId: number | undefined) {
     if (!userId) return;
 
-    const res = await baseApi.get<PaginationType<Agendamentos>>('/agendamentos?usuarioAgendamento=' + userId);
+    const res = await baseApi.get<PaginationType<Agendamentos>>('/agendamentos?filter=usuarioAgendamento=' + userId);
 
     return res.data;
 }
-
 
 export function AgendamentosPage() {
     const [open, setOpen] = useState(false);
@@ -28,6 +28,7 @@ export function AgendamentosPage() {
     const { data, refetch, isPending, isFetching } = useQuery({
         queryKey: ["agendamentos"],
         queryFn: () => fetchAgendamentos(user?.id),
+        refetchOnWindowFocus: false
     });
     const [agendamentoSelecionado, setAgendamentoSelecionado] = useState<Agendamentos | undefined>(undefined);
 
@@ -56,6 +57,7 @@ export function AgendamentosPage() {
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação do agendamento">
                 <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
                 <CadastroAgendamento pesquisar={refetch} open={open} setOpen={setOpen} data={agendamentoSelecionado} />
+                <ParametrosAgendamentoRel />
             </div>
             <section className="mt-10">
                 {isPending || isFetching ? (
