@@ -1,10 +1,8 @@
-import { Agendamentos } from "@/@types/Agendamentos";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts"
-import { TDocumentDefinitions, Content } from "pdfmake/interfaces";
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { TDocumentDefinitions } from "pdfmake/interfaces";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { getState } from "@/store/AuthStore";
 import { getFiltro, getTitulo, header, rodape } from "./index";
 import { maskCnpj, maskPhone } from "@/utils/masks";
 
@@ -22,8 +20,9 @@ export type DadosRel = {
     totalAgendamentos: number
 }
 
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+
 export async function AgendamentosPDF({ data, filtro }: Report) {
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     const dados = data?.map((agendamento) => {
         return [
