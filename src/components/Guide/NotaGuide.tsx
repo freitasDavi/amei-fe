@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Steps } from 'intro.js-react';
-import 'intro.js/introjs.css';
+import '../../assets/css/introjs.css';
 import { useQuery } from "@tanstack/react-query";
 import { OrdemServicoCad } from "@/@types/OrdemServico";
 import { baseApi } from "@/lib/api";
