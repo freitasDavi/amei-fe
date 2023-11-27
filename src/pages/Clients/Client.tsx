@@ -15,7 +15,7 @@ import { Link, useSearchParams } from "react-router-dom";
 async function fetchClientes(id: number | undefined) {
     if (!id) return;
 
-    const response = await baseApi.get<PaginationType<Clientes>>("clientes?usuarioCliente=" + id);
+    const response = await baseApi.get<PaginationType<Clientes>>("clientes");
 
     return response.data;
 }
@@ -25,7 +25,8 @@ export function Client() {
     const user = useAuthStore(state => state.userData);
     const { data, refetch, isFetching } = useQuery({
         queryKey: ['Clientes'],
-        queryFn: () => fetchClientes(user?.id)
+        queryFn: () => fetchClientes(user?.id),
+        refetchOnWindowFocus: false,
     })
     const [searchParams] = useSearchParams();
     const [clienteSelecionado, setClienteSelecionado] = useState<Clientes | undefined>(undefined);

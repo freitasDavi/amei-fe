@@ -78,14 +78,14 @@ export function Navbar() {
 
                         <li>
                             <Link
-                                to="/"
+                                to="/ordens"
                                 className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                             >
                                 <NewspaperClipping size={28} className="opacity-75" />
                                 <span
                                     className="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100"
                                 >
-                                    Relatórios
+                                    Ordens
                                 </span>
                             </Link>
                         </li>
