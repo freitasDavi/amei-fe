@@ -22,7 +22,8 @@ export function CronometroPage() {
 
     const { data, isFetching, refetch } = useQuery({
         queryKey: ["Cronometros"],
-        queryFn: () => fetchCronometros(userData.id)
+        queryFn: () => fetchCronometros(userData.id),
+        refetchOnWindowFocus: false
     })
 
     if (isFetching) return <div>Carregando...</div>
