@@ -1,3 +1,4 @@
+import { NotaGuide } from "@/components/Guide/NotaGuide";
 import { DefaultLayout } from "@/layouts/default";
 import { Perfil } from "@/layouts/perfil";
 import { AgendamentosPage } from "@/pages/Agendamentos";
@@ -37,6 +38,7 @@ export const router = createBrowserRouter(
                 <Route path="/ordens" element={<OrdemServicoLista />} />
                 <Route path="/ordens/novo" element={<NovaOrdem />} />
                 <Route path="/ordens/edit/:id" element={<NovaOrdem />} />
+                <Route path="/ordens/emissaoNF/:id" element={<NotaGuide />} />
                 <Route path="/timer" element={<CronometroPage />} />
                 <Route path="/meuPerfil" element={<Perfil />} >
                     <Route path="/meuPerfil" element={<PerfilPage />} />
