@@ -3,13 +3,16 @@ import { PaginationType } from "@/@types/Pagination";
 import { exportCSV } from "@/api/Orcamento";
 import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/Orcamentos/columns";
-import { DataTable } from "@/components/Tables/Servicos/data-table";
+import { DataTable } from "@/components/Tables/CheckBoxDataTable";
 import { Button } from "@/components/ui/button";
 import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
 import { ArrowBendDownLeft } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { OrcamentoPDF } from "@/reports/orcamento/OrcamentoEx";
 
 async function fetchOrcamentos(userId: number | undefined) {
     if (!userId) return;
@@ -20,11 +23,27 @@ async function fetchOrcamentos(userId: number | undefined) {
 }
 
 export function Orcamento() {
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedRow, setSelectedRow] = useState<OrcamentosTable | null>(null);
     const user = useAuthStore(state => state.userData);
     const { data, refetch, isFetching } = useQuery({
         queryKey: ['orcamentos'],
-        queryFn: () => fetchOrcamentos(user?.id)
+        queryFn: () => fetchOrcamentos(user?.id),
+        refetchOnWindowFocus: false
     })
+
+    const onClickExportarOrcamento = () => {
+        if (selectedRow) {
+
+            OrcamentoPDF({
+                data: selectedRow
+            })
+
+            return;
+        }
+
+        setOpenDialog(true);
+    }
 
     return (
         <div className="w-full h-full px-10">
@@ -35,6 +54,7 @@ export function Orcamento() {
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da Lista">
                 <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
                 <Link to="novo"><Button variant="default" type="button">Novo</Button></Link>
+                <Button variant="default" type="button" onClick={onClickExportarOrcamento}>Exportar</Button>
                 <Button variant="default" type="button" onClick={() => exportCSV()}>Exportar CSV</Button>
             </div>
             {isFetching ? (
@@ -42,11 +62,26 @@ export function Orcamento() {
             ) : (
                 <section className="mt-10">
                     <DataTable
+                        setSelectedRow={setSelectedRow}
                         columns={columns}
                         data={data ? data.content : []}
                     />
                 </section>
             )}
+            <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Opa</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Para emitir uma nota fiscal de serviço, é necessário selecionar um item da tabela.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction>Selecionar</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
 
         </div>
     )

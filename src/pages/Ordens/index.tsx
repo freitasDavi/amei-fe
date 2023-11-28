@@ -1,6 +1,5 @@
 import { OrdemServico } from "@/@types/OrdemServico";
 import { PaginationType } from "@/@types/Pagination";
-import { NotaGuide } from "@/components/Guide/NotaGuide";
 import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/OrdemServico/columns";
 import { DataTable } from "@/components/Tables/CheckBoxDataTable";
@@ -9,8 +8,8 @@ import { baseApi } from "@/lib/api";
 import { ArrowBendDownLeft } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { useState } from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 async function fetchOrdens() {
     const response = await baseApi.get<PaginationType<OrdemServico>>("ordemServico")

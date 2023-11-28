@@ -26,7 +26,7 @@ export type OrcamentosTable = {
     usuarioOrcamento: number;
     //clienteOrcamento: number;
     //orcamentoOrdemServico?: number;
-    itensOrcamento?: ItensOrcamento[];
+    itensOrcamentos: ItensOrcamento[];
 };
 
 
