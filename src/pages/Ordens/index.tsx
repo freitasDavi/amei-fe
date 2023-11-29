@@ -5,12 +5,12 @@ import { columns } from "@/components/Tables/OrdemServico/columns";
 import { DataTable } from "@/components/Tables/CheckBoxDataTable";
 import { Button } from "@/components/ui/button";
 import { baseApi } from "@/lib/api";
-import { ArrowBendDownLeft } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { OrdensPDF } from "@/reports/ordens/OrdensEx";
+import { PageTitle } from "@/components/ui/title-component";
 
 async function fetchOrdens() {
     const response = await baseApi.get<PaginationType<OrdemServico>>("ordemServico")
@@ -57,10 +57,7 @@ export function OrdemServicoLista() {
 
     return (
         <main className="w-full h-full px-10">
-            <div className="flex gap-2 items-baseline">
-                <Link to="/home"><ArrowBendDownLeft size={20} weight="bold" className="text-primary-logo hover:text-primary-logo-dark" /></Link>
-                <h1 className="font-medium text-3xl text-primary-logo">Ordens de serviço</h1>
-            </div>
+            <PageTitle titulo="Ordens de serviço" />
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da lisat">
                 <Button onClick={() => refetch()} >Atualizar dados</Button>
                 <Link to="/ordens/novo"><Button>Novo</Button></Link>
