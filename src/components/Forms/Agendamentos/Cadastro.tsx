@@ -19,8 +19,6 @@ import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import calendarDone from "../../../assets/lottie/calendar-done.json";
-import Lottie from "lottie-react";
 import { Agendamentos } from "@/@types/Agendamentos";
 import { ComboClientes } from "@/components/Comboboxes/ComboClientes";
 import { useSearchParams } from "react-router-dom";
@@ -73,10 +71,15 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
     async function handleSubmitCadastro(data: agendamentoSc) {
         try {
             if (!user) throw new Error("!!!!!!!!!!!");
+            var dataCorreta = data.dataAgendamento;
+
+            dataCorreta.setDate(dataCorreta.getDate() + 1);
 
             if (data.id) {
+
                 await baseApi.put(`agendamentos/${data.id}`, {
                     ...data,
+                    dataAgendamento: dataCorreta,
                     telefoneAgendamento: data.telefoneAgendamento ? removePhoneMask(data.telefoneAgendamento) : "",
                     telefoneSecundario: data.telefoneSecundario ? removePhoneMask(data.telefoneSecundario) : "",
                     codigoUsuario: user?.id
@@ -86,6 +89,7 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
             } else {
                 await baseApi.post('agendamentos', {
                     ...data,
+                    dataAgendamento: dataCorreta,
                     telefoneAgendamento: data.telefoneAgendamento ? removePhoneMask(data.telefoneAgendamento) : "",
                     telefoneSecundario: data.telefoneSecundario ? removePhoneMask(data.telefoneSecundario) : "",
                     codigoUsuario: user?.id

@@ -1,4 +1,5 @@
-import { ClienteResponseDTO } from "./Clients";
+import { ClienteEmissaoRelDTO, ClienteResponseDTO } from "./Clients";
+import { UserDTO } from "./UserResponse";
 
 export type OrdemServico = {
     id?: number;
@@ -21,6 +22,18 @@ export type OrdemServicoCad = {
     clienteOrdem: ClienteResponseDTO;
     itensOrdemServicos?: ItensOrdem[];
 };
+
+export type EmissaoOrdem = {
+    id: number;
+    statusOrdemServico: number;
+    telefoneOrdem: string;
+    valorTotal: number;
+    dataEmissaoOrdemServico: Date;
+    usuarioOrdem: UserDTO;
+    clienteOrdem: ClienteEmissaoRelDTO
+    itensOrdemServicos: ItensOrdem[];
+}
+
 
 
 export type ItensOrdem = {

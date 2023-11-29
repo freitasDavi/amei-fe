@@ -1,4 +1,4 @@
-import { OrcamentosTable } from "@/@types/Orcamentos"
+import { EmissaoOrc, OrcamentosTable } from "@/@types/Orcamentos"
 import { PaginationType } from "@/@types/Pagination";
 import { exportCSV } from "@/api/Orcamento";
 import { Loading } from "@/components/Loading";
@@ -32,11 +32,12 @@ export function Orcamento() {
         refetchOnWindowFocus: false
     })
 
-    const onClickExportarOrcamento = () => {
+    const onClickExportarOrcamento = async () => {
         if (selectedRow) {
+            const res = await baseApi.get<EmissaoOrc>(`/orcamentos/emitirOrc/${selectedRow.id}`);
 
             OrcamentoPDF({
-                data: selectedRow
+                data: res.data
             })
 
             return;
@@ -54,8 +55,8 @@ export function Orcamento() {
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da Lista">
                 <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
                 <Link to="novo"><Button variant="default" type="button">Novo</Button></Link>
-                <Button variant="default" type="button" onClick={onClickExportarOrcamento}>Exportar</Button>
-                <Button variant="default" type="button" onClick={() => exportCSV()}>Exportar CSV</Button>
+                <Button variant="default" type="button" onClick={onClickExportarOrcamento}>Gerar PDF</Button>
+                <Button variant="default" type="button" onClick={() => exportCSV()}>Exportar dados</Button>
             </div>
             {isFetching ? (
                 <div className="flex-1 flex justify-center"><Loading /></div>
@@ -82,7 +83,6 @@ export function Orcamento() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-
         </div>
     )
 }

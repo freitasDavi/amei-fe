@@ -16,3 +16,14 @@ export type User = {
     plano: string,
     bairro: ComboBairro
 }
+
+export type UserDTO = {
+    id: number,
+    razaoSocialUsuario: string,
+    cnpjUsuario: string,
+    inscricaoMunicipalUsuario: string,
+    telefoneUsuario: string,
+    cepUsuario: string,
+    enderecoUsuario: string,
+    numeroUsuario: string
+}

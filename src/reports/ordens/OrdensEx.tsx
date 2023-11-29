@@ -1,6 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import { EmissaoOrc } from "@/@types/Orcamentos";
+import { EmissaoOrdem } from "@/@types/OrdemServico";
 import { getTitulo, rodape } from "..";
 import { format } from "date-fns";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
@@ -9,13 +9,13 @@ import { ptBR } from "date-fns/locale";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
-export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
+export async function OrdensPDF({ data }: { data: EmissaoOrdem }) {
 
 
-    const dados = data.itensOrcamentos.map(i => {
+    const dados = data.itensOrdemServicos.map(i => {
         return [
             {
-                text: i.descricao, border: [false, false, false, true],
+                text: i.descricaoItemOrdem, border: [false, false, false, true],
                 margin: [0, 5, 0, 5],
                 alignment: 'left'
             },
@@ -47,7 +47,7 @@ export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
             },
             [
                 {
-                    text: 'Orçamento',
+                    text: 'Ordem de serviço',
                     color: '#333333',
                     width: '*',
                     fontSize: 28,
@@ -88,7 +88,7 @@ export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
                                     alignment: 'right',
                                 },
                                 {
-                                    text: format(new Date(data.dataEmissaoOrcamento!), 'dd/MM/yyyy', { locale: ptBR }),
+                                    text: format(new Date(data.dataEmissaoOrdemServico), 'dd/MM/yyyy', { locale: ptBR }),
                                     bold: true,
                                     color: '#333333',
                                     fontSize: 12,
@@ -96,27 +96,7 @@ export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
                                     width: 100,
                                 },
                             ],
-                        },
-                        {
-                            columns: [
-                                {
-                                    text: 'Date de validade',
-                                    color: '#aaaaab',
-                                    bold: true,
-                                    width: '*',
-                                    fontSize: 12,
-                                    alignment: 'right',
-                                },
-                                {
-                                    text: format(new Date(data.dataValidadeOrcamento!), 'dd/MM/yyyy', { locale: ptBR }),
-                                    bold: true,
-                                    color: '#333333',
-                                    fontSize: 12,
-                                    alignment: 'right',
-                                    width: 100,
-                                },
-                            ],
-                        },
+                        }
                     ],
                 },
             ],
@@ -147,13 +127,13 @@ export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
     {
         columns: [
             {
-                text: data.usuarioOrcamento.razaoSocialUsuario,
+                text: data.usuarioOrdem.razaoSocialUsuario,
                 bold: true,
                 color: '#333333',
                 alignment: 'left',
             },
             {
-                text: data.clienteOrcamento.nomeCliente,
+                text: data.clienteOrdem.nomeCliente,
                 bold: true,
                 color: '#333333',
                 alignment: 'left',
@@ -179,11 +159,11 @@ export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
     {
         columns: [
             {
-                text: `${data.usuarioOrcamento.enderecoUsuario} - ${data.usuarioOrcamento.numeroUsuario}`,
+                text: `${data.usuarioOrdem.enderecoUsuario} - ${data.usuarioOrdem.numeroUsuario}`,
                 style: 'invoiceBillingAddress',
             },
             {
-                text: `${data.clienteOrcamento.enderecoCliente} - ${data.clienteOrcamento.numeroCliente}`,
+                text: `${data.clienteOrdem.enderecoCliente} - ${data.clienteOrdem.numeroCliente}`,
                 style: 'invoiceBillingAddress',
             },
         ],
@@ -324,7 +304,7 @@ export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
                             margin: [0, 5, 0, 5],
                         },
                         {
-                            text: 'R$ ' + data.valorTotalDoOrcamento + ',00',
+                            text: 'R$ ' + data.valorTotal + ',00',
                             bold: true,
                             fontSize: 20,
                             alignment: 'right',

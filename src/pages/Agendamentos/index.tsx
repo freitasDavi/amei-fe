@@ -24,7 +24,7 @@ async function fetchAgendamentos(userId: number | undefined) {
 export function AgendamentosPage() {
     const [open, setOpen] = useState(false);
     const user = useAuthStore(state => state.userData);
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const { data, refetch, isPending, isFetching } = useQuery({
         queryKey: ["agendamentos"],
         queryFn: () => fetchAgendamentos(user?.id),
@@ -48,6 +48,11 @@ export function AgendamentosPage() {
 
     }, [idSelecionado]);
 
+    const closeWindow = (newValue: boolean) => {
+        setSearchParams("");
+        setOpen(newValue);
+    }
+
     return (
         <div className="w-full h-full px-10">
             <div className="flex gap-2 items-baseline">
@@ -56,7 +61,7 @@ export function AgendamentosPage() {
             </div>
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação do agendamento">
                 <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
-                <CadastroAgendamento pesquisar={refetch} open={open} setOpen={setOpen} data={agendamentoSelecionado} />
+                <CadastroAgendamento pesquisar={refetch} open={open} setOpen={closeWindow} data={agendamentoSelecionado} />
                 <ParametrosAgendamentoRel />
             </div>
             <section className="mt-10">

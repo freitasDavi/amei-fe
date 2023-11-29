@@ -140,7 +140,7 @@ export function CadastroServico({ pesquisar, open, setOpen, data }: Props) {
                                         <FormItem>
                                             <FormLabel htmlFor="codigoCNAE">Código CNAE</FormLabel>
                                             <FormControl>
-                                                <Input id="codigoCNAE" placeholder="000.000-0" {...field} />
+                                                <Input id="codigoCNAE" max={7} placeholder="000.000-0" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

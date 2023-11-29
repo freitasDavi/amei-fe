@@ -12,6 +12,11 @@ export const columns: ColumnDef<Agendamentos>[] = [
         accessorKey: "responsavelAgendamento",
         header: "Responsável"
     },
+
+    {
+        accessorKey: "nomeAgendamento",
+        header: "Descrição"
+    },
     {
         accessorFn: (row) => format(new Date(row.dataAgendamento), "dd/MM/yyyy HH:mm", { locale: ptBR }),
 
@@ -49,7 +54,7 @@ export const columnsHome: ColumnDef<Agendamentos>[] = [
         ),
         accessorKey: "id",
         cell: (props) => (
-            <Link to={`/agendamentos/${props.getValue()}`}>
+            <Link to={`/agendamentos/?id=${props.getValue()}`}>
                 <MagnifyingGlass className="text-primary-logo hover:text-primary-logo-dark dark:text-white dark:hover:text-slate-300" size={20} weight="bold" />
             </Link>
         ),

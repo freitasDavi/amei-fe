@@ -42,6 +42,7 @@ export function GraficoHome() {
                     <Tooltip />
                     <Legend />
                     <CartesianGrid strokeDasharray="3 3" />
+                    {/* TODO: com mais meses, menor a barra */}
                     <Bar dataKey="Faturamento" fill="#1C9AEA" background={{ fill: '#eee' }} />
                 </BarChart>
             </ResponsiveContainer>

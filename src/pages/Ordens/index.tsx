@@ -1,4 +1,4 @@
-import { OrdemServico } from "@/@types/OrdemServico";
+import { EmissaoOrdem, OrdemServico } from "@/@types/OrdemServico";
 import { PaginationType } from "@/@types/Pagination";
 import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/OrdemServico/columns";
@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { OrdensPDF } from "@/reports/ordens/OrdensEx";
 
 async function fetchOrdens() {
     const response = await baseApi.get<PaginationType<OrdemServico>>("ordemServico")
@@ -18,6 +19,7 @@ async function fetchOrdens() {
 }
 
 export function OrdemServicoLista() {
+    const [dialogText, setDialogText] = useState("Selecione uma ordem de serviço para emitir nota fiscal");
     const [openDialog, setOpenDialog] = useState(false);
     const navigate = useNavigate();
     const [selectedRow, setSelectedRow] = useState<OrdemServico | null>(null);
@@ -34,6 +36,22 @@ export function OrdemServicoLista() {
             return;
         }
 
+        setDialogText("Selecione uma ordem de serviço para emitir nota fiscal");
+        setOpenDialog(true);
+    }
+
+    const onClickExportarOrdedm = async () => {
+        if (selectedRow) {
+            const res = await baseApi.get<EmissaoOrdem>(`/ordemServico/emitirOrdem/${selectedRow.id}`);
+
+            OrdensPDF({
+                data: res.data
+            })
+
+            return;
+        }
+
+        setDialogText("Selecione uma ordem de serviço para exportar");
         setOpenDialog(true);
     }
 
@@ -47,6 +65,7 @@ export function OrdemServicoLista() {
                 <Button onClick={() => refetch()} >Atualizar dados</Button>
                 <Link to="/ordens/novo"><Button>Novo</Button></Link>
                 <Button onClick={onClickEmitirNf} type="button">Emitir nota fiscal</Button>
+                <Button type="button" onClick={onClickExportarOrdedm}>Exportar dados</Button>
             </div>
             {isFetching ? (
                 <div className="flex-1 flex justify-center"><Loading /></div>
@@ -64,7 +83,7 @@ export function OrdemServicoLista() {
                     <AlertDialogHeader>
                         <AlertDialogTitle>Opa</AlertDialogTitle>
                         <AlertDialogDescription>
-                            Para emitir uma nota fiscal de serviço, é necessário selecionar um item da tabela.
+                            {dialogText}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
