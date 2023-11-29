@@ -71,7 +71,7 @@ export function CadastroCurso({ pesquisar, open, setOpen, data }: CadastroCursoP
             toast({
                 variant: "success",
                 title: "Sucesso",
-                description: "Serviço cadastrado com sucesso",
+                description: "Curso salvo com sucesso",
                 duration: 5000
             })
 
@@ -118,7 +118,9 @@ export function CadastroCurso({ pesquisar, open, setOpen, data }: CadastroCursoP
             </DialogTrigger>
             <DialogContent onPointerDownOutside={(e) => e.preventDefault()} onInteractOutside={(e) => e.preventDefault()}>
                 <DialogHeader>
-                    <DialogTitle>Novo curso</DialogTitle>
+                    <DialogTitle>
+                        {data ? 'Edição de curso' : 'Novo curso'}
+                    </DialogTitle>
                     <DialogDescription>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(handleCadastroCurso)} className="flex flex-col gap-4">

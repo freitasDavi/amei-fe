@@ -163,7 +163,9 @@ export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClie
                 <Button type="button" variant="default">Novo</Button>
             </DialogTrigger>
             <DialogContent className="min-w-[800px] max-h-[550px] overflow-auto">
-                <DialogHeader>Novo Cliente</DialogHeader>
+                <DialogHeader>
+                    {data ? 'Edição de cliente' : 'Novo Cliente'}
+                </DialogHeader>
                 <DialogDescription>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(handleCadastroCliente)} className="flex flex-col gap-4">

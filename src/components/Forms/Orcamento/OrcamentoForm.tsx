@@ -66,7 +66,7 @@ export function OrcamentoForm({ orcamento }: OrcamentoFormProps) {
             form.setValue("dataValidadeOrcamento", new Date(orcamento.dataValidadeOrcamento));
             form.setValue("valorTotalDoOrcamento", orcamento.valorTotalDoOrcamento);
             form.setValue("observacoesOrcamento", orcamento.observacoesOrcamento);
-            form.setValue("usuarioOrcamento", orcamento.usuarioOrcamento);
+            form.setValue("usuarioOrcamento", orcamento.usuarioOrcamento.id);
             form.setValue("clienteOrcamento", orcamento.clienteOrcamento.id);
 
             var itemsOrc: ItensOrcamento[] = [];
@@ -78,6 +78,7 @@ export function OrcamentoForm({ orcamento }: OrcamentoFormProps) {
                     descricao: i.descricao,
                     valorUnitario: i.valorUnitario,
                     valorTotal: i.valorTotal,
+                    orcamento: orcamento.id
                 })
             });
 
@@ -97,6 +98,15 @@ export function OrcamentoForm({ orcamento }: OrcamentoFormProps) {
 
     async function handleNovoOrcamento(data: orcamentoSc) {
         try {
+
+            if (items.length === 0) {
+                toast({
+                    title: "Atenção",
+                    variant: "default",
+                    description: "É necessário informar pelo menos um item"
+                });
+                return;
+            }
 
             if (data.id) {
                 await baseApi.put(`/orcamentos/${data.id}`, {
@@ -213,7 +223,7 @@ export function OrcamentoForm({ orcamento }: OrcamentoFormProps) {
                             <FormItem className="flex-1">
                                 <FormLabel>Telefone</FormLabel>
                                 <FormControl>
-                                    <Input id="telefoneCliente" placeholder="48991308073" {...field} />
+                                    <Input id="telefoneCliente" placeholder="(48) 99999-9999" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

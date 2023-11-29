@@ -13,10 +13,25 @@ function removePhoneMask(phone: string) {
         .replace('-', "");
 }
 
-function maskCnpj(cnpj: string) {
-    return cnpj
-        .replace(/\D/g, '')
-        .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, "$1 $2 $3/$4-$5");
+function maskCnpj(cpfCnpj: string) {
+    // Remove todos os caracteres não numéricos
+    const numeros = cpfCnpj.replace(/\D/g, '');
+
+    // Verifica se é CPF (11 caracteres) ou CNPJ (14 caracteres)
+    const isCNPJ = numeros.length === 14;
+
+    // Verifica se a quantidade de dígitos é válida
+    if ((isCNPJ && numeros.length !== 14) || (!isCNPJ && numeros.length !== 11)) {
+        // Retorna a string original se não for uma quantidade válida de dígitos
+        return cpfCnpj;
+    }
+
+    // Aplica o formato correspondente
+    const documentoFormatado = isCNPJ
+        ? numeros.replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, "$1 $2 $3/$4-$5")
+        : numeros.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+
+    return documentoFormatado;
 }
 
 function removeCnpjMask(cnpj: String) {
@@ -25,6 +40,8 @@ function removeCnpjMask(cnpj: String) {
         .replace('/', "")
         .replace(' ', "")
         .replace(' ', "")
+        .replace('-', "")
+        .replace('-', "")
         .replace('-', "");
 }
 

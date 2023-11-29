@@ -8,7 +8,7 @@ import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { z } from "zod";
@@ -17,7 +17,7 @@ const servicoSchema = z.object({
     id: z.number().optional(),
     descricaoServico: z.string().min(5, 'Descrição deve possuir no mínimo 5 caractéres'),
     valorServico: z.coerce.number().optional(),
-    codigoCNAE: z.string().min(7, 'Código CNAE deve possuir 7 dígitos').max(7, 'Código CNAE deve possuir 7 dígitos').optional(),
+    codigoCNAE: z.string().min(7, 'Código CNAE deve possuir 7 dígitos').max(7, 'Código CNAE deve possuir 7 dígitos').optional().or(z.literal(''))
 });
 
 type servicoSc = z.infer<typeof servicoSchema>;
@@ -64,7 +64,10 @@ export function CadastroServico({ pesquisar, open, setOpen, data }: Props) {
                 duration: 5000
             })
 
+            setSearchParams("");
+            pesquisar();
             setOpen(false);
+
         } catch (err) {
             if (err instanceof AxiosError) {
                 toast({
@@ -94,6 +97,12 @@ export function CadastroServico({ pesquisar, open, setOpen, data }: Props) {
         }
     }, [data]);
 
+    function validarNumeros(input: React.ChangeEvent<HTMLInputElement>) {
+        // Remove caracteres não numéricos usando uma expressão regular
+        input.target.value = input.target.value.replace(/[^0-9]/g, '');
+        form.setValue('codigoCNAE', input.target.value);
+    }
+
     return (
         <Dialog modal={true} open={open} onOpenChange={setOpen}>
             <DialogTrigger>
@@ -101,7 +110,9 @@ export function CadastroServico({ pesquisar, open, setOpen, data }: Props) {
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Novo serviço</DialogTitle>
+                    <DialogTitle>
+                        {data ? 'Edição do serviço' : 'Novo serviço'}
+                    </DialogTitle>
                     <DialogDescription>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(handleServicoSubmit)} className="flex flex-col gap-4">
@@ -112,7 +123,7 @@ export function CadastroServico({ pesquisar, open, setOpen, data }: Props) {
                                         <FormItem>
                                             <FormLabel htmlFor="descricaoServico">Descrição</FormLabel>
                                             <FormControl>
-                                                <Input id="descricaoServico" placeholder="Trocar rebimboca da parafuseta" {...field} />
+                                                <Input id="descricaoServico" placeholder="Descrição do serviço" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -126,7 +137,8 @@ export function CadastroServico({ pesquisar, open, setOpen, data }: Props) {
                                         <FormItem>
                                             <FormLabel htmlFor="valorServico">Valor</FormLabel>
                                             <FormControl>
-                                                <Input id="valorServico" type="number" placeholder="77,77" {...field} />
+                                                <Input id="valorServico" type="text" placeholder="77,77" {...field}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -140,7 +152,7 @@ export function CadastroServico({ pesquisar, open, setOpen, data }: Props) {
                                         <FormItem>
                                             <FormLabel htmlFor="codigoCNAE">Código CNAE</FormLabel>
                                             <FormControl>
-                                                <Input id="codigoCNAE" max={7} placeholder="000.000-0" {...field} />
+                                                <Input id="codigoCNAE" maxLength={7} placeholder="000.000-0" {...field} onChange={(e) => validarNumeros(e)} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

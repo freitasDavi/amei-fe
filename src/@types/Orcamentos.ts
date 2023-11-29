@@ -10,7 +10,9 @@ export type Orcamentos = {
     dataValidadeOrcamento: Date;
     valorTotalDoOrcamento: number;
     observacoesOrcamento: string;
-    usuarioOrcamento: number;
+    usuarioOrcamento: {
+        id: number;
+    },
     clienteOrcamento: {
         id: number;
     };
@@ -51,6 +53,6 @@ export type ItensOrcamento = {
     valorUnitario: number;
     valorTotal: number;
     descricao: string;
-    codigoOrcamento?: number;
+    orcamento?: number;
     quantidade: number;
 };
