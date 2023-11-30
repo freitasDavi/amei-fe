@@ -1,5 +1,5 @@
 import pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -22,7 +22,7 @@ export type DadosRel = {
 
 
 export async function AgendamentosPDF({ data, filtro }: Report) {
-    (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+    (pdfMake as any).vfs = pdfMake.vfs;
 
     const dados = data?.map((agendamento) => {
         return [

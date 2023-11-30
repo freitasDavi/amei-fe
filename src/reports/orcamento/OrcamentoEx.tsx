@@ -1,12 +1,12 @@
 import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
+// import pdfFonts from "pdfmake/build/vfs_fonts";
 import { EmissaoOrc } from "@/@types/Orcamentos";
 import { getTitulo, rodape } from "..";
 import { format } from "date-fns";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import { ptBR } from "date-fns/locale";
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+pdfMake.vfs = pdfMake.vfs;
 
 
 export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
