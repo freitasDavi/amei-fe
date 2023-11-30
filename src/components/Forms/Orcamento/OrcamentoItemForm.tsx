@@ -13,7 +13,7 @@ const schemaItemOrc = z.object({
     valorTotal: z.coerce.number().optional(),
     descricao: z.string(),
     quantidade: z.coerce.number(),
-    codigoOrcamento: z.coerce.number().optional()
+    orcamento: z.coerce.number().optional()
 });
 
 type itemOrcSchema = z.infer<typeof schemaItemOrc>;
@@ -34,11 +34,8 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems, removeItem
             descricao: data.descricao,
             valorTotal: data.valorTotal!,
             valorUnitario: data.valorUnitario,
-            quantidade: data.quantidade
-        }
-
-        if (codigoOrcamento) {
-            newItem.codigoOrcamento = codigoOrcamento;
+            quantidade: data.quantidade,
+            orcamento: codigoOrcamento ? codigoOrcamento : 0
         }
 
         setItems(newItem);

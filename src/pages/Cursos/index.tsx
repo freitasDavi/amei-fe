@@ -5,12 +5,12 @@ import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/Cursos/columns";
 import { DataTable } from "@/components/Tables/Servicos/data-table";
 import { Button } from "@/components/ui/button";
+import { PageTitle } from "@/components/ui/title-component";
 import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
-import { ArrowBendDownLeft } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 async function fetchCursos(userId: number | undefined) {
     if (!userId) return;
@@ -45,10 +45,7 @@ export function CursosPage() {
 
     return (
         <main className="w-full h-full px-10">
-            <div className="flex gap-2 items-baseline">
-                <Link to="/home"><ArrowBendDownLeft size={20} weight="bold" className="text-primary-logo hover:text-primary-logo-dark" /></Link>
-                <h1 className="font-medium text-3xl text-primary-logo">Cursos</h1>
-            </div>
+            <PageTitle titulo="Cursos" />
             <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da página de cursos">
                 <Button onClick={() => refetch()} variant="default">Pesquisar</Button>
                 <CadastroCurso pesquisar={refetch} data={cursoSelecionado} open={open} setOpen={setOpen} />

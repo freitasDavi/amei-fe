@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/Navbar";
 import { Notification } from "@/components/Notification";
-import { Toaster } from "@/components/ui/toaster";
 import useAuthStore from "@/store/AuthStore";
 import { Navigate, Outlet, useLocation } from "react-router-dom"
 
@@ -13,14 +12,13 @@ export function DefaultLayout() {
             ? (
                 <Navigate to="/login" state={{ from: location }} replace />
             ) : (
-                <div className="flex ">
+                <div className="flex min-h-screen">
                     <Navbar />
-                    <main className="w-screen bg-[#E9E9FA] dark:bg-slate-700 relative">
+                    <main className="w-screen min-h-screen bg-[#E9E9FA] dark:bg-slate-700 relative">
                         <Notification />
                         <div className="mt-10 ">
                             <Outlet />
                         </div>
-                        <Toaster />
                     </main>
                     {/* <Footer /> */}
                 </div>

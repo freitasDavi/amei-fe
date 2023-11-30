@@ -46,7 +46,7 @@ const rodape = function (currentPage: number, totalPages: number): Content {
 
 function getTitulo(tituloRel: string) {
     const titulo: Content = {
-        text: `Relatório de ${tituloRel}`,
+        text: `${tituloRel}`,
         alignment: 'center',
         color: "white",
         fontSize: 16,

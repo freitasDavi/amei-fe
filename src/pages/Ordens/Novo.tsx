@@ -1,9 +1,9 @@
 import { OrdemServicoCad } from "@/@types/OrdemServico";
 import { OrdensForm } from "@/components/Forms/Ordens/OrdensForm";
+import { PageTitle } from "@/components/ui/title-component";
 import { baseApi } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-
 
 async function fetchOrdem(id: number): Promise<undefined | OrdemServicoCad> {
     if (!id) return undefined;
@@ -21,9 +21,14 @@ export function NovaOrdem() {
         refetchOnWindowFocus: false,
     })
 
+    let tituloDaPagina = id ? 'Edição de ordem de serviço' : 'Nova ordem de serviço';
+
     return (
         <div className="p-10">
-            <h1 className="font-sans font-medium text-3xl text-primary-logo">Nova ordem de serviço</h1>
+            <PageTitle
+                titulo={tituloDaPagina}
+                link="/ordens"
+            />
             <section>
                 <OrdensForm ordem={data} />
             </section>

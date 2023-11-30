@@ -23,3 +23,15 @@ export type ClienteResponseDTO = {
     telefone: string;
     cnpjCliente: string;
 }
+
+export type ClienteEmissaoRelDTO = {
+    id: number;
+    nomeCliente: string;
+    emailCliente: string;
+    telefoneCliente: string;
+    cepCliente: string;
+    enderecoCliente: string;
+    numeroCliente: string;
+    complementoCliente: string;
+    cnpjCliente: string;
+}

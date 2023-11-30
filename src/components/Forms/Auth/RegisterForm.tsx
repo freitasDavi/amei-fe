@@ -10,6 +10,7 @@ import useAuthStore from "@/store/AuthStore";
 import { useNavigate } from "react-router-dom";
 import { removeCepMask, removeCnpjMask, removePhoneMask } from "@/utils/masks";
 import { useState } from "react";
+import { AxiosError } from "axios";
 
 const registerSchema = z.object({
     username: z.string().max(20, "Seu usuário pode conter no máximo 20 caracteres"),
@@ -99,7 +100,20 @@ export function RegisterForm({ changeStep, currentStep, setIsLoading }: Register
                 return;
             }
         } catch (err) {
-            console.log('Error');
+            if (err instanceof AxiosError) {
+                if (err.response?.data?.message) {
+                    toast({
+                        variant: "destructive",
+                        title: "Erro",
+                        description: err.response.data.message,
+                        // duration: 10000,
+                    })
+                    return;
+                }
+            }
+
+            console.warn(err);
+
             toast({
                 variant: "destructive",
                 title: "Erro",

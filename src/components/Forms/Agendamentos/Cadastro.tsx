@@ -19,8 +19,6 @@ import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import calendarDone from "../../../assets/lottie/calendar-done.json";
-import Lottie from "lottie-react";
 import { Agendamentos } from "@/@types/Agendamentos";
 import { ComboClientes } from "@/components/Comboboxes/ComboClientes";
 import { useSearchParams } from "react-router-dom";
@@ -73,10 +71,15 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
     async function handleSubmitCadastro(data: agendamentoSc) {
         try {
             if (!user) throw new Error("!!!!!!!!!!!");
+            var dataCorreta = data.dataAgendamento;
+
+            dataCorreta.setDate(dataCorreta.getDate() + 1);
 
             if (data.id) {
+
                 await baseApi.put(`agendamentos/${data.id}`, {
                     ...data,
+                    dataAgendamento: dataCorreta,
                     telefoneAgendamento: data.telefoneAgendamento ? removePhoneMask(data.telefoneAgendamento) : "",
                     telefoneSecundario: data.telefoneSecundario ? removePhoneMask(data.telefoneSecundario) : "",
                     codigoUsuario: user?.id
@@ -86,15 +89,23 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
             } else {
                 await baseApi.post('agendamentos', {
                     ...data,
+                    dataAgendamento: dataCorreta,
                     telefoneAgendamento: data.telefoneAgendamento ? removePhoneMask(data.telefoneAgendamento) : "",
                     telefoneSecundario: data.telefoneSecundario ? removePhoneMask(data.telefoneSecundario) : "",
                     codigoUsuario: user?.id
                 });
             }
 
-            form.reset();
+            toast({
+                variant: "success",
+                title: "Sucesso",
+                description: "Agendamento salvo com sucesso",
+                duration: 5000
+            })
+
             pesquisar();
             setTimeout(() => {
+                form.reset();
                 setOpen(false);
             }, 500);
 
@@ -155,7 +166,9 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                 <Button type="button" variant="default">Novo</Button>
             </DialogTrigger>
             <DialogContent className="min-w-[800px]">
-                <DialogHeader>Novo agendamento</DialogHeader>
+                <DialogHeader>
+                    {data ? 'Edição de agendamento' : 'Novo agendamento'}
+                </DialogHeader>
                 <DialogDescription>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(handleSubmitCadastro)} className="flex flex-col gap-4">
@@ -167,7 +180,7 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                                         <FormItem className="flex-1">
                                             <FormLabel htmlFor="nomeAgendamento">Descrição</FormLabel>
                                             <FormControl>
-                                                <Input id="nomeAgendamento" placeholder="Trocar rebimboca da parafuseta" {...field} />
+                                                <Input id="nomeAgendamento" placeholder="Descrição do serviço" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -292,7 +305,7 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                                         <FormItem className="flex-1">
                                             <FormLabel htmlFor="telefoneAgendamento">Telefone</FormLabel>
                                             <FormControl>
-                                                <Input id="telefoneAgendamento" placeholder="Trocar rebimboca da parafuseta" {...field} />
+                                                <Input id="telefoneAgendamento" placeholder="(48) 99999-9999" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -306,7 +319,7 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                                         <FormItem className="flex-1">
                                             <FormLabel htmlFor="telefoneSecundario">Telefone secundário</FormLabel>
                                             <FormControl>
-                                                <Input id="telefoneSecundario" placeholder="Trocar rebimboca da parafuseta" {...field} />
+                                                <Input id="telefoneSecundario" placeholder="(48) 99999-9999" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

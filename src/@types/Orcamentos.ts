@@ -1,3 +1,5 @@
+import { ClienteEmissaoRelDTO } from "./Clients";
+import { UserDTO } from "./UserResponse";
 
 
 export type Orcamentos = {
@@ -8,13 +10,28 @@ export type Orcamentos = {
     dataValidadeOrcamento: Date;
     valorTotalDoOrcamento: number;
     observacoesOrcamento: string;
-    usuarioOrcamento: number;
+    usuarioOrcamento: {
+        id: number;
+    },
     clienteOrcamento: {
         id: number;
     };
     //orcamentoOrdemServico?: number;
     itensOrcamentos?: ItensOrcamento[];
 };
+
+export type EmissaoOrc = {
+    id?: number;
+    nomeCliente: string;
+    telefoneCliente: string;
+    dataEmissaoOrcamento?: Date;
+    dataValidadeOrcamento: Date;
+    valorTotalDoOrcamento: number;
+    observacoesOrcamento: string;
+    usuarioOrcamento: UserDTO;
+    clienteOrcamento: ClienteEmissaoRelDTO
+    itensOrcamentos: ItensOrcamento[];
+}
 
 export type OrcamentosTable = {
     id?: number;
@@ -26,7 +43,7 @@ export type OrcamentosTable = {
     usuarioOrcamento: number;
     //clienteOrcamento: number;
     //orcamentoOrdemServico?: number;
-    itensOrcamento?: ItensOrcamento[];
+    itensOrcamentos: ItensOrcamento[];
 };
 
 
@@ -36,6 +53,6 @@ export type ItensOrcamento = {
     valorUnitario: number;
     valorTotal: number;
     descricao: string;
-    codigoOrcamento?: number;
+    orcamento?: number;
     quantidade: number;
 };
