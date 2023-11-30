@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { maskCep } from "@/utils/masks";
 import { ComboCidade } from "@/components/Comboboxes/ComboCidade";
 import { ComboBairro } from "@/components/Comboboxes/ComboBairro";
+import { baseApi } from "@/lib/api";
 
 type Props = {
     changeStep: (newStep: number) => void;
@@ -25,6 +26,20 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
         changeStep(passo);
     }
 
+    const onBlurHandleCep = async (e: React.FocusEvent<HTMLInputElement, Element>) => {
+        const cep = e.target.value.replace("-", "");
+
+        if (cep.length === 8) {
+            const resp = await baseApi.get('/cidade/getByCEP/' + cep);
+            if (resp.data) {
+                setValue("usuarioCidade", resp.data.codigoCidade);
+                setValue("usuarioBairro", resp.data.codigoBairro);
+                setValue("complementoUsuario", resp.data.complemento);
+                setValue("logradouroUsuario", resp.data.rua);
+            }
+        }
+    }
+
     return (
         <div className="w-full flex flex-col gap-4">
             <div className="w-full flex gap-6">
@@ -35,7 +50,7 @@ export function RegisterEnderecoForm({ changeStep }: Props) {
                         <FormItem className="flex-1">
                             <FormLabel htmlFor="cepUsuario">CEP</FormLabel>
                             <FormControl>
-                                <Input id="cepUsuario" placeholder="00000-000" maxLength={9} {...field} />
+                                <Input onChange={(e) => field.onChange(e)} value={field.value} onBlur={(e) => onBlurHandleCep(e)} id="cepUsuario" placeholder="00000-000" maxLength={9} />
                             </FormControl>
                             <FormMessage>
                                 {formState.errors.cepUsuario && formState.errors.cepUsuario.message}

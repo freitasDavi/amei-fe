@@ -34,11 +34,8 @@ export function OrcamentoItemForm({ items, codigoOrcamento, setItems, removeItem
             descricao: data.descricao,
             valorTotal: data.valorTotal!,
             valorUnitario: data.valorUnitario,
-            quantidade: data.quantidade
-        }
-
-        if (codigoOrcamento) {
-            newItem.orcamento = codigoOrcamento;
+            quantidade: data.quantidade,
+            orcamento: codigoOrcamento ? codigoOrcamento : 0
         }
 
         setItems(newItem);

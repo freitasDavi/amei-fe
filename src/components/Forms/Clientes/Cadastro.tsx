@@ -157,6 +157,20 @@ export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClie
         }
     }
 
+    const onBlurHandleCep = async (e: React.FocusEvent<HTMLInputElement, Element>) => {
+        const cep = e.target.value.replace("-", "");
+
+        if (cep.length === 8) {
+            const resp = await baseApi.get('/cidade/getByCEP/' + cep);
+            if (resp.data) {
+                form.setValue("clienteCidade", resp.data.codigoCidade);
+                form.setValue("clienteBairro", resp.data.codigoBairro);
+                form.setValue("complementoCliente", resp.data.complemento);
+                form.setValue("enderecoCliente", resp.data.rua);
+            }
+        }
+    }
+
     return (
         <Dialog modal={true} open={open} onOpenChange={setOpen}>
             <DialogTrigger className="">
@@ -236,7 +250,7 @@ export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClie
                                         <FormItem className="flex-1 mt-1">
                                             <FormLabel htmlFor="cepCliente">CEP</FormLabel>
                                             <FormControl>
-                                                <Input id="cepCliente" maxLength={9} placeholder="888888-000" {...field} />
+                                                <Input id="cepCliente" onBlur={onBlurHandleCep} value={field.value} onChange={field.onChange} maxLength={9} placeholder="888888-000" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

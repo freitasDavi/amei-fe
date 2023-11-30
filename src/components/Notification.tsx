@@ -9,6 +9,7 @@ import { ptBR } from "date-fns/locale";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./ui/alert-dialog";
 import { useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
+import { AlarmClock, AlarmClockOff } from "lucide-react";
 
 async function fetchActiveCronometros(codigoUsuario: number) {
     var response = await baseApi.get<Cronometro>(`/cronometro/ultimoAtivo/${codigoUsuario}`);
@@ -65,7 +66,7 @@ export function Notification() {
                         <BellSimpleRinging weight="light" size={28} />
                     </div></PopoverTrigger>
                     <PopoverContent>
-                        <p className="text-sm text-slate-400">Você não possúi notificações!</p>
+                        <p className="text-sm text-slate-400">Você não possi notificações!</p>
                     </PopoverContent>
                 </Popover>
 
@@ -102,7 +103,8 @@ export function Notification() {
             <Popover>
                 <PopoverTrigger>
                     <div className="bg-white dark:bg-slate-800 dark:hover:bg-slate-950 p-2 rounded-lg hover:bg-slate-200 cursor-pointer transition-all ease-in text-[#81d8f3] hover:text-[#1C9AEA]">
-                        <Alarm weight="fill" size={28} className="relative" />
+                        {/* <Alarm weight="fill" size={28} className="relative" /> */}
+                        <AlarmClock size={28} />
                         <p className="absolute -top-2 -right-2 py-1 px-2 bg-red-500 rounded-lg text-xs text-white">1</p>
                     </div>
                 </PopoverTrigger>
@@ -116,7 +118,8 @@ export function Notification() {
                             onClick={() => onClickStopCronometro(cronometroAtivo.id)}
                             aria-label="Parar cronometro"
                             className="bg-destructive p-2 rounded-lg cursor-pointer hover:bg-destructive-dark">
-                            <BellSlash weight="light" size={20} color="white" />
+                            <AlarmClockOff size={24} />
+                            {/* <BellSlash weight="light" size={20} color="white" /> */}
                         </button>
                     </div>
 

@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/Navbar";
 import { Notification } from "@/components/Notification";
-import { Toaster } from "@/components/ui/toaster";
 import useAuthStore from "@/store/AuthStore";
 import { Navigate, Outlet, useLocation } from "react-router-dom"
 
@@ -20,7 +19,6 @@ export function DefaultLayout() {
                         <div className="mt-10 ">
                             <Outlet />
                         </div>
-                        <Toaster />
                     </main>
                     {/* <Footer /> */}
                 </div>

@@ -162,7 +162,6 @@ export function OrcamentoForm({ orcamento }: OrcamentoFormProps) {
         let curItems = items;
 
         curItems.push(novoItem);
-        debugger;
         var valorTotal = curItems.reduce((acc, item) => acc + item.valorTotal, 0);
 
         form.setValue("valorTotalDoOrcamento", valorTotal);

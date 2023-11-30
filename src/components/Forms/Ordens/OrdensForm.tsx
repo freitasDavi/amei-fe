@@ -188,7 +188,7 @@ export function OrdensForm({ ordem }: OrdemFormProps) {
                             <FormItem className="flex-1">
                                 <FormLabel>Telefone</FormLabel>
                                 <FormControl>
-                                    <Input id="telefoneCliente" placeholder="48991308073" {...field} />
+                                    <Input id="telefoneCliente" placeholder="(48) 99999-9999" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
