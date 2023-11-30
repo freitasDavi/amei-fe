@@ -32,8 +32,7 @@ export async function AgendamentosPDF({ data, filtro }: Report) {
             // { text: format(new Date(agendamento.dataAgendamento), 'dd/MM/yyyy', { locale: ptBR }), fontSize: 9, margin: [0, 2, 0, 2] },
             { text: maskCnpj(agendamento.cnpjCliente), fontSize: 9, margin: [0, 2, 0, 2] },
             { text: maskPhone(agendamento.telefoneCliente), fontSize: 9, margin: [0, 2, 0, 2] },
-            { text: agendamento.totalAgendamentos, fontSize: 9, margin: [0, 2, 20, 2], alignment: 'right' },
-
+            { text: agendamento.totalAgendamentos, fontSize: 9, margin: [0, 2, 20, 2] }
         ]
     });
 
@@ -51,7 +50,7 @@ export async function AgendamentosPDF({ data, filtro }: Report) {
                         { text: 'Nome', style: 'tableHeader', fontSize: 10, },
                         { text: 'CNPJ', style: 'tableHeader', fontSize: 10 },
                         { text: 'Telefone', style: 'tableHeader', fontSize: 10 },
-                        { text: 'Total de agendamentos', style: 'tableHeader', fontSize: 10 },
+                        { text: 'Total de agendamentos', style: 'tableHeader', fontSize: 10 }
                     ],
                     ...dados
                 ]
