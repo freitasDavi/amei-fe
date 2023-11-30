@@ -9,5 +9,10 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     }
+  },
+  build: {
+    commonjsOptions: {
+      exclude: ['/node_modules/, /pdfmake.js$/']
+    }
   }
 })
