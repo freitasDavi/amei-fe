@@ -3,36 +3,28 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { getFiltro, getTitulo, header, rodape } from "./index";
-import { maskCnpj, maskPhone } from "@/utils/masks";
+import { getFiltro, getTitulo, header, rodape } from "../index";
+import { maskPhone } from "@/utils/masks";
+import { OrdemServico } from "@/@types/OrdemServico";
+import { ENUM_STATUS_EMISSAO } from "@/utils/enums";
 
 type Report = {
     filtro: {
         periodo?: string
     }
-    data: DadosRel[]
+    data: OrdemServico[]
 }
-
-export type DadosRel = {
-    cnpjCliente: string,
-    nomeCliente: string,
-    telefoneCliente: string,
-    totalAgendamentos: number
-}
-
 
 (pdfMake as any).vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : pdfMake.vfs;
 
-export async function AgendamentosPDF({ data, filtro }: Report) {
-    // (pdfMake as any).vfs = pdfMake.vfs;
+export async function OrdensPDF({ data, filtro }: Report) {
 
-    const dados = data?.map((agendamento) => {
+    const dados = data?.map((ordem) => {
         return [
-            { text: agendamento.nomeCliente, fontSize: 9, margin: [0, 2, 0, 2] },
-            // { text: format(new Date(agendamento.dataAgendamento), 'dd/MM/yyyy', { locale: ptBR }), fontSize: 9, margin: [0, 2, 0, 2] },
-            { text: maskCnpj(agendamento.cnpjCliente), fontSize: 9, margin: [0, 2, 0, 2] },
-            { text: maskPhone(agendamento.telefoneCliente), fontSize: 9, margin: [0, 2, 0, 2] },
-            { text: agendamento.totalAgendamentos, fontSize: 9, margin: [0, 2, 20, 2], alignment: 'right' },
+            { text: ENUM_STATUS_EMISSAO(ordem.statusOrdemServico), fontSize: 9, margin: [0, 2, 0, 2] },
+            { text: ordem.clienteOrdem.nome, fontSize: 9, margin: [0, 2, 0, 2] },
+            { text: maskPhone(ordem.telefoneOrdem), fontSize: 9, margin: [0, 2, 0, 2] },
+            { text: new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(ordem.valorTotal), fontSize: 9, margin: [0, 2, 20, 2], alignment: 'right' },
 
         ]
     });
@@ -48,10 +40,10 @@ export async function AgendamentosPDF({ data, filtro }: Report) {
                 widths: ['*', '*', '*', '*'],
                 body: [
                     [
-                        { text: 'Nome', style: 'tableHeader', fontSize: 10, },
-                        { text: 'CNPJ', style: 'tableHeader', fontSize: 10 },
+                        { text: 'Status', style: 'tableHeader', fontSize: 10, },
+                        { text: 'Cliente', style: 'tableHeader', fontSize: 10 },
                         { text: 'Telefone', style: 'tableHeader', fontSize: 10 },
-                        { text: 'Total de agendamentos', style: 'tableHeader', fontSize: 10 },
+                        { text: 'Valor total', style: 'tableHeader', fontSize: 10 },
                     ],
                     ...dados
                 ]
@@ -69,7 +61,7 @@ export async function AgendamentosPDF({ data, filtro }: Report) {
 
     const docDefinitions: TDocumentDefinitions = {
         info: {
-            title: `RelatórioDeAgendamentos-${new Date()}`
+            title: `OrdensRealizadas-${new Date()}`
         },
         pageSize: 'A4',
         pageMargins: [15, 50, 15, 40],
@@ -90,9 +82,9 @@ export async function AgendamentosPDF({ data, filtro }: Report) {
             };
         },
         header: [header],
-        content: [getTitulo('Agendamentos por clientes'), filtro && getFiltro(filtro.periodo!), tabela],
+        content: [getTitulo('Ordens de serviço realizadas'), filtro && getFiltro(filtro.periodo!), tabela],
         footer: rodape
     }
 
-    pdfMake.createPdf(docDefinitions).download(`RelatórioDeAgendamentos-${format(new Date(), 'dd-MM-yyyy', { locale: ptBR })}`);
+    pdfMake.createPdf(docDefinitions).download(`OrdensRealizadas-${format(new Date(), 'dd-MM-yyyy', { locale: ptBR })}`);
 }

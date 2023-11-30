@@ -14,10 +14,13 @@ import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ComboTipoRelatorio } from "@/components/Comboboxes/ComboTipoRelatorio";
 import { useToast } from "@/components/ui/use-toast";
-import { exportAgendamentosCSV, exportAgendamentosCSVComPeriodo } from "@/api/Agendamento";
+import { exportCSV, exportCSVComPeriodo } from "@/api/Ordens";
+import { PaginationType } from "@/@types/Pagination";
+import { OrdemServico } from "@/@types/OrdemServico";
+import { OrdensPDF } from "../ordens/OrdensPDF";
 
 
-export function ParametrosAgendamentoRel() {
+export function ParametrosOrdemRel() {
     const { toast } = useToast();
     const user = useAuthStore(state => state.userData);
     const [open, setOpen] = useState(false);
@@ -31,25 +34,23 @@ export function ParametrosAgendamentoRel() {
         if (tipoRel === "csv") {
 
             if (utilizaPeriodo) {
-                return await exportAgendamentosCSVComPeriodo({ dataInicio: dataInicio!, dataFim: dataFim! });
+                return await exportCSVComPeriodo({ dataInicio: dataInicio!, dataFim: dataFim! });
             }
 
-            return await exportAgendamentosCSV();
+            return await exportCSV();
         }
 
         var response;
 
         if (utilizaPeriodo) {
-            response = await baseApi.post<DadosRel[]>('/agendamentos/emitirRel', {
-                dataInicio: dataInicio?.toISOString(),
-                dataFim: dataFim?.toISOString(),
-                codigoUsuario: user?.id,
-            });
+            // TODO: Filtrar por periodo
+            response = await baseApi.get<PaginationType<OrdemServico>>("ordemServico")
+
         } else {
-            response = await baseApi.get<DadosRel[]>(`/agendamentos/emitirRel/${user?.id}`);
+            response = await baseApi.get<PaginationType<OrdemServico>>("ordemServico")
         }
 
-        if (response.data.length === 0) {
+        if (response.data.content.length === 0) {
             toast({
                 variant: "default",
                 title: "Opa",
@@ -59,8 +60,8 @@ export function ParametrosAgendamentoRel() {
             return;
         }
 
-        AgendamentosPDF({
-            data: response.data, filtro: utilizaPeriodo ? {
+        OrdensPDF({
+            data: response.data.content, filtro: utilizaPeriodo ? {
                 periodo: `De ${format(dataInicio!, 'dd/MM/yyyy', { locale: ptBR })} até ${format(dataFim!, 'dd/MM/yyyy', { locale: ptBR })}`
             } : {}
         });
@@ -72,7 +73,7 @@ export function ParametrosAgendamentoRel() {
                 <Button type="button" variant="default">Emissão de relatórios</Button>
             </DialogTrigger>
             <DialogContent>
-                <DialogHeader>Relatório de agendamentos</DialogHeader>
+                <DialogHeader>Relatório de ordens</DialogHeader>
                 <Label>Formato de exportação</Label>
                 <ComboTipoRelatorio value={tipoRel} setValue={setTipoRel} />
                 <div className="items-top flex space-x-2">
