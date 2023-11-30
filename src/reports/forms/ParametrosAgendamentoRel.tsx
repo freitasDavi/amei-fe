@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ComboTipoRelatorio } from "@/components/Comboboxes/ComboTipoRelatorio";
 import { useToast } from "@/components/ui/use-toast";
+import { exportAgendamentosCSV, exportAgendamentosCSVComPeriodo } from "@/api/Agendamento";
 
 
 export function ParametrosAgendamentoRel() {
@@ -23,9 +24,19 @@ export function ParametrosAgendamentoRel() {
     const [utilizaPeriodo, setUtilizaPeriodo] = useState(false);
     const [dataInicio, setDataInicio] = useState<Date>();
     const [dataFim, setDataFim] = useState<Date>();
+    const [tipoRel, setTipoRel] = useState("pdf");
 
 
     async function preparaDadosRel() {
+        if (tipoRel === "csv") {
+
+            if (utilizaPeriodo) {
+                return await exportAgendamentosCSVComPeriodo({ dataInicio: dataInicio!, dataFim: dataFim! });
+            }
+
+            return await exportAgendamentosCSV();
+        }
+
         var response;
 
         if (utilizaPeriodo) {
@@ -63,7 +74,7 @@ export function ParametrosAgendamentoRel() {
             <DialogContent>
                 <DialogHeader>Relatório de agendamentos</DialogHeader>
                 <Label>Formato de exportação</Label>
-                <ComboTipoRelatorio />
+                <ComboTipoRelatorio value={tipoRel} setValue={setTipoRel} />
                 <div className="items-top flex space-x-2">
                     <Checkbox id="terms1" checked={utilizaPeriodo} onCheckedChange={() => setUtilizaPeriodo(!utilizaPeriodo)} />
                     <div className="grid gap-1.5 leading-none">

@@ -17,8 +17,8 @@ const frameworks = [
 ]
 
 
-export function ComboTipoRelatorio() {
-    const [value, setValue] = useState("");
+export function ComboTipoRelatorio({ value, setValue }: { value: string, setValue: (value: string) => void }) {
+
     const [open, setOpen] = useState(false);
 
     return (
