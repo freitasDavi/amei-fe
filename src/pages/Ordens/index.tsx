@@ -12,21 +12,32 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { OrdensPDF } from "@/reports/ordens/OrdensEx";
 import { PageTitle } from "@/components/ui/title-component";
 import { ParametrosOrdemRel } from "@/reports/forms/ParametrosOrdemRel";
+import { SearchFilter } from "@/components/ui/search-filter";
 
-async function fetchOrdens() {
+async function fetchOrdens(filtro: string) {
+
+    var filtroNome = "";
+
+    // TODO: Falar com o bruno sobre as associações querydsl cliente.NomeCliente
+    if (filtro) {
+        filtroNome = `?filter=observacoesOrcamento%2Blike%2B${filtro.toLowerCase()}`
+    }
+
+
     const response = await baseApi.get<PaginationType<OrdemServico>>("ordemServico")
 
     return response.data;
 }
 
 export function OrdemServicoLista() {
+    const [filtro, setFiltro] = useState("");
     const [dialogText, setDialogText] = useState("Selecione uma ordem de serviço para emitir nota fiscal");
     const [openDialog, setOpenDialog] = useState(false);
     const navigate = useNavigate();
     const [selectedRow, setSelectedRow] = useState<OrdemServico | null>(null);
     const { data, refetch, isFetching } = useQuery({
         queryKey: ["OrdensServico"],
-        queryFn: () => fetchOrdens(),
+        queryFn: () => fetchOrdens(filtro),
         refetchOnWindowFocus: false
     });
 
@@ -59,12 +70,16 @@ export function OrdemServicoLista() {
     return (
         <main className="w-full h-full px-10">
             <PageTitle titulo="Ordens de serviço" />
-            <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da lisat">
-                <Button onClick={() => refetch()} >Atualizar dados</Button>
-                <Link to="/ordens/novo"><Button>Novo</Button></Link>
-                <Button onClick={onClickEmitirNf} type="button">Emitir nota fiscal</Button>
-                <Button type="button" onClick={onClickExportarOrdedm}>Exportar dados</Button>
-                <ParametrosOrdemRel />
+            <div className="w-full flex items-baseline justify-between my-10">
+                <SearchFilter
+                    value={filtro} setValue={setFiltro} pesquisar={refetch} placeholder="Nome"
+                />
+                <div className="w-full flex justify-end gap-4" id="list-bar" aria-label="Navegação da lisat">
+                    <Link to="/ordens/novo"><Button>Novo</Button></Link>
+                    <Button onClick={onClickEmitirNf} type="button">Emitir nota fiscal</Button>
+                    <Button type="button" onClick={onClickExportarOrdedm}>Exportar dados</Button>
+                    <ParametrosOrdemRel />
+                </div>
             </div>
             {isFetching ? (
                 <div className="flex-1 flex justify-center"><Loading /></div>

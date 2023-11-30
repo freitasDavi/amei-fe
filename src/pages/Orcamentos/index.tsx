@@ -13,22 +13,33 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { OrcamentoPDF } from "@/reports/orcamento/OrcamentoEx";
 import { PageTitle } from "@/components/ui/title-component";
 import { ParametrosOrcamentoRel } from "@/reports/forms/ParametrosOrcamentoRel";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { MagnifyingGlass } from "@phosphor-icons/react";
+import { SearchFilter } from "@/components/ui/search-filter";
 
-async function fetchOrcamentos(userId: number | undefined) {
+async function fetchOrcamentos(userId: number | undefined, filtro?: string) {
     if (!userId) return;
 
-    const res = await baseApi.get<PaginationType<OrcamentosTable>>('/orcamentos');
+    var filtroNome = "";
+
+    if (filtro) {
+        filtroNome = `?filter=observacoesOrcamento%2Blike%2B${filtro.toLowerCase()}`
+    }
+
+    const res = await baseApi.get<PaginationType<OrcamentosTable>>('/orcamentos' + filtroNome);
 
     return res.data;
 }
 
 export function Orcamento() {
     const [openDialog, setOpenDialog] = useState(false);
+    const [filtroNome, setFiltroNome] = useState("");
     const [selectedRow, setSelectedRow] = useState<OrcamentosTable | null>(null);
     const user = useAuthStore(state => state.userData);
     const { data, refetch, isFetching } = useQuery({
         queryKey: ['orcamentos'],
-        queryFn: () => fetchOrcamentos(user?.id),
+        queryFn: () => fetchOrcamentos(user?.id, filtroNome),
         refetchOnWindowFocus: false
     })
 
@@ -49,12 +60,19 @@ export function Orcamento() {
     return (
         <div className="w-full h-full px-10">
             <PageTitle titulo="Orçamentos" />
-            <div className="w-full flex my-10 gap-4" id="list-bar" aria-label="Navegação da Lista">
-                <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
-                <Link to="novo"><Button variant="default" type="button">Novo</Button></Link>
-                <Button variant="default" type="button" onClick={onClickExportarOrcamento}>Gerar PDF</Button>
-                <ParametrosOrcamentoRel />
+            <div className="w-full flex items-baseline justify-between my-10">
+                <SearchFilter
+                    value={filtroNome} setValue={setFiltroNome} pesquisar={refetch} placeholder="Observações"
+                />
+                <div className="w-full flex gap-4 justify-end" id="list-bar" aria-label="Navegação da Lista">
+                    <Link to="novo"><Button variant="default" type="button">Novo</Button></Link>
+                    <Button variant="default" type="button" onClick={onClickExportarOrcamento}>Gerar PDF</Button>
+                    <ParametrosOrcamentoRel />
+                </div>
+
             </div>
+
+
             {isFetching ? (
                 <div className="flex-1 flex justify-center"><Loading /></div>
             ) : (
