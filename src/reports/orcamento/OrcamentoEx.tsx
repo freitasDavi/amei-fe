@@ -147,13 +147,13 @@ export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
     {
         columns: [
             {
-                text: data.usuarioOrcamento.razaoSocialUsuario,
+                text: data.usuario.razaoSocialUsuario,
                 bold: true,
                 color: '#333333',
                 alignment: 'left',
             },
             {
-                text: data.clienteOrcamento.nomeCliente,
+                text: data.cliente.nomeCliente,
                 bold: true,
                 color: '#333333',
                 alignment: 'left',
@@ -179,11 +179,11 @@ export async function OrcamentoPDF({ data }: { data: EmissaoOrc }) {
     {
         columns: [
             {
-                text: `${data.usuarioOrcamento.enderecoUsuario} - ${data.usuarioOrcamento.numeroUsuario}`,
+                text: `${data.usuario.enderecoUsuario} - ${data.usuario.numeroUsuario}`,
                 style: 'invoiceBillingAddress',
             },
             {
-                text: `${data.clienteOrcamento.enderecoCliente} - ${data.clienteOrcamento.numeroCliente}`,
+                text: `${data.cliente.enderecoCliente} - ${data.cliente.numeroCliente}`,
                 style: 'invoiceBillingAddress',
             },
         ],

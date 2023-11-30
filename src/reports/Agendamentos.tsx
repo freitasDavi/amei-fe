@@ -1,5 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// import * as pdfFonts from "pdfmake/build/vfs_fonts"
+// import * as pdfFonts from '@/lib/pdf/vfs_fonts';
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -21,7 +22,17 @@ export type DadosRel = {
 }
 
 
-(pdfMake as any).vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : pdfMake.vfs;
+(pdfMake as any).fonts = {
+    Roboto: {
+        normal:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+        bold: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+        italics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+        bolditalics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+    },
+};
 
 export async function AgendamentosPDF({ data, filtro }: Report) {
     // (pdfMake as any).vfs = pdfMake.vfs;
@@ -32,8 +43,7 @@ export async function AgendamentosPDF({ data, filtro }: Report) {
             // { text: format(new Date(agendamento.dataAgendamento), 'dd/MM/yyyy', { locale: ptBR }), fontSize: 9, margin: [0, 2, 0, 2] },
             { text: maskCnpj(agendamento.cnpjCliente), fontSize: 9, margin: [0, 2, 0, 2] },
             { text: maskPhone(agendamento.telefoneCliente), fontSize: 9, margin: [0, 2, 0, 2] },
-            { text: agendamento.totalAgendamentos, fontSize: 9, margin: [0, 2, 20, 2], alignment: 'right' },
-
+            { text: agendamento.totalAgendamentos, fontSize: 9, margin: [0, 2, 20, 2] }
         ]
     });
 
@@ -51,7 +61,7 @@ export async function AgendamentosPDF({ data, filtro }: Report) {
                         { text: 'Nome', style: 'tableHeader', fontSize: 10, },
                         { text: 'CNPJ', style: 'tableHeader', fontSize: 10 },
                         { text: 'Telefone', style: 'tableHeader', fontSize: 10 },
-                        { text: 'Total de agendamentos', style: 'tableHeader', fontSize: 10 },
+                        { text: 'Total de agendamentos', style: 'tableHeader', fontSize: 10 }
                     ],
                     ...dados
                 ]

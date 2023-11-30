@@ -28,8 +28,8 @@ export type EmissaoOrc = {
     dataValidadeOrcamento: Date;
     valorTotalDoOrcamento: number;
     observacoesOrcamento: string;
-    usuarioOrcamento: UserDTO;
-    clienteOrcamento: ClienteEmissaoRelDTO
+    usuario: UserDTO;
+    cliente: ClienteEmissaoRelDTO
     itensOrcamentos: ItensOrcamento[];
 }
 

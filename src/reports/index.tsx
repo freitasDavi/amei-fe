@@ -14,7 +14,8 @@ const header: Content = [
                 fontSize: 10,
             },
             {
-                text: client?.username!,
+                // text: client?.username!,
+                text: "JOSEFINO",
                 alignment: 'right',
                 bold: true,
                 fontSize: 12,
