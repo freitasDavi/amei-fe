@@ -1,5 +1,5 @@
 import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts"
+import * as pdfFonts from "pdfmake/build/vfs_fonts"
 // import * as pdfFonts from '@/lib/pdf/vfs_fonts';
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import { format } from "date-fns";
