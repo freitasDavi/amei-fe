@@ -1,19 +1,18 @@
 import { EmissaoOrc, OrcamentosTable } from "@/@types/Orcamentos"
 import { PaginationType } from "@/@types/Pagination";
-import { exportCSV } from "@/api/Orcamento";
 import { Loading } from "@/components/Loading";
 import { columns } from "@/components/Tables/Orcamentos/columns";
 import { DataTable } from "@/components/Tables/CheckBoxDataTable";
 import { Button } from "@/components/ui/button";
 import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
-import { ArrowBendDownLeft } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { OrcamentoPDF } from "@/reports/orcamento/OrcamentoEx";
 import { PageTitle } from "@/components/ui/title-component";
+import { ParametrosOrcamentoRel } from "@/reports/forms/ParametrosOrcamentoRel";
 
 async function fetchOrcamentos(userId: number | undefined) {
     if (!userId) return;
@@ -54,7 +53,7 @@ export function Orcamento() {
                 <Button variant="default" type="button" onClick={() => refetch()}>Pesquisar</Button>
                 <Link to="novo"><Button variant="default" type="button">Novo</Button></Link>
                 <Button variant="default" type="button" onClick={onClickExportarOrcamento}>Gerar PDF</Button>
-                <Button variant="default" type="button" onClick={() => exportCSV()}>Exportar dados</Button>
+                <ParametrosOrcamentoRel />
             </div>
             {isFetching ? (
                 <div className="flex-1 flex justify-center"><Loading /></div>

@@ -11,6 +11,7 @@ import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { OrdensPDF } from "@/reports/ordens/OrdensEx";
 import { PageTitle } from "@/components/ui/title-component";
+import { ParametrosOrdemRel } from "@/reports/forms/ParametrosOrdemRel";
 
 async function fetchOrdens() {
     const response = await baseApi.get<PaginationType<OrdemServico>>("ordemServico")
@@ -63,6 +64,7 @@ export function OrdemServicoLista() {
                 <Link to="/ordens/novo"><Button>Novo</Button></Link>
                 <Button onClick={onClickEmitirNf} type="button">Emitir nota fiscal</Button>
                 <Button type="button" onClick={onClickExportarOrdedm}>Exportar dados</Button>
+                <ParametrosOrdemRel />
             </div>
             {isFetching ? (
                 <div className="flex-1 flex justify-center"><Loading /></div>
