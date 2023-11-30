@@ -1,5 +1,5 @@
 import pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from "pdfmake/build/vfs_fonts"
+// import * as pdfFonts from "pdfmake/build/vfs_fonts"
 // import * as pdfFonts from '@/lib/pdf/vfs_fonts';
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import { format } from "date-fns";
@@ -22,7 +22,17 @@ export type DadosRel = {
 }
 
 
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+(pdfMake as any).fonts = {
+    Roboto: {
+        normal:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+        bold: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+        italics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+        bolditalics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+    },
+};
 
 export async function AgendamentosPDF({ data, filtro }: Report) {
     // (pdfMake as any).vfs = pdfMake.vfs;
