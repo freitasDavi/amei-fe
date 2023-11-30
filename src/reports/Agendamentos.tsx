@@ -22,9 +22,9 @@ export type DadosRel = {
 }
 
 
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 export async function AgendamentosPDF({ data, filtro }: Report) {
-    (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
     // (pdfMake as any).vfs = pdfMake.vfs;
 
     const dados = data?.map((agendamento) => {
