@@ -20,7 +20,6 @@ export function DefaultLayout() {
                             <Outlet />
                         </div>
                     </main>
-                    {/* <Footer /> */}
                 </div>
 
             )
