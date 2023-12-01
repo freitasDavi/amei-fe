@@ -18,8 +18,6 @@ export function CheckoutForm() {
             return;
         }
 
-        // TODO: Change screen after paymentIntent
-
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {

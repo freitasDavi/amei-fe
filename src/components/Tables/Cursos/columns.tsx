@@ -27,7 +27,7 @@ export const columns: ColumnDef<Cursos>[] = [
         header: 'Ações',
         cell: (props) => (
             <div>
-                <Link to={`/cursos?id=${props.getValue()}`} className="text-primary-logo hover:text-primary-logo-dark">
+                <Link to={`/cursos/edit?id=${props.getValue()}`} className="text-primary-logo hover:text-primary-logo-dark">
                     <Pen size={20} weight="fill" />
                 </Link>
             </div>

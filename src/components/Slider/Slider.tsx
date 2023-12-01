@@ -4,8 +4,20 @@ import { CardSlider } from "./CardSlider";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import useAuthStore from "@/store/AuthStore";
+import { Loading } from "../Loading";
 
 export function Slider() {
+    const userData = useAuthStore(state => state.userData);
+
+    if (!userData) {
+        return <Loading />
+    }
+
+    const userAdmin = userData.roles ? userData.roles.includes("ROLE_ADMIN") : false;
+
+    console.log(userAdmin);
+
     return (
         <div className="w-full p-5 relative">
             <button
@@ -41,7 +53,7 @@ export function Slider() {
                 <SwiperSlide>
                     <CardSlider
                         icon="GraduationCap"
-                        path="/cursos"
+                        path={userAdmin ? "/cursos/edit" : "/cursos"}
                         title="Cursos"
                     />
                 </SwiperSlide>

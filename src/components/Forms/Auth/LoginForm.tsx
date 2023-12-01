@@ -48,7 +48,9 @@ export function LoginForm() {
                     signIn(res.data.accessToken, res.data.refreshToken, {
                         email: res.data.email,
                         id: res.data.id,
-                        username: res.data.username
+                        username: res.data.username,
+                        roles: res.data.roles,
+                        razaoSocial: res.data.razaoSocial
                     });
 
                     toast({
@@ -65,7 +67,6 @@ export function LoginForm() {
                 }
             }
         } catch (err) {
-            // TODO: Notify failed login
             console.log('Error');
             toast({
                 variant: "destructive",

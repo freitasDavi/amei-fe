@@ -11,7 +11,7 @@ import { baseApi } from "@/lib/api";
 import useAuthStore from "@/store/AuthStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 async function fetchCursos(userId: number | undefined, filtro: string) {
     if (!userId) return;
@@ -60,6 +60,8 @@ export function CursosPage() {
                 />
                 <div className="w-full flex justify-end gap-4" id="list-bar" aria-label="Navegação da página de cursos">
                     <CadastroCurso pesquisar={refetch} data={cursoSelecionado} open={open} setOpen={setOpen} />
+                    <Link to="/cursos"><Button type="button">Visualizar</Button>
+                    </Link>
                 </div>
             </div>
             <section>
