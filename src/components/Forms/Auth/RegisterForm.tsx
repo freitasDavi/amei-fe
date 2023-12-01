@@ -90,7 +90,9 @@ export function RegisterForm({ changeStep, currentStep, setIsLoading }: Register
                 signIn(response.data.accessToken, response.data.refreshToken, {
                     email: response.data.email,
                     id: response.data.id,
-                    username: response.data.username
+                    username: response.data.username,
+                    razaoSocial: response.data.razaoSocial,
+                    roles: response.data.roles,
                 });
 
                 setTimeout(() => {
