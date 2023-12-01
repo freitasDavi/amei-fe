@@ -117,6 +117,17 @@ export function OrdensForm({ ordem }: OrdemFormProps) {
 
         } catch (err) {
             if (err instanceof AxiosError) {
+
+                if (err.response?.data.message) {
+                    toast({
+                        title: 'Ops',
+                        variant: "destructive",
+                        description: err.response?.data.message
+                    })
+
+                    return;
+                }
+
                 toast({
                     title: 'Ops',
                     variant: "destructive",
