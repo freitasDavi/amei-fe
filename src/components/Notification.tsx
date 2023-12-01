@@ -10,6 +10,8 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
 import { AlarmClock, AlarmClockOff } from "lucide-react";
+import { AxiosError } from "axios";
+import { useToast } from "./ui/use-toast";
 
 async function fetchActiveCronometros(codigoUsuario: number) {
     var response = await baseApi.get<Cronometro>(`/cronometro/ultimoAtivo/${codigoUsuario}`);
@@ -23,6 +25,7 @@ export function Notification() {
     const userData = useAuthStore(state => state.userData);
     const [ultimoCronometroAtivo, setUltimoCronometroAtivo] = useState<number | null>(null);
     const navigate = useNavigate();
+    const { toast } = useToast();
 
     if (!userData) {
         return <Bell />
@@ -53,7 +56,32 @@ export function Notification() {
             navigate(`/ordens/edit/${response.data}`);
 
         } catch (err) {
-            console.error(err);
+            if (err instanceof AxiosError) {
+
+                if (err.response?.data.message) {
+                    toast({
+                        title: 'Ops',
+                        variant: "destructive",
+                        description: err.response?.data.message
+                    })
+
+                    return;
+                }
+
+                toast({
+                    title: 'Ops',
+                    variant: "destructive",
+                    description: err.message
+                })
+
+                return;
+            }
+
+            toast({
+                title: 'Ops',
+                variant: "destructive",
+                description: "Algo não saiu como planejado"
+            })
         }
     }
 

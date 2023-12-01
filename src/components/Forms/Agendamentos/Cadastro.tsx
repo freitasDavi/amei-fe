@@ -276,8 +276,6 @@ export function CadastroAgendamento({ pesquisar, open, setOpen, data }: Props) {
                                     render={({ field }) => (
                                         <FormItem className="mt-[10px] flex-1 flex flex-col">
                                             <FormLabel htmlFor="cidadeAgendamento">Bairro</FormLabel>
-                                            {/* TODO: Trocar pelo Combo de Bairro */}
-                                            {/* <ComboCidade field={field} /> */}
                                             <ComboBairro field={field} codigoCidade={1} />
                                             <FormMessage />
                                         </FormItem>

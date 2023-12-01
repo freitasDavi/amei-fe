@@ -6,6 +6,7 @@ import { Register } from "@/pages/Auth/Register";
 import { Client } from "@/pages/Clients/Client";
 import { CronometroPage } from "@/pages/Cronometro";
 import { CursosPage } from "@/pages/Cursos";
+import { CursosUser } from "@/pages/Cursos/Users";
 import { ErrorPage } from "@/pages/ErrorPage";
 import Home from "@/pages/Home";
 import { IndexPage } from "@/pages/Index";
@@ -33,7 +34,8 @@ export const router = createBrowserRouter(
                 <Route path="/orcamentos" element={<Orcamento />} />
                 <Route path="/orcamentos/novo" element={<NovoOrcamento />} />
                 <Route path="/orcamentos/edit/:id" element={<NovoOrcamento />} />
-                <Route path="/cursos" element={<CursosPage />} />
+                <Route path="/cursos" element={<CursosUser />} />
+                <Route path="/cursos/edit" element={<CursosPage />} />
                 <Route path="/agendamentos" element={<AgendamentosPage />} />
                 <Route path="/ordens" element={<OrdemServicoLista />} />
                 <Route path="/ordens/novo" element={<NovaOrdem />} />

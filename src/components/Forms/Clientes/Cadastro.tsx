@@ -147,7 +147,7 @@ export function CadastroCliente({ pesquisar, open, setOpen, data }: CadastroClie
                 })
                 return;
             }
-            // TODO: Em bancos ja criados, create-drop pra ajustar tamanho do CNPJ
+
             toast({
                 variant: "destructive",
                 title: "Erro",
