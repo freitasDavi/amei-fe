@@ -1,27 +1,54 @@
-# React + TypeScript + Vite
+# a-mei
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esse projeto foi desenvolvido para o trabalho de conclusão de curso de Análise e Desenvolvimento de Sistemas
 
-Currently, two official plugins are available:
+O software a-mei tem como objetivo facilitar a vida dos Micro Empreendedores Individuais, oferecendo funcionalidades como cadastro de clientes, geração de orçamentos, ordens de serviço, auxílio na emissão de notas fiscais, e também formas de visualização de dados.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Tecnologias
 
-## Expanding the ESLint configuration
+Esse projeto é dividido em dois repositórios (Front-end e Back-end)
+[Repositório Front-end]([https://www.geeksforgeeks.org/](https://github.com/freitasDavi/amei-fe)https://github.com/freitasDavi/amei-fe)
+[Repositório Back-end]([https://www.geeksforgeeks.org/](https://github.com/freitasDavi/amei-fe)https://github.com/freitasDavi/amei-be)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React JS
+- TailwindCSS
+- Stripe
+- Axios
+- DateFNS
+- Chart.js
+- Phoshpor Icons
+- Intro.js
+- React Hook Form
+- Zod
+- React Query
+- Pdfmake
+- Zustand
 
-- Configure the top-level `parserOptions` property like this:
+# Como rodar esse projeto:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## 1📦 Como baixar o projeto
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+   Clonar os repositórios
+   
+    $ git clone https://github.com/freitasDavi/amei-fe.git
+   
+    # Instalar o node
+
+    # Instalar as dependencias
+  
+    $ npm install
+
+---
+
+## 2. Configurar .env
+Preencher com as seguintes variáveis
+
+- VITE_BASE_URL="http://localhost:5173" (URL_FRONT_END)
+- VITE_BE_BASE_URL="URL_BACK_END"
+- VITE_STRIPE_PUBLIC_KEY="CHAVE_PUBLICA_STRIPE"
+
+## 3 Inicializar a aplicação
+    $ npm run dev
+
+
+Projeto desenvolvido por Davi Freitas da Silva, Gabriel Favarin, Guilherme Hahn e Luiza Miguel.
