@@ -144,7 +144,7 @@ export function CadastroCronometro() {
                             )}
                         />
                         <div className="mt-4 flex-1 flex justify-end">
-                            <Button type="submit" variant="default">Salvar</Button>
+                            <Button type="submit" variant="default">Iniciar</Button>
                         </div>
                     </form>
                 </Form>
