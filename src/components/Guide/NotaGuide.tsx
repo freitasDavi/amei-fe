@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { maskCnpj } from "@/utils/masks";
+import { PageTitle } from "../ui/title-component";
 
 async function fetchOrdem(id: number): Promise<undefined | OrdemServicoCad> {
     if (!id) return undefined;
@@ -61,7 +62,7 @@ export function NotaGuide() {
 
     return (
         <main className="w-full h-full px-10">
-            <h1 className="font-medium text-3xl text-primary-logo">Auxílio a emissão de NF-e</h1>
+            <PageTitle titulo="Auxílio a emissão de NF-e" />
             <Steps
                 enabled={stepsEnabled}
                 steps={steps}

@@ -14,9 +14,9 @@ export function PriceContainer() {
                     {/* <!-- Pricing Card --> */}
                     <PriceCard title="Free" price={0} description="Faturamento de até R$1.320,00." />
                     {/* <!-- Pricing Card --> */}
-                    <PriceCard title="MEI" price={60} description="Faturamento de até R$3.000,00." />
+                    <PriceCard title="MEI" price={10} description="Faturamento de até R$3.000,00." />
                     {/* <!-- Pricing Card --> */}
-                    <PriceCard title="Premium" price={60} description="Faturamento ilimitado." />
+                    <PriceCard title="Premium" price={20} description="Faturamento ilimitado." />
 
                 </div>
             </div>
