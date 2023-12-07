@@ -62,7 +62,7 @@ export function NotaGuide() {
 
     return (
         <main className="w-full h-full px-10">
-            <PageTitle titulo="Auxílio a emissão de NF-e" />
+            <PageTitle titulo="Auxílio a emissão de NF-e" link="/ordens" />
             <Steps
                 enabled={stepsEnabled}
                 steps={steps}
